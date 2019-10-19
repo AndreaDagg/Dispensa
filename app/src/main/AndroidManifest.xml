@@ -19,10 +19,18 @@
             android:name=".Activity.AlimentiActivity.AlimentiActivity"
             android:label="@string/AlimentiActivity" />
         <activity android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity" />
-        <activity android:name=".Activity.FarmaciActivity.DispensaFarmaciActivity" />
-        <activity android:name=".Activity.FarmaciActivity.NuovoFarmacoActivity" />
-        <activity android:name=".Activity.AlimentiActivity.DispensaAlimentiActivity" />
-        <activity android:name=".Activity.AlimentiActivity.NuovoAlimentoActivity" />
+        <activity
+            android:name=".Activity.FarmaciActivity.DispensaFarmaciActivity"
+            android:label="@string/dispFarm" />
+        <activity
+            android:name=".Activity.FarmaciActivity.NuovoFarmacoActivity"
+            android:label="@string/AddFarm" />
+        <activity
+            android:name=".Activity.AlimentiActivity.DispensaAlimentiActivity"
+            android:label="@string/dispAlim" />
+        <activity
+            android:name=".Activity.AlimentiActivity.NuovoAlimentoActivity"
+            android:label="@string/AddAlim" />
         <activity
             android:name=".Activity.ArticoliScaduti"
             android:label="@string/ArticoliScadutiActivity" />
@@ -33,6 +41,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
