@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="android.corso.dispensa">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activity.ListaSpesaAvtivity.ListaSpesaActivity"
+            android:label="@string/ListaSpesaActivity"></activity>
+        <activity
+            android:name=".Activity.FarmaciActivity.FarmaciActivity"
+            android:label="@string/FarmaciActivity" />
+        <activity
+            android:name=".Activity.AlimentiActivity.AlimentiActivity"
+            android:label="@string/AlimentiActivity" />
+        <activity android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity" />
+        <activity android:name=".Activity.FarmaciActivity.DispensaFarmaciActivity" />
+        <activity android:name=".Activity.FarmaciActivity.NuovoFarmacoActivity" />
+        <activity android:name=".Activity.AlimentiActivity.DispensaAlimentiActivity" />
+        <activity android:name=".Activity.AlimentiActivity.NuovoAlimentoActivity" />
+        <activity
+            android:name=".Activity.ArticoliScaduti"
+            android:label="@string/ArticoliScadutiActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Dispensa</string>
+    <string name="AlimentiActivity">Alimenti</string>
+    <string name="FarmaciActivity">Farmaci</string>
+    <string name="ListaSpesaActivity">Lista della spesa</string>
+    <string name="ArticoliScadutiActivity">Articoli scaduti</string>
+
+    <string name="AlimentiButton">Alimenti</string>
+    <string name="FarmaciButton">Farmaci</string>
+    <string name="ListaSpesaButton">Lista della spesa</string>
+    <string name="ArticoliScadutiButton">Articoli scaduti</string>
+
+</resources>
