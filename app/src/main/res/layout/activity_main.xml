@@ -20,7 +20,8 @@
         app:layout_constraintEnd_toStartOf="@+id/FarmaciButtonHome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002" />
+        app:layout_constraintVertical_bias="0.48000002"
+        android:background="@drawable/baseline_restaurant_black_48dp"/>
 
     <Button
         android:id="@+id/FarmaciButtonHome"
@@ -34,7 +35,8 @@
         app:layout_constraintBottom_toTopOf="@+id/ArticoliScadutiButtonHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/AlimentiButtonHome"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/baseline_local_hospital_black_48dp"/>
 
     <Button
         android:id="@+id/ListaSpesaButtonHome"
@@ -48,7 +50,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ArticoliScadutiButtonHome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AlimentiButtonHome" />
+        app:layout_constraintTop_toBottomOf="@+id/AlimentiButtonHome"
+        android:background="@drawable/baseline_add_shopping_cart_black_48dp"/>
 
     <Button
         android:id="@+id/ArticoliScadutiButtonHome"
@@ -62,5 +65,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ListaSpesaButtonHome"
-        app:layout_constraintTop_toBottomOf="@+id/FarmaciButtonHome" />
+        app:layout_constraintTop_toBottomOf="@+id/FarmaciButtonHome"
+        android:background="@drawable/baseline_layers_clear_black_48dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
