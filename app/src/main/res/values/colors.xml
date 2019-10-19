@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#b2dfdb</color>
+    <!--<color name="colorPrimary">#b2dfdb</color>
     <color name="colorPrimaryDark">#e5ffff</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="textColorPrimary">#212121</color>
+    <color name="textColorPrimary">#212121</color>-->
+
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#e0e0e0</color>
+    <color name="colorAccent">#bdbdbd</color>
+    <color name="greyLight">#eeeeee</color>
 
 </resources>

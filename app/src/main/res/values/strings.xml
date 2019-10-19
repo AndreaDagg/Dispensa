@@ -1,13 +1,34 @@
 <resources>
+    <!-- Nome label Activity -->
     <string name="app_name">Dispensa</string>
     <string name="AlimentiActivity">Alimenti</string>
     <string name="FarmaciActivity">Farmaci</string>
     <string name="ListaSpesaActivity">Lista della spesa</string>
     <string name="ArticoliScadutiActivity">Articoli scaduti</string>
+    <string name="AddAlim">Nuovo alimento</string>
+    <string name="AddFarm">Nuovo farmaco</string>
+    <string name="dispAlim">Dispensa alimenti</string>
+    <string name="dispFarm">Dispensa farmaci</string>
 
+    <!-- Bottoni Home -->
     <string name="AlimentiButton">Alimenti</string>
     <string name="FarmaciButton">Farmaci</string>
     <string name="ListaSpesaButton">Lista della spesa</string>
     <string name="ArticoliScadutiButton">Articoli scaduti</string>
+
+
+    <string name="NewAlimentoTx">Inserisci un nuovo alimento: </string>
+    <string name="VisualAlimentiTx">Visualizza la dispensa degli alimenti: </string>
+    <string name="buttonNewAli">Nuovo alimento</string>
+    <string name="OpenDispensaButton">Apri dispensa</string>
+    <string name="NewFarmacoTx">Inserisci un nuovo farmaco: </string>
+    <string name="VisualFarmaciTx">Visualizza la dispensa dei farmaci: </string>
+    <string name="buttonNewFar">Nuovo farmaco</string>
+
+    <!-- NuovoAlimento && NuovoFarmaco -->
+    <string name="TxMarca">Marca</string>
+    <string name="TxTipo">Tipo</string>
+
+
 
 </resources>
