@@ -15,13 +15,12 @@
         android:layout_marginTop="213dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="63dp"
-        android:text="@string/AlimentiButton"
+        android:background="@drawable/baseline_restaurant_black_48dp"
         app:layout_constraintBottom_toTopOf="@+id/ListaSpesaButtonHome"
         app:layout_constraintEnd_toStartOf="@+id/FarmaciButtonHome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002"
-        android:background="@drawable/baseline_restaurant_black_48dp"/>
+        app:layout_constraintVertical_bias="0.48000002" />
 
     <Button
         android:id="@+id/FarmaciButtonHome"
@@ -31,12 +30,11 @@
         android:layout_marginTop="213dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="63dp"
-        android:text="@string/FarmaciButton"
+        android:background="@drawable/baseline_local_hospital_black_48dp"
         app:layout_constraintBottom_toTopOf="@+id/ArticoliScadutiButtonHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/AlimentiButtonHome"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/baseline_local_hospital_black_48dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/ListaSpesaButtonHome"
@@ -46,12 +44,11 @@
         android:layout_marginTop="63dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="235dp"
-        android:text="@string/ListaSpesaButton"
+        android:background="@drawable/baseline_add_shopping_cart_black_48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ArticoliScadutiButtonHome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AlimentiButtonHome"
-        android:background="@drawable/baseline_add_shopping_cart_black_48dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/AlimentiButtonHome" />
 
     <Button
         android:id="@+id/ArticoliScadutiButtonHome"
@@ -61,10 +58,64 @@
         android:layout_marginTop="63dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="235dp"
-        android:text="@string/ArticoliScadutiButton"
+        android:background="@drawable/baseline_layers_clear_black_48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ListaSpesaButtonHome"
+        app:layout_constraintTop_toBottomOf="@+id/FarmaciButtonHome" />
+
+    <TextView
+        android:id="@+id/TxAlimenti"
+        android:layout_width="150dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/AlimentiButton"
+        app:layout_constraintBottom_toTopOf="@+id/AlimentiButtonHome"
+        app:layout_constraintEnd_toStartOf="@+id/TxFarmaci"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/TxSpesa"
+        android:layout_width="150dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/ListaSpesaButton"
+        app:layout_constraintBottom_toTopOf="@+id/ListaSpesaButtonHome"
+        app:layout_constraintEnd_toStartOf="@+id/TxScaduti"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AlimentiButtonHome" />
+
+    <TextView
+        android:id="@+id/TxScaduti"
+        android:layout_width="150dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/ArticoliScadutiButton"
+        app:layout_constraintBottom_toTopOf="@+id/ListaSpesaButtonHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TxSpesa"
         app:layout_constraintTop_toBottomOf="@+id/FarmaciButtonHome"
-        android:background="@drawable/baseline_layers_clear_black_48dp"/>
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/TxFarmaci"
+        android:layout_width="150dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/FarmaciButton"
+        app:layout_constraintBottom_toTopOf="@+id/AlimentiButtonHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TxAlimenti"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
