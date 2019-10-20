@@ -6,4 +6,197 @@
     android:layout_height="match_parent"
     tools:context=".Activity.FarmaciActivity.NuovoFarmacoActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageViewFarm"
+                android:layout_width="80dp"
+                android:layout_height="138dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/button_only_border"
+                app:layout_constraintBottom_toTopOf="@+id/cameraFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/InsMarcaFarm"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.533" />
+
+            <EditText
+                android:id="@+id/InsTipoFarm"
+                android:layout_width="254dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="16dp"
+                android:autofillHints=""
+                android:hint="@string/InsTipologia"
+                android:inputType="text"
+                app:layout_constraintBottom_toTopOf="@+id/textViewBarCodeFarm"
+                app:layout_constraintEnd_toStartOf="@+id/cameraFarm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTipoFarm" />
+
+            <Button
+                android:id="@+id/barCodeReadFarm"
+                android:layout_width="70dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="34dp"
+                android:layout_marginBottom="100dp"
+                android:background="@drawable/baseline_format_align_center_black_48"
+                app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barCodeFarm"
+                app:layout_constraintTop_toBottomOf="@+id/cameraFarm" />
+
+            <TextView
+                android:id="@+id/textViewTipoFarm"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="259dp"
+                android:text="@string/TxTipo"
+                app:layout_constraintBottom_toTopOf="@+id/InsTipoFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/InsMarcaFarm" />
+
+            <EditText
+                android:id="@+id/InsMarcaFarm"
+                android:layout_width="254dp"
+                android:layout_height="59dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:autofillHints=""
+                android:hint="@string/InsMarca"
+                android:inputType="text"
+                app:layout_constraintBottom_toTopOf="@+id/textViewTipoFarm"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewFarm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textMarcaFarm" />
+
+            <CalendarView
+                android:id="@+id/calendarViewScadenzaFarm"
+                android:layout_width="342dp"
+                android:layout_height="292dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="37dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/InsertFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDataFarm" />
+
+            <TextView
+                android:id="@+id/TXscadenzaFarm"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/TxScadenza"
+                app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaFarm"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDataFarm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barCodeFarm" />
+
+            <TextView
+                android:id="@+id/textViewDataFarm"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/HintScadenza"
+                app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaFarm"
+                app:layout_constraintStart_toEndOf="@+id/TXscadenzaFarm"
+                app:layout_constraintTop_toBottomOf="@+id/barCodeFarm" />
+
+            <Button
+                android:id="@+id/InsertFarm"
+                android:layout_width="300dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="55dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="56dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_border"
+                android:text="@string/insertAlim"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarViewScadenzaFarm" />
+
+            <Button
+                android:id="@+id/cameraFarm"
+                android:layout_width="70dp"
+                android:layout_height="62dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="34dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/baseline_local_see_black_48"
+                app:layout_constraintBottom_toTopOf="@+id/barCodeReadFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/InsTipoFarm"
+                app:layout_constraintTop_toBottomOf="@+id/InsMarcaFarm" />
+
+            <TextView
+                android:id="@+id/textMarcaFarm"
+                android:layout_width="40dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="339dp"
+                android:text="@string/TxMarca"
+                app:layout_constraintBottom_toTopOf="@+id/InsMarcaFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/barCodeFarm"
+                android:layout_width="254dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="24dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/InsCBAR"
+                android:inputType="number"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDataFarm"
+                app:layout_constraintEnd_toStartOf="@+id/barCodeReadFarm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewBarCodeFarm" />
+
+            <TextView
+                android:id="@+id/textViewBarCodeFarm"
+                android:layout_width="92dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="287dp"
+                android:text="@string/CBAR"
+                app:layout_constraintBottom_toTopOf="@+id/barCodeFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/InsTipoFarm" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
