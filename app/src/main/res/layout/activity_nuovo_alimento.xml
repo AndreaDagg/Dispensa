@@ -6,13 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".Activity.AlimentiActivity.NuovoAlimentoActivity">
 
+
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageViewAli"
+                android:layout_width="80dp"
+                android:layout_height="138dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/button_only_border"
+                app:layout_constraintBottom_toTopOf="@+id/cameraAli"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/InsMarcaAli"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.533" />
 
             <EditText
                 android:id="@+id/InsTipoAli"
@@ -21,13 +42,13 @@
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="16dp"
-                android:inputType="text"
+                android:autofillHints=""
                 android:hint="@string/InsTipologia"
+                android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/textViewBarCodeAli"
                 app:layout_constraintEnd_toStartOf="@+id/cameraAli"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTipoAli"
-                android:autofillHints="" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTipoAli" />
 
             <Button
                 android:id="@+id/barCodeReadAlim"
@@ -58,18 +79,18 @@
 
             <EditText
                 android:id="@+id/InsMarcaAli"
-                android:layout_width="340dp"
+                android:layout_width="254dp"
                 android:layout_height="59dp"
-                android:inputType="text"
-                android:hint="@string/InsMarca"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="39dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
+                android:autofillHints=""
+                android:hint="@string/InsMarca"
+                android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/textViewTipoAli"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewAli"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textMarcaAli"
-                android:autofillHints="" />
+                app:layout_constraintTop_toBottomOf="@+id/textMarcaAli" />
 
             <CalendarView
                 android:id="@+id/calendarViewScadenzaAlim"
@@ -149,6 +170,7 @@
                 android:text="@string/TxMarca"
                 app:layout_constraintBottom_toTopOf="@+id/InsMarcaAli"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

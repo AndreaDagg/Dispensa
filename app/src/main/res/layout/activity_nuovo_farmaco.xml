@@ -14,6 +14,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/imageViewFarm"
+                android:layout_width="80dp"
+                android:layout_height="138dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/button_only_border"
+                app:layout_constraintBottom_toTopOf="@+id/cameraFarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/InsMarcaFarm"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.533" />
+
             <EditText
                 android:id="@+id/InsTipoFarm"
                 android:layout_width="254dp"
@@ -41,7 +56,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaFarm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barCodeFarm"
-                app:layout_constraintTop_toBottomOf="@+id/cameraAli" />
+                app:layout_constraintTop_toBottomOf="@+id/cameraFarm" />
 
             <TextView
                 android:id="@+id/textViewTipoFarm"
@@ -58,16 +73,16 @@
 
             <EditText
                 android:id="@+id/InsMarcaFarm"
-                android:layout_width="340dp"
+                android:layout_width="254dp"
                 android:layout_height="59dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="39dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:autofillHints=""
                 android:hint="@string/InsMarca"
                 android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/textViewTipoFarm"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewFarm"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textMarcaFarm" />
 
