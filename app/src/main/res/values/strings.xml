@@ -30,6 +30,8 @@
     <string name="TxTipo">Tipo</string>
     <string name="CBAR">Codice a barre</string>
     <string name="InsCBAR">Inserisci codice a barr...</string>
+    <string name="InsMarca">Inserisci marca...</string>
+    <string name="InsTipologia">Inserisci il tipo...</string>
     <string name="TxScadenza">Scadenza: </string>
     <string name="HintScadenza">Inserisci scadenza...</string>
     <string name="insertAlim">Inserisci</string>

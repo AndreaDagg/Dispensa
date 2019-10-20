@@ -14,18 +14,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/spinnerTipoAli"
-                style="@android:style/Widget.Material.Spinner.Underlined"
+            <EditText
+                android:id="@+id/InsTipoAli"
                 android:layout_width="254dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewBarCode"
+                android:inputType="text"
+                android:hint="@string/InsTipologia"
+                app:layout_constraintBottom_toTopOf="@+id/textViewBarCodeAli"
                 app:layout_constraintEnd_toStartOf="@+id/cameraAli"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTipoAli" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTipoAli"
+                android:autofillHints="" />
 
             <Button
                 android:id="@+id/barCodeReadAlim"
@@ -49,24 +51,25 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="259dp"
                 android:text="@string/TxTipo"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerTipoAli"
+                app:layout_constraintBottom_toTopOf="@+id/InsTipoAli"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerMarcaAli" />
+                app:layout_constraintTop_toBottomOf="@+id/InsMarcaAli" />
 
-            <Spinner
-                android:id="@+id/spinnerMarcaAli"
-                style="@android:style/Widget.Material.Spinner.Underlined"
+            <EditText
+                android:id="@+id/InsMarcaAli"
                 android:layout_width="340dp"
                 android:layout_height="59dp"
-
+                android:inputType="text"
+                android:hint="@string/InsMarca"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="39dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/textViewTipoAli"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textMarcaAli" />
+                app:layout_constraintTop_toBottomOf="@+id/textMarcaAli"
+                android:autofillHints="" />
 
             <CalendarView
                 android:id="@+id/calendarViewScadenzaAlim"
@@ -133,8 +136,8 @@
                 android:background="@drawable/baseline_local_see_black_48"
                 app:layout_constraintBottom_toTopOf="@+id/barCodeReadAlim"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/spinnerTipoAli"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerMarcaAli" />
+                app:layout_constraintStart_toEndOf="@+id/InsTipoAli"
+                app:layout_constraintTop_toBottomOf="@+id/InsMarcaAli" />
 
             <TextView
                 android:id="@+id/textMarcaAli"
@@ -144,7 +147,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="339dp"
                 android:text="@string/TxMarca"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerMarcaAli"
+                app:layout_constraintBottom_toTopOf="@+id/InsMarcaAli"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -163,10 +166,10 @@
                 app:layout_constraintBottom_toTopOf="@+id/textViewData"
                 app:layout_constraintEnd_toStartOf="@+id/barCodeReadAlim"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewBarCode" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewBarCodeAli" />
 
             <TextView
-                android:id="@+id/textViewBarCode"
+                android:id="@+id/textViewBarCodeAli"
                 android:layout_width="92dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="32dp"
@@ -176,7 +179,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/barCodeAlim"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerTipoAli" />
+                app:layout_constraintTop_toBottomOf="@+id/InsTipoAli" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
