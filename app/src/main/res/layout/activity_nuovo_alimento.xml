@@ -82,10 +82,10 @@
                 app:layout_constraintBottom_toTopOf="@+id/InsertAlim"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewData" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewDataAli" />
 
             <TextView
-                android:id="@+id/TXscadenza"
+                android:id="@+id/TXscadenzaAli"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginStart="32dp"
@@ -94,12 +94,12 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/TxScadenza"
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaAlim"
-                app:layout_constraintEnd_toStartOf="@+id/textViewData"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDataAli"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/barCodeAlim" />
 
             <TextView
-                android:id="@+id/textViewData"
+                android:id="@+id/textViewDataAli"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
@@ -107,7 +107,7 @@
                 android:layout_marginBottom="8dp"
                 android:hint="@string/HintScadenza"
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaAlim"
-                app:layout_constraintStart_toEndOf="@+id/TXscadenza"
+                app:layout_constraintStart_toEndOf="@+id/TXscadenzaAli"
                 app:layout_constraintTop_toBottomOf="@+id/barCodeAlim" />
 
             <Button
@@ -163,7 +163,7 @@
                 android:ems="10"
                 android:hint="@string/InsCBAR"
                 android:inputType="number"
-                app:layout_constraintBottom_toTopOf="@+id/textViewData"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDataAli"
                 app:layout_constraintEnd_toStartOf="@+id/barCodeReadAlim"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewBarCodeAli" />
