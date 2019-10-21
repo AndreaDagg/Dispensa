@@ -10,7 +10,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {ProdottoEntity.class, ArticoloEntity.class}, version = 1)
+@Database(entities = {ProdottoEntity.class, ArticoloEntity.class}, version = 2)
 public abstract class DispensaDatabase extends RoomDatabase {
 
     public abstract ProdottoDao getProdottoDao();

@@ -1,17 +1,22 @@
 package android.corso.dispensa.Database.Entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "prodotto_entity")
+import java.sql.Blob;
+
+@Entity(tableName = "prodottoentity")
 public class ProdottoEntity {
 
 
+
     @PrimaryKey
-    private Long idBarcode;   //TODO:It's not autoGenerate we have to do the check before the insert
+    private Long idbarcode;   //TODO:It's not autoGenerate we have to do the check before the insert
     private String category;
     private String brand;
-    private String productType;
+    private String producttype;
+    private Blob image;
 
     //private Bitmap image; TODO: Trovare un metodo per salvare bitmap nel db
 
@@ -19,12 +24,21 @@ public class ProdottoEntity {
     private int newBuy;
     private String note;
 
-    public Long getIdBarcode() {
-        return idBarcode;
+
+    public Blob getImage() {
+        return image;
     }
 
-    public void setIdBarcode(Long idBarcode) {
-        this.idBarcode = idBarcode;
+    public void setImage(Blob image) {
+        this.image = image;
+    }
+
+    public Long getIdbarcode() {
+        return idbarcode;
+    }
+
+    public void setIdbarcode(@NonNull Long idbarcode) {
+        this.idbarcode = idbarcode;
     }
 
     public String getCategory() {
@@ -43,12 +57,12 @@ public class ProdottoEntity {
         this.brand = brand;
     }
 
-    public String getProductType() {
-        return productType;
+    public String getProducttype() {
+        return producttype;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setProducttype(String producttype) {
+        this.producttype = producttype;
     }
 
     public boolean isList() {

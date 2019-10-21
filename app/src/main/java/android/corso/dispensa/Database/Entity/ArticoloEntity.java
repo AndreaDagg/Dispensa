@@ -1,18 +1,17 @@
 package android.corso.dispensa.Database.Entity;
 
 
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "articolo_entity")
+@Entity(tableName = "articoloentity")
 public class ArticoloEntity {
 
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
-    private Long barCode;
-    private String deadline;
+    private Long barcode;
+    private Long deadline;
     private int used;
 
 
@@ -24,19 +23,19 @@ public class ArticoloEntity {
         this.id = id;
     }
 
-    public Long getBarCode() {
-        return barCode;
+    public Long getBarcode() {
+        return barcode;
     }
 
-    public void setBarCode(Long barCode) {
-        this.barCode = barCode;
+    public void setBarcode(Long barcode) {
+        this.barcode = barcode;
     }
 
-    public String getDeadline() {
+    public Long getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(Long deadline) {
         this.deadline = deadline;
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 public interface ArticoloDao {
 
     @Insert
-    public Long createArticolo(ArticoloEntity articoloEntity);
+    public Long insertArticolo(ArticoloEntity articoloEntity);
 
     @Update
     public void updateArticolo(ArticoloEntity articoloEntity);
@@ -22,7 +22,7 @@ public interface ArticoloDao {
     @Delete
     public void deleteArticolo(ArticoloEntity articoloEntity);
 
-    @Query("SELECT * FROM articolo_entity")
+    @Query("SELECT * FROM articoloentity")
     public List<ArticoloEntity> findAll();
 
 

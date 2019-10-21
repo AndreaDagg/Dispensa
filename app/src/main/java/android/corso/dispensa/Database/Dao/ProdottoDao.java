@@ -21,6 +21,6 @@ public interface ProdottoDao {
     @Delete
     public void deleteProdotto(ProdottoEntity prodottoEntity);
 
-    @Query("SELECT * FROM prodotto_entity")
+    @Query("SELECT * FROM prodottoentity")
     public List<ProdottoEntity> findAll();
 }
