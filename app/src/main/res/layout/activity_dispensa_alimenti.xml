@@ -8,14 +8,32 @@
 
     <TextView
         android:id="@+id/textViewDDDD"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginBottom="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="26dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewProva"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.69"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.309" />
+
+    <ImageView
+        android:id="@+id/imageViewProva"
+        android:layout_width="248dp"
+        android:layout_height="262dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="412dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/button_only_border"
+        app:layout_constraintBottom_toTopOf="@+id/cameraAli"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/InsMarcaAli"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.533" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

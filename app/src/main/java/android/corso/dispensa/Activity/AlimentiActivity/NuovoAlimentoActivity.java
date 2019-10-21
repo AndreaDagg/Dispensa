@@ -26,7 +26,7 @@ import static android.Manifest.permission.CAMERA;
 
 public class NuovoAlimentoActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private Bitmap image = null;
+    private byte[] ByteStringImage = null;
 
 
     @Override
@@ -110,6 +110,9 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         prodottoEntity.setBrand(((EditText) findViewById(R.id.InsMarcaAli)).getText().toString());
                         prodottoEntity.setProducttype(((EditText) findViewById(R.id.InsTipoAli)).getText().toString());
                         //prodottoEntity.setImage(); TODO: Found a way for save an image
+                        if (ByteStringImage != null) {
+                            prodottoEntity.setImage(new String(ByteStringImage));
+                        }
                         prodottoEntity.setList(false);
                         prodottoEntity.setNewBuy(0);
                         prodottoEntity.setNote(null);
@@ -118,8 +121,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         articoloEntity.setDeadline(((CalendarView) findViewById(R.id.calendarViewScadenzaAlim)).getDate()); //TODO: Non funziona bene la data verificare!
                         articoloEntity.setUsed(100); //Full 100%
 
-                        DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
-                        Log.d("---->---->", "PAssa -- -- -- --");
+                        Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
                         Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
 
 
@@ -129,27 +131,24 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 }.execute();
 
                 //TODO: Gestire la migrazione
-
-
             }
-
         });
     }
 
 
-
-    private void savePicure(Intent data) {
-        Bundle extras = data.getExtras();
-        Bitmap imageBitmap = (Bitmap) extras.get("data");
-        ImageView imageView = (ImageView) findViewById(R.id.imageViewAli);
-        imageView.setImageBitmap(imageBitmap);
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            savePicure(data);
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ImageView imageView = (ImageView) findViewById(R.id.imageViewAli);
+            imageView.setImageBitmap(imageBitmap);
+
+            //TODO: non funziona storage img
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            this.ByteStringImage = byteArray;
         }
     }
 

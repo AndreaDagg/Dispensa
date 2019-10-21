@@ -16,7 +16,7 @@ public class ProdottoEntity {
     private String category;
     private String brand;
     private String producttype;
-    private Blob image;
+    private String image;
 
     //private Bitmap image; TODO: Trovare un metodo per salvare bitmap nel db
 
@@ -25,11 +25,11 @@ public class ProdottoEntity {
     private String note;
 
 
-    public Blob getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
