@@ -9,5 +9,7 @@
     <color name="colorPrimaryDark">#e0e0e0</color>
     <color name="colorAccent">#bdbdbd</color>
     <color name="greyLight">#eeeeee</color>
+    <color name="redLight">#DD372B</color>
+    <color name="blueSwitch">#596BCC</color>
 
 </resources>
