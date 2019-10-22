@@ -35,6 +35,7 @@
     <string name="TxScadenza">Scadenza: </string>
     <string name="HintScadenza">Inserisci scadenza...</string>
     <string name="insertAlim">Inserisci</string>
+    <string name="multiSwitch">Più articoli</string>
 
 
 </resources>

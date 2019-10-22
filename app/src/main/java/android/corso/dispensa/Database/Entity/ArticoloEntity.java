@@ -11,9 +11,35 @@ public class ArticoloEntity {
     @PrimaryKey(autoGenerate = true)
     private Long id;
     private Long barcode;
-    private Long deadline;
+    private int daydeadline;
+    private int monthdeadline;
+    private int yeardeadline;
     private int used;
 
+
+    public int getDaydeadline() {
+        return daydeadline;
+    }
+
+    public void setDaydeadline(int daydeadline) {
+        this.daydeadline = daydeadline;
+    }
+
+    public int getMonthdeadline() {
+        return monthdeadline;
+    }
+
+    public void setMonthdeadline(int monthdeadline) {
+        this.monthdeadline = monthdeadline;
+    }
+
+    public int getYeardeadline() {
+        return yeardeadline;
+    }
+
+    public void setYeardeadline(int yeardeadline) {
+        this.yeardeadline = yeardeadline;
+    }
 
     public Long getId() {
         return id;
@@ -29,14 +55,6 @@ public class ArticoloEntity {
 
     public void setBarcode(Long barcode) {
         this.barcode = barcode;
-    }
-
-    public Long getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Long deadline) {
-        this.deadline = deadline;
     }
 
     public int getUsed() {

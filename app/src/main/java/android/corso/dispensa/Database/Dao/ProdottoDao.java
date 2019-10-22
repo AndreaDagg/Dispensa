@@ -23,4 +23,7 @@ public interface ProdottoDao {
 
     @Query("SELECT * FROM prodottoentity")
     public List<ProdottoEntity> findAll();
+
+    @Query("SELECT idbarcode FROM prodottoentity WHERE idbarcode LIKE :barcode")
+    public boolean findIdBarcode(Long barcode);
 }

@@ -64,9 +64,9 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
                     }
 
                     texT.setText(b + a +c );
-                    byte[] image = prodottoEntities.get(0).getImage().getBytes();
+                    //byte[] image = prodottoEntities.get(0).getImage().getBytes();
 
-                    ima.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length));
+                   // ima.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length));
                 }
 
                 return null;

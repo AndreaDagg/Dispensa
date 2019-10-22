@@ -1,8 +1,10 @@
 package android.corso.dispensa.Activity.AlimentiActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.corso.dispensa.Database.DispensaDatabase;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 
@@ -26,7 +29,10 @@ import static android.Manifest.permission.CAMERA;
 
 public class NuovoAlimentoActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int CONFIRMED_SELECTION = 2;
     private byte[] ByteStringImage = null;
+    private boolean CODEDAR_DETECTED = false;
+    private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0;
 
 
     @Override
@@ -44,7 +50,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
 
-        getExpiry();
+        setDeadline();
         getFoodPicture();
         getinsertMarca();
         getinsertType();
@@ -69,8 +75,18 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
     }
 
-    private void getExpiry() {
-        CalendarView foodExpiry = (CalendarView) findViewById(R.id.calendarViewScadenzaAlim);
+    private void setDeadline() {
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarViewScadenzaAlim);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                daySelected = dayOfMonth;
+                monthSelected = month + 1;
+                yearSelected = year;
+                dateSelected = CONFIRMED_SELECTION;
+                Log.d("--> DATACW", "---PASssss");
+            }
+        });
 
     }
 
@@ -95,37 +111,71 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     private void setInsertButton() {
         Button insertButton = findViewById(R.id.InsertAlim);
         insertButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
-                new AsyncTask<Void, Void, Void>() {
+
+                new AsyncTask<Void, Void, Boolean>() {
 
                     @Override
-                    protected Void doInBackground(Void... voids) {
+                    protected Boolean doInBackground(Void... voids) {
 
                         ProdottoEntity prodottoEntity = new ProdottoEntity();
                         ArticoloEntity articoloEntity = new ArticoloEntity();
 
-                        prodottoEntity.setIdbarcode(Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString()));
-                        prodottoEntity.setCategory("ALI");
-                        prodottoEntity.setBrand(((EditText) findViewById(R.id.InsMarcaAli)).getText().toString());
-                        prodottoEntity.setProducttype(((EditText) findViewById(R.id.InsTipoAli)).getText().toString());
-                        //prodottoEntity.setImage(); TODO: Found a way for save an image
-                        if (ByteStringImage != null) {
-                            prodottoEntity.setImage(new String(ByteStringImage));
+                        //TODO: check if id insert is 13 character
+                        if ((!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) && (dateSelected == CONFIRMED_SELECTION)) {
+
+
+
+                            Long barcode = Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString());
+                            //Check id existence
+                            if (!DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
+                                prodottoEntity.setIdbarcode(barcode);
+                                prodottoEntity.setCategory("ALI");
+                                prodottoEntity.setBrand(((EditText) findViewById(R.id.InsMarcaAli)).getText().toString());
+                                prodottoEntity.setProducttype(((EditText) findViewById(R.id.InsTipoAli)).getText().toString());
+                                //TODO: Found a way for save an image
+                                if (ByteStringImage != null) {
+                                    prodottoEntity.setImage(new String(ByteStringImage));
+                                }
+                                prodottoEntity.setList(false);
+                                prodottoEntity.setNewBuy(0);
+                                prodottoEntity.setNote(null);
+                            }else {
+                                CODEDAR_DETECTED = true;
+                            }
+
+                            articoloEntity.setBarcode(Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString()));
+                            articoloEntity.setUsed(100); //Full 100%
+
+                            Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
+                            Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
+                            return true;
+
+                        } else {
+                            //insert codebar
+                            return false;
                         }
-                        prodottoEntity.setList(false);
-                        prodottoEntity.setNewBuy(0);
-                        prodottoEntity.setNote(null);
+                    }
 
-                        articoloEntity.setBarcode(Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString()));
-                        articoloEntity.setDeadline(((CalendarView) findViewById(R.id.calendarViewScadenzaAlim)).getDate()); //TODO: Non funziona bene la data verificare!
-                        articoloEntity.setUsed(100); //Full 100%
+                    @Override
+                    protected void onPostExecute(Boolean aBoolean) {
 
-                        Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
-                        Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
-
-
-                        return null;
+                        if (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci il codice a barre", Toast.LENGTH_SHORT);
+                            toast.show();
+                        } else if ((dateSelected != CONFIRMED_SELECTION) && (!aBoolean)) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT);
+                            toast.show();
+                        } else if (aBoolean && !CODEDAR_DETECTED){
+                            Toast toast = Toast.makeText(getApplicationContext(), "Prodotto inserito correttamente", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }else if(aBoolean){
+                            CODEDAR_DETECTED = false;
+                            Toast toast = Toast.makeText(getApplicationContext(), "Alimento inserito correttamente", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
 
                     }
                 }.execute();

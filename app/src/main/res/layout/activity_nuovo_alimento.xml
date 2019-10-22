@@ -110,9 +110,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="19dp"
                 android:text="@string/TxScadenza"
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaAlim"
                 app:layout_constraintEnd_toStartOf="@+id/textViewDataAli"
@@ -125,9 +125,11 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="33dp"
                 android:layout_marginBottom="8dp"
                 android:hint="@string/HintScadenza"
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaAlim"
+                app:layout_constraintEnd_toStartOf="@+id/SwitchMultiAli"
                 app:layout_constraintStart_toEndOf="@+id/TXscadenzaAli"
                 app:layout_constraintTop_toBottomOf="@+id/barCodeAlim" />
 
@@ -202,6 +204,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/InsTipoAli" />
+
+            <Switch
+                android:id="@+id/SwitchMultiAli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="274dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/multiSwitch"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDataAli"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barCodeReadAlim" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
