@@ -40,36 +40,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAddAli" />
 
-
     <TextView
         android:id="@+id/textViewNewAli"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="203dp"
-        android:layout_marginBottom="8dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/NewAlimentoTx"
+        android:text="@string/VisualAlimentiTx"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAddAli"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOpenDispAli"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.016"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddAli"
+        app:layout_constraintVertical_bias="0.86" />
 
     <TextView
         android:id="@+id/textViewVisDisp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="140dp"
         android:layout_marginEnd="151dp"
-        android:layout_marginBottom="8dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/VisualAlimentiTx"
+        android:text="@string/NewAlimentoTx"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/buttonOpenDispAli"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddAli"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.012"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddAli" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
 </androidx.constraintlayout.widget.ConstraintLayout>
