@@ -37,5 +37,8 @@
     <string name="insertAlim">Inserisci</string>
     <string name="multiSwitch">Più articoli</string>
 
+    <string name="typeAli">ALI</string>
+    <string name="typeFarm">FAR</string>
+
 
 </resources>

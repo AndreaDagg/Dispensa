@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
+import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -21,6 +22,8 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -77,6 +80,8 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
     private void setDeadline() {
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarViewScadenzaAlim);
+        final TextView dataTextView = (TextView) findViewById(R.id.textViewDataAli);
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -84,9 +89,12 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 monthSelected = month + 1;
                 yearSelected = year;
                 dateSelected = CONFIRMED_SELECTION;
-                Log.d("--> DATACW", "---PASssss");
+                dataTextView.setText(daySelected + " / " + monthSelected + " / " + yearSelected);
+                view.invalidate(); //Refresh
+
             }
         });
+
 
     }
 
@@ -116,6 +124,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 new AsyncTask<Void, Void, Boolean>() {
+                    Switch switchMultiAlim = findViewById(R.id.SwitchMultiAli);
 
                     @Override
                     protected Boolean doInBackground(Void... voids) {
@@ -127,8 +136,8 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         if ((!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) && (dateSelected == CONFIRMED_SELECTION)) {
 
 
-
                             Long barcode = Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString());
+
                             //Check id existence
                             if (!DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
                                 prodottoEntity.setIdbarcode(barcode);
@@ -142,12 +151,21 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 prodottoEntity.setList(false);
                                 prodottoEntity.setNewBuy(0);
                                 prodottoEntity.setNote(null);
-                            }else {
+                            } else {
                                 CODEDAR_DETECTED = true;
                             }
 
                             articoloEntity.setBarcode(Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString()));
+                            articoloEntity.setDaydeadline(daySelected);
+                            articoloEntity.setMonthdeadline(monthSelected);
+                            articoloEntity.setYeardeadline(yearSelected);
                             articoloEntity.setUsed(100); //Full 100%
+
+                            //Start homeActivity if switch is false
+                            if (!switchMultiAlim.isChecked()) {
+                                Intent intentHome = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intentHome);
+                            }
 
                             Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
                             Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
@@ -168,17 +186,22 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         } else if ((dateSelected != CONFIRMED_SELECTION) && (!aBoolean)) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT);
                             toast.show();
-                        } else if (aBoolean && !CODEDAR_DETECTED){
+                        } else if (aBoolean && !CODEDAR_DETECTED) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Prodotto inserito correttamente", Toast.LENGTH_SHORT);
                             toast.show();
-                        }else if(aBoolean){
+                        } else if (aBoolean) {
                             CODEDAR_DETECTED = false;
                             Toast toast = Toast.makeText(getApplicationContext(), "Alimento inserito correttamente", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        if (switchMultiAlim.isChecked()) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
                             toast.show();
                         }
 
                     }
                 }.execute();
+
 
                 //TODO: Gestire la migrazione
             }
