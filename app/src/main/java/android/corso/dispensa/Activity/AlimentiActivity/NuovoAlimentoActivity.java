@@ -3,6 +3,7 @@ package android.corso.dispensa.Activity.AlimentiActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.room.Database;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 
@@ -64,7 +66,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         super.onResume();
     }
 
-
     private void getinsertMarca() {
         EditText foodBrand = (EditText) findViewById(R.id.InsMarcaAli);
     }
@@ -87,12 +88,46 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         });
     }
 
+    private void setMarcaProdotto(String brand){
+        EditText BrandEditText = findViewById(R.id.InsMarcaAli);
+        BrandEditText.setText(brand);
+    }
+
+    private void setTipoProdotto(String type){
+        EditText BrandEditText = findViewById(R.id.InsTipoAli);
+        BrandEditText.setText(type);
+    }
+
+    private void setPictureProdotto(){
+        //TODO: TO BE DEFiNED
+    }
+
     private void setBarCode(String bar_code) {
         EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
         barCode.setText(bar_code);
-        Toast toast = Toast.makeText(getApplicationContext(), "L: " + barCode.getText().toString().length(), Toast.LENGTH_LONG);
-        toast.show();
+        setForms(bar_code);
+    }
 
+    @SuppressLint("StaticFieldLeak")
+    private void setForms(String barcodeInsert) {
+        final Long barcode = Long.parseLong(barcodeInsert);
+        if (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == CODEBAR_LENGTH) {
+            new AsyncTask<Void, Void, Void>(){
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
+                        ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findInfoById(barcode);
+                        setMarcaProdotto(prodottoEntities.getBrand());
+                        setTipoProdotto(prodottoEntities.getProducttype());
+                        setPictureProdotto(); //TODO: TO BE DEFiNED
+                    }
+                    return null;
+                }
+            }.execute();
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 caratteri", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     private void setDeadline() {
@@ -152,7 +187,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
                         if ((!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches(""))
                                 && (dateSelected == CONFIRMED_SELECTION)
-                                && (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == 13)) {
+                                && (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == CODEBAR_LENGTH)) {
 
 
                             Long barcode = Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString());
@@ -207,7 +242,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                             Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT);
                             toast.show();
                         } else if (((((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() != 13)) && (!aBoolean)) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 elementi", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 caratteri", Toast.LENGTH_SHORT);
                             toast.show();
                         } else if (aBoolean && !CODEDAR_DETECTED) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Prodotto inserito correttamente", Toast.LENGTH_SHORT);
@@ -225,7 +260,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 toast2.show();
                             }
                         }
-
                     }
                 }.execute();
 
