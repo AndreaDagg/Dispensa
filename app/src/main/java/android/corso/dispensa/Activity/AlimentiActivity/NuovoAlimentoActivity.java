@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.corso.dispensa.BarcodeDetect;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
@@ -33,9 +34,11 @@ import static android.Manifest.permission.CAMERA;
 public class NuovoAlimentoActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int CONFIRMED_SELECTION = 2;
+    static final int REQUEST_CALL_ALI = 8;
     private byte[] ByteStringImage = null;
     private boolean CODEDAR_DETECTED = false;
     private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0;
+    private String barcodeRead = null;
 
 
     @Override
@@ -57,7 +60,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         getFoodPicture();
         getinsertMarca();
         getinsertType();
-        getBarCode();
+        getBarcode();
         setInsertButton();
 
 
@@ -74,8 +77,23 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
     }
 
-    private void getBarCode() {
+    private void getBarcode() {
+        final Button getBarcodeButton = (Button) findViewById(R.id.barCodeReadAlim);
+        getBarcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentBercode = new Intent(getApplicationContext(), BarcodeDetect.class);
+                intentBercode.putExtra("call_by", REQUEST_CALL_ALI);
+                //TODO: results intent
+                startActivityForResult(intentBercode, REQUEST_CALL_ALI);
+            }
+        });
+    }
+
+    private void setBarCode(String bar_code) {
         EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
+        barCode.setText(bar_code);
+
     }
 
     private void setDeadline() {
@@ -155,7 +173,10 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 CODEDAR_DETECTED = true;
                             }
 
-                            articoloEntity.setBarcode(Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString()));
+
+                                articoloEntity.setBarcode(Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString()));
+
+
                             articoloEntity.setDaydeadline(daySelected);
                             articoloEntity.setMonthdeadline(monthSelected);
                             articoloEntity.setYeardeadline(yearSelected);
@@ -222,6 +243,10 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
             this.ByteStringImage = byteArray;
+        } else if (requestCode == REQUEST_CALL_ALI && resultCode == RESULT_OK) {
+            setBarCode(data.getExtras().getString("Barcode"));
+
+
         }
     }
 

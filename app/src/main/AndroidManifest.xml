@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.corso.dispensa">
 
+    <meta-data
+        android:name="com.google.android.gms.vision.DEPENDENCIES"
+        android:value="barcode" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -13,9 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BarcodeDetect"></activity>
         <activity
             android:name=".Activity.ListaSpesaAvtivity.ListaSpesaActivity"
-            android:label="@string/ListaSpesaActivity"></activity>
+            android:label="@string/ListaSpesaActivity" />
         <activity
             android:name=".Activity.FarmaciActivity.FarmaciActivity"
             android:label="@string/FarmaciActivity" />
