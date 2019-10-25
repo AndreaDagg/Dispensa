@@ -52,6 +52,7 @@ public class BarcodeDetect extends AppCompatActivity {
         barcodeTextView = (TextView) findViewById(R.id.barcode_text);
 
 
+        //Call by alimenti or farmaci
         Bundle extras = getIntent().getExtras();
         CALL = extras.getInt("call_by");
 
@@ -126,7 +127,6 @@ public class BarcodeDetect extends AppCompatActivity {
         super.onResume();
 
         confirmButton();
-
     }
 
     private void confirmButton() {

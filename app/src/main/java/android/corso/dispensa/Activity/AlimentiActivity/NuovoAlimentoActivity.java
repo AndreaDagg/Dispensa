@@ -35,10 +35,10 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int CONFIRMED_SELECTION = 2;
     static final int REQUEST_CALL_ALI = 8;
+    static final int CODEBAR_LENGTH = 13;
     private byte[] ByteStringImage = null;
     private boolean CODEDAR_DETECTED = false;
     private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0;
-    private String barcodeRead = null;
 
 
     @Override
@@ -49,8 +49,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{CAMERA}, 1);
         }
-
-
     }
 
     @Override
@@ -62,7 +60,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         getinsertType();
         getBarcode();
         setInsertButton();
-
 
         super.onResume();
     }
@@ -93,6 +90,8 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     private void setBarCode(String bar_code) {
         EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
         barCode.setText(bar_code);
+        Toast toast = Toast.makeText(getApplicationContext(), "L: " + barCode.getText().toString().length(), Toast.LENGTH_LONG);
+        toast.show();
 
     }
 
@@ -123,7 +122,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 //check that there is an activity that satisfies the call to the ACTION && if we are authorized for camera
-                if ((takePhotoIntent.resolveActivity(getPackageManager()) != null) && (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_DENIED)) {
+                if ((takePhotoIntent.resolveActivity(getPackageManager()) != null) && (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_GRANTED)) {
                     startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE);
                 }
             }
@@ -150,8 +149,10 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         ProdottoEntity prodottoEntity = new ProdottoEntity();
                         ArticoloEntity articoloEntity = new ArticoloEntity();
 
-                        //TODO: check if id insert is 13 character
-                        if ((!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) && (dateSelected == CONFIRMED_SELECTION)) {
+
+                        if ((!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches(""))
+                                && (dateSelected == CONFIRMED_SELECTION)
+                                && (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == 13)) {
 
 
                             Long barcode = Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString());
@@ -174,9 +175,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                             }
 
 
-                                articoloEntity.setBarcode(Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString()));
-
-
+                            articoloEntity.setBarcode(barcode);
                             articoloEntity.setDaydeadline(daySelected);
                             articoloEntity.setMonthdeadline(monthSelected);
                             articoloEntity.setYeardeadline(yearSelected);
@@ -207,22 +206,28 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         } else if ((dateSelected != CONFIRMED_SELECTION) && (!aBoolean)) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT);
                             toast.show();
+                        } else if (((((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() != 13)) && (!aBoolean)) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 elementi", Toast.LENGTH_SHORT);
+                            toast.show();
                         } else if (aBoolean && !CODEDAR_DETECTED) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Prodotto inserito correttamente", Toast.LENGTH_SHORT);
                             toast.show();
+                            if (switchMultiAlim.isChecked()) {
+                                Toast toast2 = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
+                                toast2.show();
+                            }
                         } else if (aBoolean) {
                             CODEDAR_DETECTED = false;
                             Toast toast = Toast.makeText(getApplicationContext(), "Alimento inserito correttamente", Toast.LENGTH_SHORT);
                             toast.show();
-                        }
-                        if (switchMultiAlim.isChecked()) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
-                            toast.show();
+                            if (switchMultiAlim.isChecked()) {
+                                Toast toast2 = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
+                                toast2.show();
+                            }
                         }
 
                     }
                 }.execute();
-
 
                 //TODO: Gestire la migrazione
             }
@@ -245,9 +250,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             this.ByteStringImage = byteArray;
         } else if (requestCode == REQUEST_CALL_ALI && resultCode == RESULT_OK) {
             setBarCode(data.getExtras().getString("Barcode"));
-
-
         }
     }
-
 }

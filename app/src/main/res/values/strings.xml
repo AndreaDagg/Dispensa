@@ -40,5 +40,8 @@
     <string name="typeAli">ALI</string>
     <string name="typeFarm">FAR</string>
 
+    <string name="detect">Rilevato: </string>
+    <string name="confirm">Conferma</string>
+
 
 </resources>
