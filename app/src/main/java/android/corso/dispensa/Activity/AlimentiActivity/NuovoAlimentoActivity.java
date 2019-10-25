@@ -82,7 +82,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentBercode = new Intent(getApplicationContext(), BarcodeDetect.class);
                 intentBercode.putExtra("call_by", REQUEST_CALL_ALI);
-                //TODO: results intent
                 startActivityForResult(intentBercode, REQUEST_CALL_ALI);
             }
         });
@@ -184,11 +183,9 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         ProdottoEntity prodottoEntity = new ProdottoEntity();
                         ArticoloEntity articoloEntity = new ArticoloEntity();
 
-
                         if ((!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches(""))
                                 && (dateSelected == CONFIRMED_SELECTION)
                                 && (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == CODEBAR_LENGTH)) {
-
 
                             Long barcode = Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString());
 
