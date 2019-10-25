@@ -1,14 +1,14 @@
 package android.corso.dispensa.Database.Dao;
 
-import android.corso.dispensa.Database.Entity.ProdottoEntity;
+        import android.corso.dispensa.Database.Entity.ProdottoEntity;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+        import androidx.room.Dao;
+        import androidx.room.Delete;
+        import androidx.room.Insert;
+        import androidx.room.Query;
+        import androidx.room.Update;
 
-import java.util.List;
+        import java.util.List;
 
 @Dao
 public interface ProdottoDao {
@@ -26,4 +26,7 @@ public interface ProdottoDao {
 
     @Query("SELECT idbarcode FROM prodottoentity WHERE idbarcode LIKE :barcode")
     public boolean findIdBarcode(Long barcode);
+
+    @Query("SELECT * FROM prodottoentity WHERE idbarcode LIKE :barcode")
+    public ProdottoEntity findInfoById(Long barcode);
 }
