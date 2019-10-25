@@ -12,4 +12,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuovo_farmaco);
     }
+
+    //TODO: ADD switch to layout
 }

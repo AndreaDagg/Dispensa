@@ -25,10 +25,9 @@
                 android:layout_width="80dp"
                 android:layout_height="138dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/button_only_border"
+                android:src="@drawable/picture"
                 app:layout_constraintBottom_toTopOf="@+id/cameraAli"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/InsMarcaAli"
@@ -58,7 +57,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="34dp"
                 android:layout_marginBottom="100dp"
-                android:background="@drawable/baseline_format_align_center_black_48"
+                android:background="@drawable/barcode"
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaAlim"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barCodeAlim"
@@ -110,9 +109,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="19dp"
                 android:text="@string/TxScadenza"
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaAlim"
                 app:layout_constraintEnd_toStartOf="@+id/textViewDataAli"
@@ -125,9 +124,11 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="33dp"
                 android:layout_marginBottom="8dp"
                 android:hint="@string/HintScadenza"
                 app:layout_constraintBottom_toTopOf="@+id/calendarViewScadenzaAlim"
+                app:layout_constraintEnd_toStartOf="@+id/SwitchMultiAli"
                 app:layout_constraintStart_toEndOf="@+id/TXscadenzaAli"
                 app:layout_constraintTop_toBottomOf="@+id/barCodeAlim" />
 
@@ -151,14 +152,14 @@
                 android:layout_width="70dp"
                 android:layout_height="62dp"
                 android:layout_marginStart="18dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="34dp"
                 android:layout_marginBottom="32dp"
-                android:background="@drawable/baseline_local_see_black_48"
+                android:background="@drawable/camera3"
                 app:layout_constraintBottom_toTopOf="@+id/barCodeReadAlim"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/InsTipoAli"
-                app:layout_constraintTop_toBottomOf="@+id/InsMarcaAli" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewAli" />
 
             <TextView
                 android:id="@+id/textMarcaAli"
@@ -202,6 +203,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/InsTipoAli" />
+
+            <Switch
+                android:id="@+id/SwitchMultiAli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="274dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/multiSwitch"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDataAli"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barCodeReadAlim"
+                android:thumbTint="@color/blueSwitch"
+                android:checked="false"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
