@@ -2,6 +2,7 @@ package android.corso.dispensa.Fragment;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.R;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,10 @@ import java.util.List;
  */
 public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdottoRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<ProdottoEntity> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyProdottoRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyProdottoRecyclerViewAdapter(List<ProdottoEntity> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -38,9 +39,9 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).content);
-        holder.mContentView.setText(mValues.get(position).content);
-        holder.mContentView2.setText(mValues.get(position).id);
+        holder.mType.setText(mValues.get(position).getProducttype()+"");
+        holder.mBrand.setText(mValues.get(position).getBrand()+"");
+        holder.mQuantity.setText(mValues.get(position).getCategory()+"");
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +49,7 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
         });
@@ -61,22 +62,22 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public final TextView mContentView2;
-        public DummyItem mItem;
+        public final TextView mType;
+        public final TextView mBrand;
+        public final TextView mQuantity;
+        public ProdottoEntity mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.itemTypeProductList);
-            mContentView = (TextView) view.findViewById(R.id.itemBrandProductList);
-            mContentView2 = (TextView) view.findViewById(R.id.itemQuantityProductList);
+            mType = (TextView) view.findViewById(R.id.itemTypeProductList);
+            mBrand = (TextView) view.findViewById(R.id.itemBrandProductList);
+            mQuantity = (TextView) view.findViewById(R.id.itemQuantityProductList);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mBrand.getText() + "'";
         }
     }
 }

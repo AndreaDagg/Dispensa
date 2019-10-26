@@ -87,17 +87,17 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         });
     }
 
-    private void setMarcaProdotto(String brand){
+    private void setMarcaProdotto(String brand) {
         EditText BrandEditText = findViewById(R.id.InsMarcaAli);
         BrandEditText.setText(brand);
     }
 
-    private void setTipoProdotto(String type){
+    private void setTipoProdotto(String type) {
         EditText BrandEditText = findViewById(R.id.InsTipoAli);
         BrandEditText.setText(type);
     }
 
-    private void setPictureProdotto(){
+    private void setPictureProdotto() {
         //TODO: TO BE DEFiNED
     }
 
@@ -111,7 +111,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     private void setForms(String barcodeInsert) {
         final Long barcode = Long.parseLong(barcodeInsert);
         if (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == CODEBAR_LENGTH) {
-            new AsyncTask<Void, Void, Void>(){
+            new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
@@ -180,17 +180,17 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                     @Override
                     protected Boolean doInBackground(Void... voids) {
 
-                        ProdottoEntity prodottoEntity = new ProdottoEntity();
-                        ArticoloEntity articoloEntity = new ArticoloEntity();
 
                         if ((!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches(""))
                                 && (dateSelected == CONFIRMED_SELECTION)
                                 && (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == CODEBAR_LENGTH)) {
 
+                            ArticoloEntity articoloEntity = new ArticoloEntity();
                             Long barcode = Long.parseLong(((EditText) findViewById(R.id.barCodeAlim)).getText().toString());
 
                             //Check id existence
                             if (!DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
+                                ProdottoEntity prodottoEntity = new ProdottoEntity();
                                 prodottoEntity.setIdbarcode(barcode);
                                 prodottoEntity.setCategory("ALI");
                                 prodottoEntity.setBrand(((EditText) findViewById(R.id.InsMarcaAli)).getText().toString());
@@ -202,6 +202,8 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 prodottoEntity.setList(false);
                                 prodottoEntity.setNewBuy(0);
                                 prodottoEntity.setNote(null);
+
+                                Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
                             } else {
                                 CODEDAR_DETECTED = true;
                             }
@@ -213,14 +215,14 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                             articoloEntity.setYeardeadline(yearSelected);
                             articoloEntity.setUsed(100); //Full 100%
 
+
+                            Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
+
                             //Start homeActivity if switch is false
                             if (!switchMultiAlim.isChecked()) {
                                 Intent intentHome = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intentHome);
                             }
-
-                            Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
-                            Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
                             return true;
 
                         } else {

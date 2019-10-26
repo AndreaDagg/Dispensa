@@ -1,6 +1,10 @@
 package android.corso.dispensa.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.corso.dispensa.Database.DispensaDatabase;
+import android.corso.dispensa.Database.Entity.ProdottoEntity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -48,21 +52,30 @@ public class ProdottoFragment extends Fragment {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_prodotto_list, container, false);
 
-        // Crea attraverso la classe MyProdottoREcyclerView la lista
+        //Create MyProdottoRecyclerViewAdapter from DB data
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            final RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyProdottoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            new AsyncTask<Void,Void,Void>(){
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    recyclerView.setAdapter(new MyProdottoRecyclerViewAdapter(
+                            DispensaDatabase.getInstance(getContext()).getProdottoDao().findAll(), mListener
+                    ));
+                    return null;
+                }
+            }.execute();
         }
         return view;
     }
@@ -79,6 +92,6 @@ public class ProdottoFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(ProdottoEntity item);
     }
 }
