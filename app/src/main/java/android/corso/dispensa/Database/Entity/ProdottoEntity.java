@@ -1,6 +1,7 @@
 package android.corso.dispensa.Database.Entity;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,20 +17,21 @@ public class ProdottoEntity {
     private String category;
     private String brand;
     private String producttype;
-    private String image;
 
-    //private Bitmap image; TODO: Trovare un metodo per salvare bitmap nel db
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
+
+
 
     private boolean isList;
     private int newBuy;
     private String note;
 
-
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

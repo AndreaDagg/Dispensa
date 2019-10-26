@@ -1,9 +1,12 @@
 package android.corso.dispensa.Fragment;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
+import android.corso.dispensa.Dialog.DialogAlert;
 import android.corso.dispensa.R;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,10 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
     public MyProdottoRecyclerViewAdapter(List<ProdottoEntity> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+        if (items.size() == 0){
+            DialogAlert dialogAlert = new DialogAlert("Nessun elemento trovato!");
+            //TODO: forse non si possono iusare i dialog
+        }
     }
 
     @Override

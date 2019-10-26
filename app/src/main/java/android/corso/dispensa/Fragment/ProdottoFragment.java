@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class ProdottoFragment extends Fragment {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     recyclerView.setAdapter(new MyProdottoRecyclerViewAdapter(
-                            DispensaDatabase.getInstance(getContext()).getProdottoDao().findAllByCategory(CALLBY), mListener
+                         DispensaDatabase.getInstance(getContext()).getProdottoDao().findAllByCategory("ALI"), mListener
                     ));
                     return null;
                 }
