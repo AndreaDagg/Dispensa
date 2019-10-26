@@ -16,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
-import android.corso.dispensa.Fragment.dummy.DummyContent;
-import android.corso.dispensa.Fragment.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 

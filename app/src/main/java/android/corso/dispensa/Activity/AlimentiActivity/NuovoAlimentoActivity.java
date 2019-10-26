@@ -174,8 +174,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
     }
 
-    //TODO: Cercare metodo per implementare lettura tramite barcode
-
     private void setInsertButton() {
         Button insertButton = findViewById(R.id.InsertAlim);
         insertButton.setOnClickListener(new View.OnClickListener() {
