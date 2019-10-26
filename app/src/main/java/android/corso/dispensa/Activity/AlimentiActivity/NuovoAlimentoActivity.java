@@ -20,6 +20,8 @@ import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -225,30 +227,48 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             if (print) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci il codice a barre.", Toast.LENGTH_SHORT);
                 toast.show();
+                EditText targetView = (EditText) findViewById(R.id.barCodeAlim);
+                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.setError("Inserisci barcode");
+                //targetView.getBackground().setColorFilter(Color.parseColor("#DD372B"), PorterDuff.Mode.SCREEN);
+
             }
             return false;
         } else if (!(((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() == CODEBAR_LENGTH)) {
             if (print) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Il codice a barre deve contenere 13 caratteri.", Toast.LENGTH_SHORT);
                 toast.show();
+                EditText targetView = (EditText) findViewById(R.id.barCodeAlim);
+                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.setError("Assicurati che sia di 13 caratteri");
             }
             return false;
         } else if (!(dateSelected == CONFIRMED_SELECTION)) {
             if (print) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza.", Toast.LENGTH_SHORT);
                 toast.show();
+                View targetView = findViewById(R.id.calendarViewScadenzaAlim);
+                targetView.getParent().requestChildFocus(targetView,targetView);
             }
             return false;
         } else if (((EditText) findViewById(R.id.InsMarcaAli)).getText().toString().matches("")) {
             if (print) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci la marca del prodotto", Toast.LENGTH_SHORT);
                 toast.show();
+                EditText targetView = (EditText) findViewById(R.id.InsMarcaAli);
+                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.setError("Inserisci una marca");
+
             }
             return false;
         } else if (((EditText) findViewById(R.id.InsTipoAli)).getText().toString().matches("")) {
             if (print) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci il tipo di prodotto.", Toast.LENGTH_SHORT);
                 toast.show();
+                EditText targetView = (EditText) findViewById(R.id.InsTipoAli);
+                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.setError("Inserisci il tipo");
+
             }
             return false;
         } else if (ByteStringImage == null) {
