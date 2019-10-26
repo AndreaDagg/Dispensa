@@ -28,6 +28,7 @@ import java.util.List;
  * interface.
  */
 public class ProdottoFragment extends Fragment {
+    private String CALLBY = null;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -39,7 +40,9 @@ public class ProdottoFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ProdottoFragment() {
+    public ProdottoFragment(String call_by) {
+        //Take category  ALI of FAR
+        this.CALLBY = call_by;
     }
 
 
@@ -71,7 +74,7 @@ public class ProdottoFragment extends Fragment {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     recyclerView.setAdapter(new MyProdottoRecyclerViewAdapter(
-                            DispensaDatabase.getInstance(getContext()).getProdottoDao().findAll(), mListener
+                            DispensaDatabase.getInstance(getContext()).getProdottoDao().findAllByCategory(CALLBY), mListener
                     ));
                     return null;
                 }

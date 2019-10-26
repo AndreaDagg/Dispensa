@@ -29,11 +29,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Blob;
 import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 
 public class NuovoAlimentoActivity extends AppCompatActivity {
+    static final String CATEGORY_ALI = "ALI";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int CONFIRMED_SELECTION = 2;
     static final int REQUEST_CALL_ALI = 8;
@@ -97,9 +99,16 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         BrandEditText.setText(type);
     }
 
-    private void setPictureProdotto() {
-        //TODO: TO BE DEFiNED
+    private void setPictureProdotto(Bitmap imageBitmap) {
+        ImageView imageView = (ImageView) findViewById(R.id.imageViewAli);
+        imageView.setImageBitmap(imageBitmap);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.PNG, 0,outputStream);
+        ByteStringImage = outputStream.toByteArray();
     }
+
+
 
     private void setBarCode(String bar_code) {
         EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
@@ -118,7 +127,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findInfoById(barcode);
                         setMarcaProdotto(prodottoEntities.getBrand());
                         setTipoProdotto(prodottoEntities.getProducttype());
-                        setPictureProdotto(); //TODO: TO BE DEFiNED
+                        //setPictureProdotto(); //TODO: TO BE DEFiNED
                     }
                     return null;
                 }
@@ -192,12 +201,12 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                             if (!DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
                                 ProdottoEntity prodottoEntity = new ProdottoEntity();
                                 prodottoEntity.setIdbarcode(barcode);
-                                prodottoEntity.setCategory("ALI");
+                                prodottoEntity.setCategory(CATEGORY_ALI);
                                 prodottoEntity.setBrand(((EditText) findViewById(R.id.InsMarcaAli)).getText().toString());
                                 prodottoEntity.setProducttype(((EditText) findViewById(R.id.InsTipoAli)).getText().toString());
                                 //TODO: Found a way for save an image
                                 if (ByteStringImage != null) {
-                                    prodottoEntity.setImage(new String(ByteStringImage));
+                                   // prodottoEntity.setImage(ByteStringImage);
                                 }
                                 prodottoEntity.setList(false);
                                 prodottoEntity.setNewBuy(0);
@@ -268,13 +277,15 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = (ImageView) findViewById(R.id.imageViewAli);
-            imageView.setImageBitmap(imageBitmap);
+            setPictureProdotto(imageBitmap);
+
 
             //TODO: non funziona storage img
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

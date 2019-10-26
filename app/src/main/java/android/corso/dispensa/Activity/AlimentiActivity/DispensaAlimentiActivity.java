@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 
 public class DispensaAlimentiActivity extends AppCompatActivity {
+    private static String CALL_BY_ALI = "ALI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.frameNameTable, new DispensaFragment()).commit();
     }
     public void setFragmentList(){
-        getSupportFragmentManager().beginTransaction().add(R.id.listFragmentDisp, new ProdottoFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.listFragmentDisp, new ProdottoFragment(CALL_BY_ALI)).commit();
     }
 
 
