@@ -43,5 +43,8 @@
     <string name="detect">Rilevato: </string>
     <string name="confirm">Conferma</string>
 
+    <string name="quantity">Quantità</string>
+
+
 
 </resources>
