@@ -3,6 +3,7 @@ package android.corso.dispensa.Activity.AlimentiActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.corso.dispensa.Fragment.DispensaFragment;
+import android.corso.dispensa.Fragment.ProdottoFragment;
 import android.corso.dispensa.R;
 import android.os.Bundle;
 
@@ -14,7 +15,9 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dispensa_alimenti);
 
-        setFragment();
+
+        setFragmentHead();
+        setFragmentList();
     }
 
     @Override
@@ -24,8 +27,13 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
     }
 
 
-    public void setFragment() {
+    public void setFragmentHead() {
         getSupportFragmentManager().beginTransaction().add(R.id.frameNameTable, new DispensaFragment()).commit();
     }
+    public void setFragmentList(){
+        getSupportFragmentManager().beginTransaction().add(R.id.listFragmentDisp, new ProdottoFragment()).commit();
+    }
+
+
 
 }
