@@ -11,9 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,20 +21,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Objects;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ItemFragment.OnFragmentInteractionListener} interface
+ * {@link ItemFragmentHead.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class ItemFragment extends Fragment {
+public class ItemFragmentHead extends Fragment {
 
 
     private OnFragmentInteractionListener mListener;
 
-    public ItemFragment() {
+    public ItemFragmentHead() {
         // Required empty public constructor
     }
 
@@ -53,7 +49,6 @@ public class ItemFragment extends Fragment {
         Bundle bundle = this.getArguments();
         final Long _idItem = (Long) bundle.get("idItem");
 
-
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -66,7 +61,7 @@ public class ItemFragment extends Fragment {
                 ImageView imageViewPicture = (ImageView) view.findViewById(R.id.ItemFragmentImage);
                 textViewItem.setText(prodottoEntity.getProducttype());
                 textViewBrand.setText(prodottoEntity.getBrand());
-                textViewQuantity.setText("Quantità: " + 000);
+                textViewQuantity.setText("Quantità: " + 000); //TODO:Implementare la quantità
 
                 if (prodottoEntity.getImage() != null) {
                     Bitmap bitmapImage = BitmapFactory.decodeByteArray(prodottoEntity.getImage(), 0, prodottoEntity.getImage().length);
@@ -76,7 +71,6 @@ public class ItemFragment extends Fragment {
                     Toast toast = Toast.makeText(getContext(),"Nessuna immagine trovata", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
                 return null;
             }
         }.execute();

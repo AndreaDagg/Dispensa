@@ -25,6 +25,8 @@ public interface ArticoloDao {
     @Query("SELECT * FROM articoloentity")
     public List<ArticoloEntity> findAll();
 
+    @Query("SELECT * FROM articoloentity WHERE barcode LIKE :barcodeid")
+    public List<ArticoloEntity> findByBarcode(Long barcodeid);
 
 
 }

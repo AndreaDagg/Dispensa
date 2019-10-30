@@ -1,18 +1,14 @@
 package android.corso.dispensa.Fragment.ProductFragments;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.FragmentTransaction;
-import android.corso.dispensa.Activity.AlimentiActivity.DispensaAlimentiActivity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Dialog.DialogAlert;
-import android.corso.dispensa.Fragment.ItemsFragments.ItemFragment;
+import android.corso.dispensa.Fragment.ItemsFragments.ItemFragmentHead;
+import android.corso.dispensa.Fragment.ItemsFragments.ItemListFragment;
 import android.corso.dispensa.R;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,11 +67,14 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
                 Bundle bundle = new Bundle();
                 bundle.putLong("idItem", _id);
 
-                ItemFragment itemFragment = new ItemFragment();
+                ItemFragmentHead itemFragment = new ItemFragmentHead();
+                ItemListFragment itemListFragment = new ItemListFragment();
                 itemFragment.setArguments(bundle);
+                itemListFragment.setArguments(bundle);
 
                 AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
                 appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment,"ITEM_FRAGMENT").addToBackStack("ITEM_FRAGMENT").commit();
+                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDisp, itemListFragment).addToBackStack(null).commit();
 
 
             }
