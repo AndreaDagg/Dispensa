@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import android.corso.dispensa.Fragment.ItemsFragments.ItemListFragment.OnListFragmentInteractionListener;
+import android.widget.ToggleButton;
 
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class MyItemListFragmentRecyclerViewAdapter extends RecyclerView.Adapter<
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getUsed());
-        holder.mContentView.setText("seta la data");
+        holder.mDeadline.setText("//TODO: Setta la data");
+        holder.mUsateButton.setText(mValues.get(position).getUsed()+"");
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,20 +58,20 @@ public class MyItemListFragmentRecyclerViewAdapter extends RecyclerView.Adapter<
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mDeadline;
+        public final TextView mUsateButton;
         public ArticoloEntity mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.ItemToggleButton);
-            mContentView = (TextView) view.findViewById(R.id.ItemDeadline);
+            mDeadline = (TextView) view.findViewById(R.id.ItemDeadline);
+            mUsateButton = (ToggleButton) view.findViewById(R.id.ItemToggleButton);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mDeadline.getText() + "'";
         }
     }
 }
