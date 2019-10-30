@@ -371,34 +371,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         }
 
                     }
-
-
-                        /*if (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci il codice a barre", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else if ((dateSelected != CONFIRMED_SELECTION) && (!aBoolean)) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else if (((((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() != 13)) && (!aBoolean)) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 caratteri", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else if (aBoolean && !CODEDAR_DETECTED) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Prodotto inserito correttamente", Toast.LENGTH_SHORT);
-                            toast.show();
-                            if (switchMultiAlim.isChecked()) {
-                                Toast toast2 = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
-                                toast2.show();
-                            }
-                        } else if (aBoolean) {
-                            CODEDAR_DETECTED = false;
-                            Toast toast = Toast.makeText(getApplicationContext(), "Alimento inserito correttamente", Toast.LENGTH_SHORT);
-                            toast.show();
-                            if (switchMultiAlim.isChecked()) {
-                                Toast toast2 = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
-                                toast2.show();
-                            }
-                        }
-                    }*/
                 }.execute();
 
                 //TODO: Gestire la migrazione

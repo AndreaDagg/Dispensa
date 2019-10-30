@@ -1,4 +1,4 @@
-package android.corso.dispensa.Fragment;
+package android.corso.dispensa.Fragment.ProductFragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -73,7 +70,7 @@ public class ProdottoFragment extends Fragment {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     recyclerView.setAdapter(new MyProdottoRecyclerViewAdapter(
-                         DispensaDatabase.getInstance(getContext()).getProdottoDao().findAllByCategory("ALI"), mListener
+                         DispensaDatabase.getInstance(getContext()).getProdottoDao().findAllByCategory(CALLBY), mListener
                     ));
                     return null;
                 }
