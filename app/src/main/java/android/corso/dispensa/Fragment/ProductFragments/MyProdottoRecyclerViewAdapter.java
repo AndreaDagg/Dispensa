@@ -73,15 +73,13 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
                 itemListFragment.setArguments(bundle);
 
                 AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
-                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment,"ITEM_FRAGMENT").addToBackStack("ITEM_FRAGMENT").commit();
+                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment).addToBackStack(null).commit();
                 appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDisp, itemListFragment).addToBackStack(null).commit();
 
 
             }
         });
     }
-
-
 
 
     @Override

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,18 @@ public class ProdottoFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+
+    }
+
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -75,7 +88,11 @@ public class ProdottoFragment extends Fragment {
                     return null;
                 }
             }.execute();
+
+
         }
+
+
         return view;
     }
 

@@ -8,6 +8,7 @@ import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Activity.FarmaciActivity.FarmaciActivity;
 import android.corso.dispensa.Activity.ListaSpesaAvtivity.ListaSpesaActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setArticoliScaduti();
         super.onResume();
     }
+
+
 
     private void setAlimentiButtonHome(){
         Button alimentiButtonHome = (Button)findViewById(R.id.AlimentiButtonHome);
