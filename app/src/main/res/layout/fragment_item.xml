@@ -26,10 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="17dp"
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/ItemFragmentQuantity"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ItemFragmentItem" />
 
@@ -38,11 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toTopOf="@+id/view"
-            app:layout_constraintEnd_toStartOf="@+id/ItemFragmentImage"
-            app:layout_constraintTop_toBottomOf="@+id/ItemFragmentBrand" />
+            app:layout_constraintEnd_toStartOf="@+id/ItemFragmentImage" />
 
         <ImageView
             android:id="@+id/ItemFragmentImage"

@@ -28,5 +28,8 @@ public interface ArticoloDao {
     @Query("SELECT * FROM articoloentity WHERE barcode LIKE :barcodeid")
     public List<ArticoloEntity> findByBarcode(Long barcodeid);
 
+    @Query("SELECT COUNT(barcode) FROM articoloentity WHERE barcode LIKE :barcodeid")
+    public int CountItemByBarcode(Long barcodeid);
+
 
 }

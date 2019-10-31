@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Database;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +71,8 @@ public class ItemListFragment extends Fragment {
                 protected Void doInBackground(Void... voids) {
                     recyclerView.setAdapter(new MyItemListFragmentRecyclerViewAdapter(
                             DispensaDatabase.getInstance(getContext()).getArticoloDao().findByBarcode(barcode), mListener));
+
+
                     return null;
                 }
             }.execute();

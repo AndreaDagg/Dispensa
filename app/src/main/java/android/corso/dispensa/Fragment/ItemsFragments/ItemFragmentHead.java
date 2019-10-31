@@ -55,13 +55,14 @@ public class ItemFragmentHead extends Fragment {
                 ProdottoEntity prodottoEntity = new ProdottoEntity();
                 prodottoEntity = DispensaDatabase.getInstance(getContext()).getProdottoDao().findInfoById(_idItem);
 
+
                 TextView textViewItem = (TextView) view.findViewById(R.id.ItemFragmentItem);
                 TextView textViewBrand = (TextView) view.findViewById(R.id.ItemFragmentBrand);
                 TextView textViewQuantity = (TextView) view.findViewById(R.id.ItemFragmentQuantity);
                 ImageView imageViewPicture = (ImageView) view.findViewById(R.id.ItemFragmentImage);
                 textViewItem.setText(prodottoEntity.getProducttype());
                 textViewBrand.setText(prodottoEntity.getBrand());
-                textViewQuantity.setText("Quantità: " + 000); //TODO:Implementare la quantità
+                textViewQuantity.setText("Quantità: " +  DispensaDatabase.getInstance(getContext()).getArticoloDao().CountItemByBarcode(_idItem));
 
                 if (prodottoEntity.getImage() != null) {
                     Bitmap bitmapImage = BitmapFactory.decodeByteArray(prodottoEntity.getImage(), 0, prodottoEntity.getImage().length);

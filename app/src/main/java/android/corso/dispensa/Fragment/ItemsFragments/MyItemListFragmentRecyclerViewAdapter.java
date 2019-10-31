@@ -36,8 +36,8 @@ public class MyItemListFragmentRecyclerViewAdapter extends RecyclerView.Adapter<
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mDeadline.setText("//TODO: Setta la data");
-        holder.mUsateButton.setText(mValues.get(position).getUsed()+"");
+        holder.mDeadline.setText(mValues.get(position).getDaydeadline() + "/" + mValues.get(position).getMonthdeadline() + "/" + mValues.get(position).getYeardeadline());
+        holder.mUsateButton.setText(mValues.get(position).getUsed() + "");
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
