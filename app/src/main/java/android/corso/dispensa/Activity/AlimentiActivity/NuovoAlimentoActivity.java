@@ -220,6 +220,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     }
 
     private void getFoodPicture() {
+
         Button foodPicture = (Button) findViewById(R.id.cameraAli);
         foodPicture.setOnClickListener(new View.OnClickListener() {
             @Override
