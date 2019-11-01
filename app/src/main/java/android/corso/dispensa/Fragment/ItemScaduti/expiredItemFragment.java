@@ -5,6 +5,7 @@ import android.content.Context;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
+import android.corso.dispensa.Logic.CheckDeadline;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -13,11 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +65,7 @@ public class expiredItemFragment extends Fragment {
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            Context context = view.getContext();
+            final Context context = view.getContext();
             final RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -73,18 +76,15 @@ public class expiredItemFragment extends Fragment {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
+                    List<ArticoloEntity> articoloEntities = new ArrayList<>();
 
-
-                        //TODO: DEfinire metodo per valutare la scadenza
-                    List<ArticoloEntity> articoloEntities = DispensaDatabase.getInstance(getContext()).getArticoloDao().findAll();
-
+                    CheckDeadline checkDeadline = new CheckDeadline(context);
+                   // articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
+                    articoloEntities = (checkDeadline.getArticoloEntitiesExpired());
                     recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
-
-
                     return null;
                 }
             }.execute();
-
         }
         return view;
     }

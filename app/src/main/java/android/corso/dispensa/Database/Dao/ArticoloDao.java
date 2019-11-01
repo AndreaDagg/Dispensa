@@ -32,4 +32,11 @@ public interface ArticoloDao {
     public int CountItemByBarcode(Long barcodeid);
 
 
+   /* @Query("SELECT *, MIN(yeardeadline) as yearcurrent FROM articoloentity")
+    public List<ArticoloEntity> getExpired(int yearcurrent);*/
+
+   /*@Query("SELECT id,barcode,daydeadline,monthdeadline,yeardeadline FROM articoloentity")
+   public List<ArticoloEntity> getExpiredInfo();*/
+
+
 }
