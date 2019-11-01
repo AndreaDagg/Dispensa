@@ -26,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -49,7 +50,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     static final int CODEBAR_LENGTH = 13;
     private byte[] ByteStringImage = null;
     private boolean CODEBAR_DETECTED = false;
-    private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0;
+    private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0, CONFIRMED_BACK = 0;
 
 
     @Override
@@ -73,6 +74,18 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
         setInsertButton();
 
         super.onResume();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        CONFIRMED_BACK++;
+        if (CONFIRMED_BACK == CONFIRMED_SELECTION) {
+            return super.onKeyDown(keyCode, event);
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Premi di nuovo per uscire.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return false;
     }
 
     private void getinsertMarca() {
@@ -207,6 +220,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     }
 
     private void getFoodPicture() {
+
         Button foodPicture = (Button) findViewById(R.id.cameraAli);
         foodPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,7 +242,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci il codice a barre.", Toast.LENGTH_SHORT);
                 toast.show();
                 EditText targetView = (EditText) findViewById(R.id.barCodeAlim);
-                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.getParent().requestChildFocus(targetView, targetView);
                 targetView.setError("Inserisci barcode");
                 //targetView.getBackground().setColorFilter(Color.parseColor("#DD372B"), PorterDuff.Mode.SCREEN);
 
@@ -239,7 +253,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Il codice a barre deve contenere 13 caratteri.", Toast.LENGTH_SHORT);
                 toast.show();
                 EditText targetView = (EditText) findViewById(R.id.barCodeAlim);
-                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.getParent().requestChildFocus(targetView, targetView);
                 targetView.setError("Assicurati che sia di 13 caratteri");
             }
             return false;
@@ -248,7 +262,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza.", Toast.LENGTH_SHORT);
                 toast.show();
                 View targetView = findViewById(R.id.calendarViewScadenzaAlim);
-                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.getParent().requestChildFocus(targetView, targetView);
             }
             return false;
         } else if (((EditText) findViewById(R.id.InsMarcaAli)).getText().toString().matches("")) {
@@ -256,7 +270,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci la marca del prodotto", Toast.LENGTH_SHORT);
                 toast.show();
                 EditText targetView = (EditText) findViewById(R.id.InsMarcaAli);
-                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.getParent().requestChildFocus(targetView, targetView);
                 targetView.setError("Inserisci una marca");
 
             }
@@ -266,7 +280,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Inserisci il tipo di prodotto.", Toast.LENGTH_SHORT);
                 toast.show();
                 EditText targetView = (EditText) findViewById(R.id.InsTipoAli);
-                targetView.getParent().requestChildFocus(targetView,targetView);
+                targetView.getParent().requestChildFocus(targetView, targetView);
                 targetView.setError("Inserisci il tipo");
 
             }
@@ -371,34 +385,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         }
 
                     }
-
-
-                        /*if (((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci il codice a barre", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else if ((dateSelected != CONFIRMED_SELECTION) && (!aBoolean)) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else if (((((EditText) findViewById(R.id.barCodeAlim)).getText().toString().length() != 13)) && (!aBoolean)) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 caratteri", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else if (aBoolean && !CODEDAR_DETECTED) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Prodotto inserito correttamente", Toast.LENGTH_SHORT);
-                            toast.show();
-                            if (switchMultiAlim.isChecked()) {
-                                Toast toast2 = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
-                                toast2.show();
-                            }
-                        } else if (aBoolean) {
-                            CODEDAR_DETECTED = false;
-                            Toast toast = Toast.makeText(getApplicationContext(), "Alimento inserito correttamente", Toast.LENGTH_SHORT);
-                            toast.show();
-                            if (switchMultiAlim.isChecked()) {
-                                Toast toast2 = Toast.makeText(getApplicationContext(), "Inserisci una nuova data di scadenza dello stesso prodotto", Toast.LENGTH_LONG);
-                                toast2.show();
-                            }
-                        }
-                    }*/
                 }.execute();
 
                 //TODO: Gestire la migrazione

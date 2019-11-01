@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_margin_type">32dp</dimen>
-    <dimen name="text_margin_berand">60dp</dimen>
+    <dimen name="text_margin_berand">40dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="text8dp">8dp</dimen>
 </resources>

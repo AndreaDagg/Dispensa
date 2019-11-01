@@ -1,18 +1,20 @@
-package android.corso.dispensa.Fragment;
+package android.corso.dispensa.Fragment.ProductFragments;
 
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Dialog.DialogAlert;
+import android.corso.dispensa.Fragment.ItemsFragments.ItemFragmentHead;
+import android.corso.dispensa.Fragment.ItemsFragments.ItemListFragment;
 import android.corso.dispensa.R;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import android.corso.dispensa.Fragment.ProdottoFragment.OnListFragmentInteractionListener;
+import android.corso.dispensa.Fragment.ProductFragments.ProdottoFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -24,25 +26,33 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
     public MyProdottoRecyclerViewAdapter(List<ProdottoEntity> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
-        if (items.size() == 0){
+        if (items.size() == 0) {
             DialogAlert dialogAlert = new DialogAlert("Nessun elemento trovato!");
             //TODO: forse non si possono iusare i dialog
         }
     }
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_prodotto, parent, false);
+
+
         return new ViewHolder(view);
+
+
     }
+
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mType.setText(mValues.get(position).getProducttype()+"");
-        holder.mBrand.setText(mValues.get(position).getBrand()+"");
-        holder.mQuantity.setText(mValues.get(position).getCategory()+"");
+        holder.mType.setText(mValues.get(position).getProducttype() + "");
+        holder.mBrand.setText(mValues.get(position).getBrand() + "");
+        //TODO: Passare la quantità
+        holder.mQuantity.setText(mValues.get(position).getCategory() + "");
+        final Long _id = mValues.get(position).getIdbarcode();
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +60,27 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                     mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mItem);
                 }
+
+                /* Call 2nd fragment */
+                Bundle bundle = new Bundle();
+                bundle.putLong("idItem", _id);
+
+                ItemFragmentHead itemFragment = new ItemFragmentHead();
+                ItemListFragment itemListFragment = new ItemListFragment();
+                itemFragment.setArguments(bundle);
+                itemListFragment.setArguments(bundle);
+
+                AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
+                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment).addToBackStack(null).commit();
+                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDisp, itemListFragment).addToBackStack(null).commit();
+
+
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -74,6 +100,8 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
             mType = (TextView) view.findViewById(R.id.itemTypeProductList);
             mBrand = (TextView) view.findViewById(R.id.itemBrandProductList);
             mQuantity = (TextView) view.findViewById(R.id.itemQuantityProductList);
+
+
         }
 
         @Override

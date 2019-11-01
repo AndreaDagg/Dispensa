@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/text_margin_berand"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/ExpiredTypeTw"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:id="@+id/ExpiredBrandTw"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginStart="@dimen/text8dp"
+        android:layout_marginEnd="@dimen/text8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:id="@+id/ExpiredDeadlineTw"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+</LinearLayout>

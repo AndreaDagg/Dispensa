@@ -1,6 +1,5 @@
-package android.corso.dispensa.Fragment;
+package android.corso.dispensa.Fragment.ProductFragments;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 

@@ -1,11 +1,15 @@
 package android.corso.dispensa.Activity.AlimentiActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Database;
 
-import android.corso.dispensa.Fragment.DispensaFragment;
-import android.corso.dispensa.Fragment.ProdottoFragment;
+import android.content.Intent;
+import android.corso.dispensa.Database.DispensaDatabase;
+import android.corso.dispensa.Fragment.ProductFragments.DispensaFragment;
+import android.corso.dispensa.Fragment.ProductFragments.ProdottoFragment;
 import android.corso.dispensa.R;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 
 public class DispensaAlimentiActivity extends AppCompatActivity {
@@ -28,11 +32,21 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
     }
 
 
-    public void setFragmentHead() {
-        getSupportFragmentManager().beginTransaction().add(R.id.frameNameTable, new DispensaFragment()).commit();
+   @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+       Intent intent = new Intent(getApplicationContext(), AlimentiActivity.class);
+       startActivity(intent);
+       return super.onKeyDown(keyCode, event);
     }
-    public void setFragmentList(){
+
+    public boolean setFragmentHead() {
+        getSupportFragmentManager().beginTransaction().add(R.id.frameNameTable, new DispensaFragment()).commit();
+        return true;
+    }
+    public boolean setFragmentList(){
         getSupportFragmentManager().beginTransaction().add(R.id.listFragmentDisp, new ProdottoFragment(CALL_BY_ALI)).commit();
+        return true;
     }
 
 

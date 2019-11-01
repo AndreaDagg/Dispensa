@@ -25,6 +25,18 @@ public interface ArticoloDao {
     @Query("SELECT * FROM articoloentity")
     public List<ArticoloEntity> findAll();
 
+    @Query("SELECT * FROM articoloentity WHERE barcode LIKE :barcodeid")
+    public List<ArticoloEntity> findByBarcode(Long barcodeid);
+
+    @Query("SELECT COUNT(barcode) FROM articoloentity WHERE barcode LIKE :barcodeid")
+    public int CountItemByBarcode(Long barcodeid);
+
+
+   /* @Query("SELECT *, MIN(yeardeadline) as yearcurrent FROM articoloentity")
+    public List<ArticoloEntity> getExpired(int yearcurrent);*/
+
+   /*@Query("SELECT id,barcode,daydeadline,monthdeadline,yeardeadline FROM articoloentity")
+   public List<ArticoloEntity> getExpiredInfo();*/
 
 
 }
