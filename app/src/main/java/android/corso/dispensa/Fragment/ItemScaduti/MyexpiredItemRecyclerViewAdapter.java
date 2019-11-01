@@ -1,8 +1,14 @@
 package android.corso.dispensa.Fragment.ItemScaduti;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.corso.dispensa.Database.DispensaDatabase;
+import android.corso.dispensa.Database.Entity.ArticoloEntity;
+import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.R;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +17,16 @@ import android.widget.TextView;
 
 import android.corso.dispensa.Fragment.ItemScaduti.expiredItemFragment.OnListFragmentInteractionListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.List;
 
+
 public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<MyexpiredItemRecyclerViewAdapter.ViewHolder> {
 
-    private final JSONArray mValues;
+    private final List<ArticoloEntity> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyexpiredItemRecyclerViewAdapter(JSONArray items, OnListFragmentInteractionListener listener) {
+    public MyexpiredItemRecyclerViewAdapter(List<ArticoloEntity> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -33,26 +38,27 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
         return new ViewHolder(view);
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        try {
-         //   holder.mItem = (JSONArray) mValues.get(position + 1);
-            /* holder.twBrandExp.setText(mValues.get(position).id);*/
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        holder.mItem = mValues.get(position);
+        //AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
 
-            holder.twTypeExp.setText((mValues.get(position + 1)).toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
 
-        /*TODO: Il jsopn arriva viene letto funziona, position itera esattamente 22 posizioni*/
 
-        /*  Log.d("-->", " "+position);*/
 
-        try {
-            Log.d("-->", (mValues.get(position + 1).toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(holder.mType.getContext()).getProdottoDao().findInfoById(mValues.get(position).getBarcode());
+                Log.d("-->","Passo");
+
+                holder.mType.setText(prodottoEntities.getProducttype());
+                holder.mBrand.setText(prodottoEntities.getBrand());
+                holder.mDeadline.setText(mValues.get(position).getDaydeadline() + "/" + mValues.get(position).getMonthdeadline() + "/" + mValues.get(position).getYeardeadline());
+                return null;
+            }
+        }.execute();
 
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -69,27 +75,27 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
 
     @Override
     public int getItemCount() {
-        return mValues.length();
+        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView twBrandExp;
-        public final TextView twTypeExp;
-        public final TextView twDeadExp;
-        public JSONArray mItem;
+        public final TextView mType;
+        public final TextView mBrand;
+        public final TextView mDeadline;
+        public ArticoloEntity mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            twBrandExp = (TextView) view.findViewById(R.id.ExpiredBrandTw);
-            twTypeExp = (TextView) view.findViewById(R.id.ExpiredTypeTw);
-            twDeadExp = (TextView) view.findViewById(R.id.ExpiredDeadlineTw);
+            mType = (TextView) view.findViewById(R.id.ExpiredTypeTw);
+            mBrand = (TextView) view.findViewById(R.id.ExpiredBrandTw);
+            mDeadline = (TextView) view.findViewById(R.id.ExpiredDeadlineTw);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + twTypeExp.getText() + "'";
+            return super.toString() + " '" + mBrand.getText() + "'";
         }
     }
 }

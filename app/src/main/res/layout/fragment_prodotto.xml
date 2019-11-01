@@ -5,27 +5,28 @@
     android:orientation="horizontal">
 
 
-
     <TextView
         android:id="@+id/itemTypeProductList"
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/text_margin_type"
-        android:textAppearance="?attr/textAppearanceListItem"
-        />
+        android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
         android:id="@+id/itemBrandProductList"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/text_margin_type"
         android:layout_marginStart="@dimen/text_margin_berand"
+        android:layout_marginTop="@dimen/text_margin_type"
         android:textAppearance="?attr/textAppearanceListItem" />
+
     <TextView
         android:id="@+id/itemQuantityProductList"
         android:layout_width="90dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/text_margin_type"
         android:layout_marginStart="@dimen/text_margin_berand"
+        android:layout_marginTop="@dimen/text_margin_type"
         android:textAppearance="?attr/textAppearanceListItem" />
+
+
 </LinearLayout>

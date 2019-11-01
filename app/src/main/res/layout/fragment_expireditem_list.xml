@@ -10,4 +10,10 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".Fragment.ItemScaduti.expiredItemFragment"
-    tools:listitem="@layout/fragment_expireditem" />
+    tools:listitem="@layout/fragment_expireditem" >
+
+
+
+
+</androidx.recyclerview.widget.RecyclerView>
+

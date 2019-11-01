@@ -13,17 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.JsonWriter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
-
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -38,8 +31,19 @@ public class expiredItemFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 3;
+    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+
+    // TODO: Customize parameter initialization
+    @SuppressWarnings("unused")
+    public static expiredItemFragment newInstance(int columnCount) {
+        expiredItemFragment fragment = new expiredItemFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,45 +74,11 @@ public class expiredItemFragment extends Fragment {
                 @Override
                 protected Void doInBackground(Void... voids) {
 
-                    ArticoloEntity articoloEntity = new ArticoloEntity();
 
-
-                    //TODO:Valutare di cambuiare il list con un json
-                    List<ProdottoEntity> prodottoEntities = null;
-
-                    JSONArray productsExpiredJson = new JSONArray();
-
-
-                    //TODO: IF scaduto
-                    //Per ora tutti scaduti e predno solo ilBarcode
-
-                    //Recupre gli idBarcode
+                        //TODO: DEfinire metodo per valutare la scadenza
                     List<ArticoloEntity> articoloEntities = DispensaDatabase.getInstance(getContext()).getArticoloDao().findAll();
-                    for (int i = 0; i < articoloEntities.size(); i++) {
-                        //perogni barcode recupero le info del prodotto
-                        //prodottoEntities.add(DispensaDatabase.getInstance(getContext()).getProdottoDao().findInfoById(articoloEntities.get(i).getId()));
-                        ProdottoEntity productInfo = DispensaDatabase.getInstance(getContext()).getProdottoDao().findInfoById(articoloEntities.get(i).getBarcode());
-                        JSONObject productJson = new JSONObject();
-                       try {
-                            productJson.put("idBarcode", productInfo.getIdbarcode());
-                            productJson.put("Brand", productInfo.getBrand());
-                            productJson.put("Type", productInfo.getProducttype());
-                            productJson.put("scadenza",
-                                    articoloEntities.get(i).getDaydeadline() + "/" + articoloEntities.get(i).getMonthdeadline() + "/" + articoloEntities.get(i).getYeardeadline());
-                            productsExpiredJson.put(productJson);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
 
-                       // Log.d("-> ", i + " " +productInfo.getIdbarcode().toString());
-                        //Log.d("-> ", i + " " + articoloEntities.size());
-                        //Log.d("--> ",articoloEntities.get(i).getBarcode()+"");
-
-
-                    }
-
-
-                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(productsExpiredJson, mListener));
+                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
 
 
                     return null;
@@ -132,6 +102,6 @@ public class expiredItemFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(JSONArray item);
+        void onListFragmentInteraction(ArticoloEntity item);
     }
 }
