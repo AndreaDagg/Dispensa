@@ -31,22 +31,19 @@ import java.util.List;
  */
 public class expiredItemFragment extends Fragment {
 
+    private String CALLBY;
+
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
+    public expiredItemFragment(String callby){
+        this.CALLBY = callby;
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static expiredItemFragment newInstance(int columnCount) {
-        expiredItemFragment fragment = new expiredItemFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,18 +70,15 @@ public class expiredItemFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    List<ArticoloEntity> articoloEntities = new ArrayList<>();
 
-                    CheckDeadline checkDeadline = new CheckDeadline(context);
-                   // articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
-                    articoloEntities = (checkDeadline.getArticoloEntitiesExpired());
-                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
-                    return null;
-                }
-            }.execute();
+            CheckDeadline checkDeadline = new CheckDeadline(context);
+            List<ArticoloEntity> articoloEntities = new ArrayList<>();
+            //TODO: non concatena le liste
+            //articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
+            Log.d("EXPIREDFRAGMENT=> ",""+CALLBY);
+            articoloEntities = (checkDeadline.getArticoloEntitiesByCategory(CALLBY));
+            recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
+
         }
         return view;
     }

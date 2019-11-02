@@ -42,13 +42,11 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-        //AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
 
         new AsyncTask<ProdottoEntity, Void, ProdottoEntity>() {
             @Override
             protected ProdottoEntity doInBackground(ProdottoEntity... entities) {
-                ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(holder.mType.getContext()).getProdottoDao().findInfoById(mValues.get(position).getBarcode());
-                return prodottoEntities;
+                return DispensaDatabase.getInstance(holder.mType.getContext()).getProdottoDao().findInfoById(mValues.get(position).getBarcode());
             }
 
             @Override

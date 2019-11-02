@@ -342,7 +342,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 CODEBAR_DETECTED = true;
                             }
 
-
+                            articoloEntity.setCategoryItem(CATEGORY_ALI);
                             articoloEntity.setBarcode(barcode);
                             articoloEntity.setDaydeadline(daySelected);
                             articoloEntity.setMonthdeadline(monthSelected);

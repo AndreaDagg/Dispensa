@@ -15,7 +15,15 @@ public class ArticoloEntity {
     private int monthdeadline;
     private int yeardeadline;
     private int used;
+    private String categoryItem;
 
+    public String getCategoryItem() {
+        return categoryItem;
+    }
+
+    public void setCategoryItem(String categoryItem) {
+        this.categoryItem = categoryItem;
+    }
 
     public int getDaydeadline() {
         return daydeadline;

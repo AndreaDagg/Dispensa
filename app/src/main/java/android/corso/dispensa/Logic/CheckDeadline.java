@@ -17,7 +17,8 @@ public class CheckDeadline {
     private int CURRENTYEAR = 0;
     private Context context;
 
-    private List<ArticoloEntity> articoloEntitiesInfoFromDB, articoloEntitiesExpired = new ArrayList<ArticoloEntity>(), getArticoloEntitiesExpiredToday = new ArrayList<ArticoloEntity>();
+    private List<ArticoloEntity> articoloEntitiesInfoFromDB, articoloEntitiesExpired = new ArrayList<ArticoloEntity>(),
+            getArticoloEntitiesExpiredToday = new ArrayList<ArticoloEntity>(), getArticoloEntitiesByCategory = new ArrayList<ArticoloEntity>();
 
 
     public CheckDeadline(Context view) {
@@ -95,9 +96,32 @@ public class CheckDeadline {
             this.getArticoloEntitiesExpiredToday.add(articoloEntityExpired);
         } else {
             this.articoloEntitiesExpired.add(articoloEntityExpired);
-            Log.d("Scaduto: ", articoloEntityExpired.getId().toString() + " || " + articoloEntityExpired.getBarcode().toString());
-            Log.d("S=> ", articoloEntityExpired.getDaydeadline() + " " + articoloEntityExpired.getMonthdeadline() + " " + articoloEntityExpired.getYeardeadline());
         }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public List<ArticoloEntity> getArticoloEntitiesByCategory(final String category) {
+
+        new AsyncTask<Void,Void,Void>(){
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                for (int i = 0; i < getArticoloEntitiesExpired().size(); i++) {
+
+                    if (getArticoloEntitiesExpired().get(i).getCategoryItem().equals(category)) {
+
+                        getArticoloEntitiesByCategory.add(getArticoloEntitiesExpired().get(i));
+                    }
+
+                }
+
+                //TODO:se vuoi passeare anche gli scaduti del giorno basta riscrivere un for
+                //Log.d("--", getArticoloEntitiesByCategory + "");
+                return null;
+            }
+        }.execute();
+
+        return getArticoloEntitiesByCategory;
     }
 
     public List<ArticoloEntity> getArticoloEntitiesExpired() {
