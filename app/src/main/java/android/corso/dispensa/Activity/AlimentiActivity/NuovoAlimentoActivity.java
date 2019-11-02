@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.room.Database;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -15,17 +13,14 @@ import android.corso.dispensa.BarcodeDetect;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
-import android.corso.dispensa.Dialog.DialogAlert;
+import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -37,13 +32,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
-import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 
 public class NuovoAlimentoActivity extends AppCompatActivity {
-    static final String CATEGORY_ALI = "ALI";
+    static final String CATEGORYSELECTED = new CategoryItem().getCATEGORY_ALI();
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int CONFIRMED_SELECTION = 2;
     static final int REQUEST_CALL_ALI = 8;
@@ -327,7 +320,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                             if (!DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
                                 ProdottoEntity prodottoEntity = new ProdottoEntity();
                                 prodottoEntity.setIdbarcode(barcode);
-                                prodottoEntity.setCategory(CATEGORY_ALI);
+                                prodottoEntity.setCategory(CATEGORYSELECTED);
                                 prodottoEntity.setBrand(((EditText) findViewById(R.id.InsMarcaAli)).getText().toString());
                                 prodottoEntity.setProducttype(((EditText) findViewById(R.id.InsTipoAli)).getText().toString());
                                 if (ByteStringImage != null) {
@@ -342,7 +335,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 CODEBAR_DETECTED = true;
                             }
 
-                            articoloEntity.setCategoryItem(CATEGORY_ALI);
+                            articoloEntity.setCategoryItem(CATEGORYSELECTED);
                             articoloEntity.setBarcode(barcode);
                             articoloEntity.setDaydeadline(daySelected);
                             articoloEntity.setMonthdeadline(monthSelected);

@@ -23,7 +23,7 @@ public class ArticoliScaduti extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articoli_scaduti);
-        setFragmentList(new CategoryItem().getCATEGORY_FAR());
+        setFragmentList(new CategoryItem().getCATEGORY_ALI());
 
     }
 
