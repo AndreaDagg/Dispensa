@@ -40,6 +40,7 @@ public class ArticoliScaduti extends AppCompatActivity {
     }
 
 
+
     public void setFragmentList(){
       getSupportFragmentManager().beginTransaction().add(R.id.FrameDeadLine, new expiredItemFragment()).commit();
     }
