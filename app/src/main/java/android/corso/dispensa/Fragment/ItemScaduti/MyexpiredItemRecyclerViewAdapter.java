@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
+import android.corso.dispensa.Dialog.ConfirmDeleteItem;
 import android.corso.dispensa.R;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -52,6 +57,8 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
             @Override
             protected void onPostExecute(ProdottoEntity entity) {
                 super.onPostExecute(entity);
+                holder.mCategory = mValues.get(position).getCategoryItem();
+                holder.mIdItem = mValues.get(position).getId();
                 holder.mType.setText(entity.getProducttype());
                 holder.mBrand.setText(entity.getBrand());
                 holder.mDeadline.setText(mValues.get(position).getDaydeadline() + "/" + mValues.get(position).getMonthdeadline() + "/" + mValues.get(position).getYeardeadline());
@@ -76,12 +83,14 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public final View mView;
         public final TextView mType;
         public final TextView mBrand;
         public final TextView mDeadline;
         public ArticoloEntity mItem;
+        public Long mIdItem;
+        public String mCategory;
 
         public ViewHolder(View view) {
             super(view);
@@ -89,11 +98,48 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
             mType = (TextView) view.findViewById(R.id.ExpiredTypeTw);
             mBrand = (TextView) view.findViewById(R.id.ExpiredBrandTw);
             mDeadline = (TextView) view.findViewById(R.id.ExpiredDeadlineTw);
+
+            //associate a menu with the element
+            mView.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mBrand.getText() + "'";
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
+            final ArticoliScaduti articoliScaduti = (ArticoliScaduti) v.getContext();
+
+            MenuInflater inflater = new MenuInflater(v.getContext());
+            inflater.inflate(R.menu.expireditemmenu, menu);
+
+            MenuItem move = menu.findItem(R.id.menumove);
+            move.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    /*ArticoliScaduti articoliScaduti = (ArticoliScaduti) v.getContext();
+                    articoliScaduti.chiamaMetodo()*/
+                    Log.d("-->", mIdItem + "");
+
+                    return false;
+                }
+            });
+
+            MenuItem remove = menu.findItem(R.id.menudelete);
+            remove.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    ConfirmDeleteItem confirmDeleteItem = new ConfirmDeleteItem();
+                    confirmDeleteItem.setIdItem(mIdItem, mCategory, articoliScaduti);
+                    confirmDeleteItem.show(articoliScaduti.getSupportFragmentManager(), "viewHolder");
+
+                    return false;
+                }
+            });
+
+
         }
     }
 }
