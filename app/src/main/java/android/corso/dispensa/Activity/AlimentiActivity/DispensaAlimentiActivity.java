@@ -7,13 +7,14 @@ import android.content.Intent;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Fragment.ProductFragments.DispensaFragment;
 import android.corso.dispensa.Fragment.ProductFragments.ProdottoFragment;
+import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.R;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
 
 public class DispensaAlimentiActivity extends AppCompatActivity {
-    private static String CALL_BY_ALI = "ALI";
+    private static String CALL_BY_ALI =new CategoryItem().getCATEGORY_ALI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
