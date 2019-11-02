@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 
 import java.util.Objects;
@@ -24,6 +25,7 @@ public class ArticoliScaduti extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articoli_scaduti);
         setFragmentList(new CategoryItem().getCATEGORY_ALI());
+
 
     }
 
@@ -44,15 +46,28 @@ public class ArticoliScaduti extends AppCompatActivity {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
+
+                AlphaAnimation buttonClick = new AlphaAnimation(1F, 1.5F);
+                v.startAnimation(buttonClick);
+
+                removeFragmentList();
                 setFragmentList(new CategoryItem().getCATEGORY_ALI());
 
                 ViewGroup viewGroup = findViewById(R.id.FrameDeadLine);
                 viewGroup.invalidate();
+
                 Button buttonFar = (Button) findViewById(R.id.buttonFarDead);
                 ButtonAli.setBackgroundColor(getResources().getColor(R.color.blueSwitch, getTheme()));
+                ButtonAli.setTextColor(getResources().getColor(R.color.greyLight, getTheme()));
                 buttonFar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark, getTheme()));
+                buttonFar.setTextColor(getResources().getColor(R.color.colorPrimary, getTheme()));
+
+
             }
+
+
+
+
         });
     }
 
@@ -63,13 +78,15 @@ public class ArticoliScaduti extends AppCompatActivity {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
+                removeFragmentList();
                 setFragmentList(new CategoryItem().getCATEGORY_FAR());
                 ViewGroup viewGroup = findViewById(R.id.FrameDeadLine);
                 viewGroup.invalidate();
                 Button ButtonAli = (Button) findViewById(R.id.buttonAliDead);
                 buttonFar.setBackgroundColor(getResources().getColor(R.color.blueSwitch, getTheme()));
+                buttonFar.setTextColor(getResources().getColor(R.color.greyLight, getTheme()));
                 ButtonAli.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark, getTheme()));
+                ButtonAli.setTextColor(getResources().getColor(R.color.colorPrimary, getTheme()));
             }
         });
 
@@ -81,5 +98,9 @@ public class ArticoliScaduti extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.FrameDeadLine, new expiredItemFragment(category)).commitNow();
     }
 
+    public void removeFragmentList() {
+        getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
+       // getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
+    }
 
 }
