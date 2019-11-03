@@ -52,5 +52,9 @@
     <string name="move">Sposta</string>
     <string name="back">Annulla</string>
 
+    <string name="Home">Home Dispensa</string>
+    <string name="Notify">Notifiche</string>
+    <string name="Info">Info</string>
+
 
 </resources>

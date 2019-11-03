@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CheckDeadline {
@@ -26,7 +27,7 @@ public class CheckDeadline {
         this.context = view;
 
         Calendar cal = Calendar.getInstance();
-        cal.get(Calendar.DAY_OF_MONTH);
+        //cal.get(Calendar.DAY_OF_MONTH);
 
         CURRENTDAY = cal.get(Calendar.DAY_OF_MONTH);
         CURRENTMONTH = cal.get(Calendar.MONTH) + 1;
@@ -130,6 +131,24 @@ public class CheckDeadline {
 
     public List<ArticoloEntity> getGetArticoloEntitiesExpiredToday() {
         return getArticoloEntitiesExpiredToday;
+    }
+
+    public int getdayplus(int add){
+
+        Date curretndate = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(curretndate);
+
+        cal.add(Calendar.DAY_OF_MONTH, add);
+
+        Date date = cal.getTime();
+
+        Log.d("-------------------------------","---------");
+        Log.d("Oggi_e'",curretndate+"");
+        Log.d("Tra_",+ add+" giorni sarà: "+ date);
+        Log.d("-------------------------------","---------");
+
+        return 0;
     }
 
     public int getCURRENTDAY() {

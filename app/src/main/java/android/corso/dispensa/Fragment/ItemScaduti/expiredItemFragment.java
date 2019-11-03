@@ -75,8 +75,10 @@ public class expiredItemFragment extends Fragment {
             List<ArticoloEntity> articoloEntities = new ArrayList<>();
             //TODO: non concatena le liste
             //articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
-            Log.d("EXPIREDFRAGMENT=> ",""+CALLBY);
+           // Log.d("EXPIREDFRAGMENT=> ",""+CALLBY);
             articoloEntities = (checkDeadline.getArticoloEntitiesByCategory(CALLBY));
+            //articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
+
             recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
 
         }
