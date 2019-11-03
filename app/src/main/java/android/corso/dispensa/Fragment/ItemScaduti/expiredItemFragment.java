@@ -32,6 +32,7 @@ import java.util.List;
 public class expiredItemFragment extends Fragment {
 
     private String CALLBY;
+    private boolean TODAY;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -39,8 +40,9 @@ public class expiredItemFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    public expiredItemFragment(String callby){
+    public expiredItemFragment(String callby, boolean today){
         this.CALLBY = callby;
+        this.TODAY = today;
 
     }
 
@@ -76,7 +78,7 @@ public class expiredItemFragment extends Fragment {
             //TODO: non concatena le liste
             //articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
            // Log.d("EXPIREDFRAGMENT=> ",""+CALLBY);
-            articoloEntities = (checkDeadline.getArticoloEntitiesByCategory(CALLBY));
+            articoloEntities = (checkDeadline.getArticoloEntitiesByCategory(CALLBY, TODAY));
             //articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
 
             recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));

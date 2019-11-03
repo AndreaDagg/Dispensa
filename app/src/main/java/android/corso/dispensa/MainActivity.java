@@ -1,6 +1,7 @@
 package android.corso.dispensa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.content.Intent;
 import android.corso.dispensa.Activity.AlimentiActivity.AlimentiActivity;
@@ -8,6 +9,7 @@ import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Activity.FarmaciActivity.FarmaciActivity;
 import android.corso.dispensa.Activity.ListaSpesaAvtivity.ListaSpesaActivity;
 import android.corso.dispensa.Logic.OptionMenuLogic;
+import android.corso.dispensa.NotificationApp.NotificationApp;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -96,7 +98,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
                 return true;
             case R.id.menuOpNotify:
-                Log.d("Menu2", "Intercetto");
+                NotificationApp notificationApp = new NotificationApp(getApplicationContext());
+           /*     new NotificationApp(getApplicationContext()).getNotificationExpired();
+                new NotificationApp(getApplicationContext()).getNotificationExpire();*/
+                notificationApp.getNotificationExpired();
+                notificationApp.getNotificationExpire();
                 return true;
             case R.id.menuOpInfo:
                 return true;

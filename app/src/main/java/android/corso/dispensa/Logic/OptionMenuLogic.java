@@ -14,8 +14,7 @@ public class OptionMenuLogic {
     }
 
     public Intent getGoHomeIntent(){
-        Intent intent = new Intent(CONTEX, MainActivity.class);
-        return  intent;
+        return new Intent(CONTEX, MainActivity.class);
     }
 
 

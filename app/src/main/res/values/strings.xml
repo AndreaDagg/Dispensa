@@ -55,6 +55,6 @@
     <string name="Home">Home Dispensa</string>
     <string name="Notify">Notifiche</string>
     <string name="Info">Info</string>
-
+    <string name="today">Scaduti oggi: </string>
 
 </resources>

@@ -12,17 +12,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import java.util.Objects;
 
 public class ArticoliScaduti extends AppCompatActivity {
 
-    /* private String CATEGORYDEFAULT = new CategoryItem().getCATEGORY_ALI();
-     private String CATEGORY
- */
+    private boolean TODAY = false;
+    private String CATEGORY = new CategoryItem().getCATEGORY_ALI();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+
+        //Set if show today expired
+        if (extras != null) {
+            this.TODAY = extras.getBoolean("today");
+        }
+
         setContentView(R.layout.activity_articoli_scaduti);
         setFragmentList(new CategoryItem().getCATEGORY_ALI());
 
@@ -33,8 +42,10 @@ public class ArticoliScaduti extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+
         getCategoryToShowALI();
         getCategoryToShowFAR();
+        getIfShowToday();
 
 
     }
@@ -46,12 +57,13 @@ public class ArticoliScaduti extends AppCompatActivity {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
+                CATEGORY =new CategoryItem().getCATEGORY_ALI();
 
                 AlphaAnimation buttonClick = new AlphaAnimation(1F, 1.5F);
                 v.startAnimation(buttonClick);
 
                 removeFragmentList();
-                setFragmentList(new CategoryItem().getCATEGORY_ALI());
+                setFragmentList(CATEGORY);
 
                 ViewGroup viewGroup = findViewById(R.id.FrameDeadLine);
                 viewGroup.invalidate();
@@ -66,8 +78,6 @@ public class ArticoliScaduti extends AppCompatActivity {
             }
 
 
-
-
         });
     }
 
@@ -78,8 +88,9 @@ public class ArticoliScaduti extends AppCompatActivity {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
+                CATEGORY = new CategoryItem().getCATEGORY_FAR();
                 removeFragmentList();
-                setFragmentList(new CategoryItem().getCATEGORY_FAR());
+                setFragmentList(CATEGORY);
                 ViewGroup viewGroup = findViewById(R.id.FrameDeadLine);
                 viewGroup.invalidate();
                 Button ButtonAli = (Button) findViewById(R.id.buttonAliDead);
@@ -93,14 +104,34 @@ public class ArticoliScaduti extends AppCompatActivity {
 
     }
 
+    private void getIfShowToday(){
+        final Switch switchToday = (Switch) findViewById(R.id.switchToday);
+        switchToday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (switchToday.isChecked()) {
+                    TODAY = true;
+                    removeFragmentList();
+                    setFragmentList(CATEGORY);
+
+                }else{
+                    TODAY = false;
+                    removeFragmentList();
+                    setFragmentList(CATEGORY);
+                }
+            }
+        });
+
+    }
+
     public void setFragmentList(String category) {
         Log.d("Cat: ", category + "");
-        getSupportFragmentManager().beginTransaction().add(R.id.FrameDeadLine, new expiredItemFragment(category)).commitNow();
+        getSupportFragmentManager().beginTransaction().add(R.id.FrameDeadLine, new expiredItemFragment(category, TODAY)).commitNow();
     }
 
     public void removeFragmentList() {
         getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
-       // getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
+        // getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
     }
 
 }

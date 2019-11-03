@@ -101,19 +101,30 @@ public class CheckDeadline {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public List<ArticoloEntity> getArticoloEntitiesByCategory(final String category) {
+    public List<ArticoloEntity> getArticoloEntitiesByCategory(final String category, final boolean today) {
 
-        new AsyncTask<Void,Void,Void>(){
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                for (int i = 0; i < getArticoloEntitiesExpired().size(); i++) {
+                if (!today) {
+                    for (int i = 0; i < getArticoloEntitiesExpired().size(); i++) {
 
-                    if (getArticoloEntitiesExpired().get(i).getCategoryItem().equals(category)) {
+                        if (getArticoloEntitiesExpired().get(i).getCategoryItem().equals(category)) {
 
-                        getArticoloEntitiesByCategory.add(getArticoloEntitiesExpired().get(i));
+                            getArticoloEntitiesByCategory.add(getArticoloEntitiesExpired().get(i));
+                        }
+
                     }
+                } else {
+                    for (int i = 0; i < getArticoloEntitiesExpiredToday().size(); i++) {
 
+                        if (getArticoloEntitiesExpiredToday().get(i).getCategoryItem().equals(category)) {
+
+                            getArticoloEntitiesByCategory.add(getArticoloEntitiesExpiredToday().get(i));
+                        }
+
+                    }
                 }
 
                 //TODO:se vuoi passeare anche gli scaduti del giorno basta riscrivere un for
@@ -129,11 +140,11 @@ public class CheckDeadline {
         return articoloEntitiesExpired;
     }
 
-    public List<ArticoloEntity> getGetArticoloEntitiesExpiredToday() {
+    public List<ArticoloEntity> getArticoloEntitiesExpiredToday() {
         return getArticoloEntitiesExpiredToday;
     }
 
-    public int getdayplus(int add){
+    public int getdayplus(int add) {
 
         Date curretndate = new Date();
         Calendar cal = Calendar.getInstance();
@@ -143,10 +154,10 @@ public class CheckDeadline {
 
         Date date = cal.getTime();
 
-        Log.d("-------------------------------","---------");
-        Log.d("Oggi_e'",curretndate+"");
-        Log.d("Tra_",+ add+" giorni sarà: "+ date);
-        Log.d("-------------------------------","---------");
+        Log.d("-------------------------------", "---------");
+        Log.d("Oggi_e'", curretndate + "");
+        Log.d("Tra_", +add + " giorni sarà: " + date);
+        Log.d("-------------------------------", "---------");
 
         return 0;
     }
