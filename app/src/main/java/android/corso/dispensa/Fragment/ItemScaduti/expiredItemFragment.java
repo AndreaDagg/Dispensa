@@ -2,6 +2,7 @@ package android.corso.dispensa.Fragment.ItemScaduti;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
@@ -77,10 +78,10 @@ public class expiredItemFragment extends Fragment {
             List<ArticoloEntity> articoloEntities = new ArrayList<>();
             //TODO: non concatena le liste
             //articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
-           // Log.d("EXPIREDFRAGMENT=> ",""+CALLBY);
+
             articoloEntities = (checkDeadline.getArticoloEntitiesByCategory(CALLBY, TODAY));
             //articoloEntities = (checkDeadline.getGetArticoloEntitiesExpiredToday());
-
+            Log.d("EXPIREDFRAGMENT=> ","Passo nel item "+CALLBY);
             recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
 
         }
