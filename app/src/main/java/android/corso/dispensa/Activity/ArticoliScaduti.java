@@ -5,8 +5,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.corso.dispensa.Fragment.ItemScaduti.expiredItemFragment;
 import android.corso.dispensa.Logic.CategoryItem;
+import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -160,4 +162,10 @@ public class ArticoliScaduti extends AppCompatActivity {
         // getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intentMain);
+    }
 }

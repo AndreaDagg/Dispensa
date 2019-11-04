@@ -36,10 +36,11 @@ public class NotificationApp {
         SharedPreferencesApp sharedPreferencesApp = new SharedPreferencesApp(CONTEXT);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
+        //calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, sharedPreferencesApp.getHourPreferences());
         calendar.set(Calendar.MINUTE, sharedPreferencesApp.getMinutesPreferences() - 1);
         calendar.set(Calendar.SECOND, 1);
+        calendar.set(Calendar.MILLISECOND,1);
 
 
         Intent intentNotificationApp = new Intent(CONTEXT, NotificationApp.Notification_reciver.class);
