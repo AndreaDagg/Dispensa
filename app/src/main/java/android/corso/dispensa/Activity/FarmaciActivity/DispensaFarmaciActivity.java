@@ -31,14 +31,14 @@ public class DispensaFarmaciActivity extends AppCompatActivity {
 
     }
 
-
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        Intent intent = new Intent(getApplicationContext(), AlimentiActivity.class);
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+        Intent intent = new Intent(getApplicationContext(), FarmaciActivity.class);
         startActivity(intent);
-        return super.onKeyDown(keyCode, event);
     }
+
 
     public boolean setFragmentHead() {
         getSupportFragmentManager().beginTransaction().add(R.id.frameNameTable, new DispensaFragment()).commit();
