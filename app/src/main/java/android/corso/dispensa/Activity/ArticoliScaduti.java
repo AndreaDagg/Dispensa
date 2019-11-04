@@ -52,7 +52,6 @@ public class ArticoliScaduti extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-
         getCategoryToShowALI();
         getCategoryToShowFAR();
         getIfShowToday();

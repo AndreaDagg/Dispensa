@@ -33,6 +33,9 @@ public interface ProdottoDao {
     @Query("SELECT * FROM prodottoentity WHERE idbarcode LIKE :barcode")
     public ProdottoEntity findInfoById(Long barcode);
 
+    @Query("SELECT category FROM prodottoentity WHERE idbarcode LIKE :barcode")
+    public String getCategoryById (Long barcode);
+
     @Query("SELECT * FROM prodottoentity WHERE isList LIKE :islist")
     public List<ProdottoEntity> findListShop(Boolean islist);
 

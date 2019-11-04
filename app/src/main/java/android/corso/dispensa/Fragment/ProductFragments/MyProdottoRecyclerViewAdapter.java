@@ -7,6 +7,7 @@ import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Dialog.DialogAlert;
 import android.corso.dispensa.Fragment.ItemsFragments.ItemFragmentHead;
 import android.corso.dispensa.Fragment.ItemsFragments.ItemListFragment;
+import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.R;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -46,7 +47,7 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
 
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.mType.setText(mValues.get(position).getProducttype() + "");
         holder.mBrand.setText(mValues.get(position).getBrand() + "");
@@ -73,8 +74,13 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
                 itemListFragment.setArguments(bundle);
 
                 AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
-                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment).addToBackStack(null).commit();
-                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDisp, itemListFragment).addToBackStack(null).commit();
+                if (mValues.get(position).getCategory().equals(new CategoryItem().getCATEGORY_ALI())) {
+                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment).addToBackStack(null).commit();
+                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDisp, itemListFragment).addToBackStack(null).commit();
+                } else if (mValues.get(position).getCategory().equals(new CategoryItem().getCATEGORY_FAR())) {
+                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTableFarm, itemFragment).addToBackStack(null).commit();
+                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDispFarm, itemListFragment).addToBackStack(null).commit();
+                }
 
 
             }

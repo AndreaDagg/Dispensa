@@ -42,7 +42,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
     static final int REQUEST_CALL_FAR = 9;
     static final int CODEBAR_LENGTH = 13;
     private byte[] ByteStringImage = null;
-    private boolean CODEBAR_DETECTED = false;
+    private boolean CODEBAR_DETECTED = false, CODEBAR_IS_ALIM = false;
     private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0, CONFIRMED_BACK = 0;
 
     @Override
@@ -138,10 +138,15 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
     }
 
 
-    private void setBarCode(String bar_code) {
-        EditText barCode = (EditText) findViewById(R.id.barCodeFarm);
-        barCode.setText(bar_code);
-        setForms(bar_code);
+    private void setBarCode(String bar_code, Boolean checkBarcode) {
+        if (!checkBarcode) {
+            EditText barCode = (EditText) findViewById(R.id.barCodeFarm);
+            barCode.setText(bar_code);
+        } else {
+            EditText barCode = (EditText) findViewById(R.id.barCodeFarm);
+            barCode.setText(bar_code);
+            setForms(bar_code);
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -153,11 +158,14 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                 protected byte[] doInBackground(Void... voids) {
 
                     if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
-                        ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findInfoById(barcode);
-                        setMarcaProdotto(prodottoEntities.getBrand());
-                        setTipoProdotto(prodottoEntities.getProducttype());
-                        ByteStringImage = prodottoEntities.getImage();
-
+                        if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().getCategoryById(barcode).equals(CATEGORYSELECTED)) {
+                            ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findInfoById(barcode);
+                            setMarcaProdotto(prodottoEntities.getBrand());
+                            setTipoProdotto(prodottoEntities.getProducttype());
+                            ByteStringImage = prodottoEntities.getImage();
+                        } else {
+                            CODEBAR_IS_ALIM = true;
+                        }
                     } else {
                         return null; //TODO: CHEcK
                     }
@@ -174,6 +182,11 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                         Bitmap bitmapImage = BitmapFactory.decodeByteArray(ByteStringImage, 0, ByteStringImage.length);
                         bitmapImage = Bitmap.createScaledBitmap(bitmapImage, 100, 180, true);
                         setPictureProdotto(bitmapImage, false);
+                    } else if (CODEBAR_IS_ALIM) {
+                        setPictureProdotto(null, false);
+                        Toast.makeText(getApplicationContext(), "ATTENZIONE: Il barcode è un alimento", Toast.LENGTH_LONG).show();
+                        setBarCode("", false);
+                        CODEBAR_IS_ALIM = false;
                     } else {
                         setPictureProdotto(null, false);
                     }
@@ -397,7 +410,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             setPictureProdotto(imageBitmap, true);
 
         } else if (requestCode == REQUEST_CALL_FAR && resultCode == RESULT_OK) {
-            setBarCode(data.getExtras().getString("Barcode"));
+            setBarCode(data.getExtras().getString("Barcode"),true);
         }
     }
     //TODO: ADD switch to layout
