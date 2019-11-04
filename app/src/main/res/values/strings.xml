@@ -57,4 +57,7 @@
     <string name="Info">Info</string>
     <string name="today">Scaduti oggi: </string>
 
+    <string name="insertHour">Inserisci nuovo orario</string>
+    <string name="twHour">Orario di notifica: </string>
+
 </resources>

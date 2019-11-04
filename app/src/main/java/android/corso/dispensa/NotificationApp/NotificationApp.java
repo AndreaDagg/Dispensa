@@ -1,16 +1,24 @@
 package android.corso.dispensa.NotificationApp;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.corso.dispensa.Activity.ArticoliScaduti;
+import android.corso.dispensa.Logic.SharedPreferencesApp;
 import android.corso.dispensa.R;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
+import java.util.Calendar;
+import java.util.Objects;
 
 
 public class NotificationApp {
@@ -23,61 +31,65 @@ public class NotificationApp {
 
     }
 
+    public void SetNotification() {
 
-    public void getNotificationExpired() {
-        Intent intent = new Intent(CONTEXT, ArticoliScaduti.class);
-        intent.putExtra("today", true);
-        PendingIntent pendingIntent = PendingIntent.getActivity(CONTEXT, 0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        SharedPreferencesApp sharedPreferencesApp = new SharedPreferencesApp(CONTEXT);
 
-        NotificationCompat.Builder notificationBuilderExpired = new NotificationCompat.Builder(CONTEXT, "dispensa_channel")
-                .setSmallIcon(R.drawable.apple16px)
-                .setContentTitle("Prodotti scaduti!")
-                .setContentText("Clicca per aprire la lista dei prodotti scaduti!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .addAction(R.drawable.ic_launcher_background, "Lista prodotti scaduti", pendingIntent);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, sharedPreferencesApp.getHourPreferences());
+        calendar.set(Calendar.MINUTE, sharedPreferencesApp.getMinutesPreferences() - 1);
+        calendar.set(Calendar.SECOND, 1);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("notificationChannelOne", "Prodotti Scaduti", NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("Canale delle notifiche dei Prodotti scaduti");
 
-            /* Build notification Channel */
-            ((NotificationManager) CONTEXT.getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
-            notificationBuilderExpired.setChannelId(channel.getId());
-        }
+        Intent intentNotificationApp = new Intent(CONTEXT, NotificationApp.Notification_reciver.class);
+        intentNotificationApp.setAction("MY_NOTIFICATION_MESSAGE");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(CONTEXT, 0, intentNotificationApp, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        /* Send */
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(CONTEXT);
-        managerCompat.notify(1, notificationBuilderExpired.build());
-
+        AlarmManager alarmManager = (AlarmManager) CONTEXT.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
     }
 
-    public void getNotificationExpire() {
-        PendingIntent pendingIntent = PendingIntent.getActivity(CONTEXT, 0, new Intent(CONTEXT, ArticoliScaduti.class), 0);
 
-        NotificationCompat.Builder notificationBuilderExpired = new NotificationCompat.Builder(CONTEXT, "dispensa_channel")
-                .setSmallIcon(R.drawable.apple16px)
-                .setContentTitle("Questi prodotti stanno per scadere!")
-                .setContentText("Clicca per aprire la lista dei prodotti che scadranno a breve!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .addAction(R.drawable.ic_launcher_background, "Apri lista", pendingIntent);
+    static public class Notification_reciver extends BroadcastReceiver {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel2 = new NotificationChannel("notificationChannelTwo", "Prodotti che scadranno", NotificationManager.IMPORTANCE_DEFAULT);
-            channel2.setDescription("Canale delle notifiche dei Prodotti scaduti");
+        public Notification_reciver() {
 
-            /* Build notification Channel */
-            ((NotificationManager) CONTEXT.getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel2);
-            notificationBuilderExpired.setChannelId(channel2.getId());
         }
 
-        /* Send */
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(CONTEXT);
-        managerCompat.notify(2, notificationBuilderExpired.build());
+        @SuppressLint("UnsafeProtectedBroadcastReceiver")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Objects.equals(intent.getAction(), "MY_NOTIFICATION_MESSAGE")) {
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+                Intent intentGetNotificationExpired = new Intent(context, ArticoliScaduti.class);
+                intentGetNotificationExpired.putExtra("today", true);
+                intentGetNotificationExpired.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentGetNotificationExpired, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                NotificationCompat.Builder notificationBuilderExpired = new NotificationCompat.Builder(context, "dispensa_channel")
+                        .setSmallIcon(R.drawable.apple16px)
+                        .setContentTitle("Prodotti scaduti!")
+                        .setContentText("Clicca per aprire la lista dei prodotti scaduti!")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
+                        .addAction(R.drawable.ic_launcher_background, "Lista prodotti scaduti", pendingIntent);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationChannel channel = new NotificationChannel("notificationChannelOne", "Prodotti Scaduti", NotificationManager.IMPORTANCE_DEFAULT);
+                    channel.setDescription("Canale delle notifiche dei Prodotti scaduti");
+
+                    ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
+                    notificationBuilderExpired.setChannelId(channel.getId());
+                }
+
+                notificationManager.notify(0, notificationBuilderExpired.build());
+            }
+        }
     }
 
 

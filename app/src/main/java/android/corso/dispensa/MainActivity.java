@@ -1,9 +1,10 @@
 package android.corso.dispensa;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.corso.dispensa.Activity.AlimentiActivity.AlimentiActivity;
 import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Activity.FarmaciActivity.FarmaciActivity;
@@ -11,13 +12,13 @@ import android.corso.dispensa.Activity.ListaSpesaAvtivity.ListaSpesaActivity;
 import android.corso.dispensa.Logic.OptionMenuLogic;
 import android.corso.dispensa.NotificationApp.NotificationApp;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import static android.Manifest.permission.SET_ALARM;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), SET_ALARM) == PackageManager.PERMISSION_DENIED) {
+            requestPermissions(new String[]{SET_ALARM}, 1);
+        }
+        new NotificationApp(getApplicationContext()).SetNotification();
+
+
     }
 
     @Override
@@ -98,11 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
                 return true;
             case R.id.menuOpNotify:
-                NotificationApp notificationApp = new NotificationApp(getApplicationContext());
-           /*     new NotificationApp(getApplicationContext()).getNotificationExpired();
-                new NotificationApp(getApplicationContext()).getNotificationExpire();*/
-                notificationApp.getNotificationExpired();
-                notificationApp.getNotificationExpire();
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
                 return true;
             case R.id.menuOpInfo:
                 return true;
