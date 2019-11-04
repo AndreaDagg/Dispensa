@@ -1,12 +1,9 @@
-package android.corso.dispensa.Fragment.ItemScaduti;
+package android.corso.dispensa.Fragment.ItemShopping;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Database.DispensaDatabase;
-import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
-import android.corso.dispensa.Logic.CheckDeadline;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -15,25 +12,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class expiredItemFragment extends Fragment {
-
-    private String CALLBY;
-    private boolean TODAY;
+public class productShopFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -41,12 +26,12 @@ public class expiredItemFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    public expiredItemFragment(String callby, boolean today) {
-        this.CALLBY = callby;
-        this.TODAY = today;
-
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public productShopFragment() {
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,11 +46,11 @@ public class expiredItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_expireditem_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_productshop_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            final Context context = view.getContext();
+            Context context = view.getContext();
             final RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -73,17 +58,22 @@ public class expiredItemFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             new AsyncTask<Void,Void,Void>(){
+
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));
+                    recyclerView.setAdapter(new MyproductShopRecyclerViewAdapter(
+
+                            DispensaDatabase.getInstance(getContext()).getProdottoDao().findListShop(true)
+                            , mListener));
                     return null;
                 }
             }.execute();
 
-
         }
         return view;
     }
+
+
 
 
     /**
@@ -98,6 +88,6 @@ public class expiredItemFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(ArticoloEntity item);
+        void onListFragmentInteraction(ProdottoEntity item);
     }
 }

@@ -3,18 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="android.corso.dispensa.Fragment.ItemScaduti.expiredItemFragment"
+    android:name="android.corso.dispensa.Fragment.ItemShopping.productShopFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    android:background="@color/white"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".Fragment.ItemScaduti.expiredItemFragment"
-    tools:listitem="@layout/fragment_expireditem" >
-
-
-
-
-</androidx.recyclerview.widget.RecyclerView>
-
+    tools:context=".Fragment.ItemShopping.productShopFragment"
+    tools:listitem="@layout/fragment_productshop" />

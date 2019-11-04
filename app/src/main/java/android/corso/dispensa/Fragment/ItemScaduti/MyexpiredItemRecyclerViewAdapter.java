@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import android.corso.dispensa.Fragment.ItemScaduti.expiredItemFragment.OnListFragmentInteractionListener;
+import android.widget.Toast;
 
 
 import java.util.List;
@@ -59,6 +60,7 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
                 super.onPostExecute(entity);
                 holder.mCategory = mValues.get(position).getCategoryItem();
                 holder.mIdItem = mValues.get(position).getId();
+                holder.mBarcodeItem = mValues.get(position).getBarcode();
                 holder.mType.setText(entity.getProducttype());
                 holder.mBrand.setText(entity.getBrand());
                 holder.mDeadline.setText(mValues.get(position).getDaydeadline() + "/" + mValues.get(position).getMonthdeadline() + "/" + mValues.get(position).getYeardeadline());
@@ -89,7 +91,7 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
         public final TextView mBrand;
         public final TextView mDeadline;
         public ArticoloEntity mItem;
-        public Long mIdItem;
+        public Long mIdItem, mBarcodeItem;
         public String mCategory;
 
         public ViewHolder(View view) {
@@ -117,11 +119,25 @@ public class MyexpiredItemRecyclerViewAdapter extends RecyclerView.Adapter<Myexp
 
             MenuItem move = menu.findItem(R.id.menumove);
             move.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @SuppressLint("StaticFieldLeak")
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    /*ArticoliScaduti articoliScaduti = (ArticoliScaduti) v.getContext();
-                    articoliScaduti.chiamaMetodo()*/
-                    Log.d("-->", mIdItem + "");
+
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            DispensaDatabase.getInstance(mView.getContext()).getProdottoDao().updateProdottoIsList(true, mBarcodeItem);
+                            DispensaDatabase.getInstance(mView.getContext()).getProdottoDao().updateProdottoQuantity(
+                                    DispensaDatabase.getInstance(mView.getContext()).getProdottoDao().getQuantuityNewBuy(mBarcodeItem) + 1, mBarcodeItem);
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+                            Toast.makeText(mView.getContext(),"Aggiunto a lista della spesa!",Toast.LENGTH_SHORT).show();
+                        }
+                    }.execute();
 
                     return false;
                 }

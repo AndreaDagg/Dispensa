@@ -32,4 +32,18 @@ public interface ProdottoDao {
 
     @Query("SELECT * FROM prodottoentity WHERE idbarcode LIKE :barcode")
     public ProdottoEntity findInfoById(Long barcode);
+
+    @Query("SELECT category FROM prodottoentity WHERE idbarcode LIKE :barcode")
+    public String getCategoryById (Long barcode);
+
+    @Query("SELECT * FROM prodottoentity WHERE isList LIKE :islist")
+    public List<ProdottoEntity> findListShop(Boolean islist);
+
+    @Query("SELECT newBuy FROM prodottoentity WHERE idbarcode LIKE :barcode")
+    public int getQuantuityNewBuy(Long barcode);
+
+    @Query("UPDATE prodottoentity SET isList = :islist WHERE idbarcode = :iidbarcode")
+    public void updateProdottoIsList(Boolean islist, Long iidbarcode);
+    @Query("UPDATE prodottoentity SET newBuy = :quant WHERE idbarcode = :iidbarcode")
+    public void updateProdottoQuantity(int quant, Long iidbarcode);
 }

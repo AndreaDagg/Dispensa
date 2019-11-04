@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.corso.dispensa.Activity.FarmaciActivity.NuovoFarmacoActivity;
 import android.corso.dispensa.BarcodeDetect;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
@@ -42,7 +43,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     static final int REQUEST_CALL_ALI = 8;
     static final int CODEBAR_LENGTH = 13;
     private byte[] ByteStringImage = null;
-    private boolean CODEBAR_DETECTED = false;
+    private boolean CODEBAR_DETECTED = false, CODEBAR_IS_FARM = false;
     private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0, CONFIRMED_BACK = 0;
 
 
@@ -73,6 +74,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         CONFIRMED_BACK++;
         if (CONFIRMED_BACK == CONFIRMED_SELECTION) {
+            finish();
             return super.onKeyDown(keyCode, event);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Premi di nuovo per uscire.", Toast.LENGTH_SHORT);
@@ -143,10 +145,15 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
     }
 
 
-    private void setBarCode(String bar_code) {
-        EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
-        barCode.setText(bar_code);
-        setForms(bar_code);
+    private void setBarCode(String bar_code, boolean checkBarcode) {
+        if (!checkBarcode) {
+            EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
+            barCode.setText(bar_code);
+        } else {
+            EditText barCode = (EditText) findViewById(R.id.barCodeAlim);
+            barCode.setText(bar_code);
+            setForms(bar_code);
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -158,10 +165,15 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                 protected byte[] doInBackground(Void... voids) {
 
                     if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findIdBarcode(barcode)) {
-                        ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findInfoById(barcode);
-                        setMarcaProdotto(prodottoEntities.getBrand());
-                        setTipoProdotto(prodottoEntities.getProducttype());
-                        ByteStringImage = prodottoEntities.getImage();
+                        if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().getCategoryById(barcode).equals(CATEGORYSELECTED)) {
+                            ProdottoEntity prodottoEntities = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().findInfoById(barcode);
+                            setMarcaProdotto(prodottoEntities.getBrand());
+                            setTipoProdotto(prodottoEntities.getProducttype());
+                            ByteStringImage = prodottoEntities.getImage();
+                        } else {
+                            CODEBAR_IS_FARM = true;
+                        }
+
 
                     } else {
                         return null; //TODO: CHEcK
@@ -179,6 +191,11 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                         Bitmap bitmapImage = BitmapFactory.decodeByteArray(ByteStringImage, 0, ByteStringImage.length);
                         bitmapImage = Bitmap.createScaledBitmap(bitmapImage, 100, 180, true);
                         setPictureProdotto(bitmapImage, false);
+                    } else if (CODEBAR_IS_FARM) {
+                        setPictureProdotto(null, false);
+                        Toast.makeText(getApplicationContext(), "ATTENZIONE: Il barcode è un farmaco", Toast.LENGTH_LONG).show();
+                        setBarCode("",false);
+                        CODEBAR_IS_FARM = false;
                     } else {
                         setPictureProdotto(null, false);
                     }
@@ -403,7 +420,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             setPictureProdotto(imageBitmap, true);
 
         } else if (requestCode == REQUEST_CALL_ALI && resultCode == RESULT_OK) {
-            setBarCode(data.getExtras().getString("Barcode"));
+            setBarCode(data.getExtras().getString("Barcode"),true);
         }
     }
 }

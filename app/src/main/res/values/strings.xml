@@ -49,8 +49,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="delete">Elimina</string>
-    <string name="move">Sposta</string>
+    <string name="move">Aggiungi in lista della spesa</string>
     <string name="back">Annulla</string>
 
+    <string name="Home">Home Dispensa</string>
+    <string name="Notify">Notifiche</string>
+    <string name="Info">Info</string>
+    <string name="today">Scaduti oggi: </string>
+
+    <string name="insertHour">Inserisci nuovo orario</string>
+    <string name="twHour">Orario di notifica: </string>
+
+    <string name="product">Prodotto</string>
+    <string name="shopping">Carrello</string>
+    <string name="adddProdList">Inserisci prodotto</string>
+    <string name="RemuveShop">Rimuovi acquistati</string>
 
 </resources>

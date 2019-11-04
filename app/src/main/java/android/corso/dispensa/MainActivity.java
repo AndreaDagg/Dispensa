@@ -1,16 +1,24 @@
 package android.corso.dispensa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.corso.dispensa.Activity.AlimentiActivity.AlimentiActivity;
 import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Activity.FarmaciActivity.FarmaciActivity;
 import android.corso.dispensa.Activity.ListaSpesaAvtivity.ListaSpesaActivity;
+import android.corso.dispensa.Logic.OptionMenuLogic;
+import android.corso.dispensa.NotificationApp.NotificationApp;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import static android.Manifest.permission.SET_ALARM;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), SET_ALARM) == PackageManager.PERMISSION_DENIED) {
+            requestPermissions(new String[]{SET_ALARM}, 1);
+        }
+        new NotificationApp(getApplicationContext()).SetNotification();
+
+
     }
 
     @Override
@@ -32,9 +48,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    private void setAlimentiButtonHome(){
-        Button alimentiButtonHome = (Button)findViewById(R.id.AlimentiButtonHome);
+    private void setAlimentiButtonHome() {
+        Button alimentiButtonHome = (Button) findViewById(R.id.AlimentiButtonHome);
         alimentiButtonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setFarmaciButtonHome(){
-        Button farmaciButtonHome = (Button)findViewById(R.id.FarmaciButtonHome);
+    private void setFarmaciButtonHome() {
+        Button farmaciButtonHome = (Button) findViewById(R.id.FarmaciButtonHome);
         farmaciButtonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setListaSpesaButtonHome(){
-        Button listaSpesaButtonHome = (Button)findViewById(R.id.ListaSpesaButtonHome);
+    private void setListaSpesaButtonHome() {
+        Button listaSpesaButtonHome = (Button) findViewById(R.id.ListaSpesaButtonHome);
         listaSpesaButtonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setArticoliScaduti(){
-        Button articoliScadutiButtonHome = (Button)findViewById(R.id.ArticoliScadutiButtonHome);
+    private void setArticoliScaduti() {
+        Button articoliScadutiButtonHome = (Button) findViewById(R.id.ArticoliScadutiButtonHome);
         articoliScadutiButtonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +93,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.optionmenu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuOpHome:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
+                return true;
+            case R.id.menuOpNotify:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
+                return true;
+            case R.id.menuOpInfo:
+                return true;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
 }

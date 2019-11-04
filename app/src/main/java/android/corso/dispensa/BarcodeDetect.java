@@ -62,7 +62,8 @@ public class BarcodeDetect extends AppCompatActivity {
             requestPermissions(new String[]{CAMERA}, 1);
         }
 
-        detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.QR_CODE | Barcode.EAN_13).build();
+        /*Barcode.QR_CODE |*/
+        detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.EAN_13).build();
 
         if (!detector.isOperational()) {
             //TODO: gestire in caso incui barcode non è operativo

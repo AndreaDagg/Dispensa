@@ -43,7 +43,7 @@ public class ConfirmDeleteItem extends DialogFragment {
                     protected void onPostExecute(Void aVoid) {
                         super.onPostExecute(aVoid);
 
-                        articoliScaduti.removeFragmentList();
+                        // articoliScaduti.removeFragmentList();
                         articoliScaduti.setFragmentList(CATEGORY);
                     }
                 }.execute();
@@ -61,7 +61,7 @@ public class ConfirmDeleteItem extends DialogFragment {
         return builder.create();
     }
 
-    public void setIdItem(long id_item, String category,ArticoliScaduti scaduti) {
+    public void setIdItem(long id_item, String category, ArticoliScaduti scaduti) {
         this.IDITEM = id_item;
         this.CATEGORY = category;
         this.articoliScaduti = scaduti;
