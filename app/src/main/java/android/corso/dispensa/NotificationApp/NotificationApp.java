@@ -36,9 +36,9 @@ public class NotificationApp {
         SharedPreferencesApp sharedPreferencesApp = new SharedPreferencesApp(CONTEXT);
 
         Calendar calendar = Calendar.getInstance();
-        //calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, sharedPreferencesApp.getHourPreferences());
-        calendar.set(Calendar.MINUTE, sharedPreferencesApp.getMinutesPreferences() - 1);
+        calendar.set(Calendar.MINUTE, sharedPreferencesApp.getMinutesPreferences());
         calendar.set(Calendar.SECOND, 1);
         calendar.set(Calendar.MILLISECOND,1);
 
@@ -77,7 +77,6 @@ public class NotificationApp {
                         .setContentText("Clicca per aprire la lista dei prodotti scaduti!")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
                         .addAction(R.drawable.ic_launcher_background, "Lista prodotti scaduti", pendingIntent);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

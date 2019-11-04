@@ -72,8 +72,15 @@ public class expiredItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+            new AsyncTask<Void,Void,Void>(){
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));
+                    return null;
+                }
+            }.execute();
 
-            recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));
+
         }
         return view;
     }
