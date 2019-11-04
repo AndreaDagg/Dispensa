@@ -165,6 +165,7 @@ public class ArticoliScaduti extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finishAffinity();
         Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intentMain);
     }
