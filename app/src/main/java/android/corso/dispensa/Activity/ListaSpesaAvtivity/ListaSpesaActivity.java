@@ -57,6 +57,7 @@ public class ListaSpesaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finishAffinity();
         Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intentMain);
     }
