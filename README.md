@@ -1,2 +1,4 @@
 # Dispensa
-app Android sviluppata per l'esame Programmazione Mobile. Consente lo storage degli alimenti e dei medicinali, creae una lista della spesa e avere un feedback dei prodotti che stanno o sono scaduti. 
+
+Android app developed for the Mobile Programming exam. It allows you to store food and medicine, create a shopping list and get feedback on products that are or have expired.
+Developed with API 26.
