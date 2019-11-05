@@ -51,7 +51,7 @@ public class MyproductShopRecyclerViewAdapter extends RecyclerView.Adapter<Mypro
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     //TODO: Moficare la quantita a zero e is lista a false nel db quando checkbok
-                    Log.d("CheckBoxPress", "Pressed");
+                    //Log.d("CheckBoxPress", "Pressed");
                     new AsyncTask<Void, Void, Void>() {
                         @Override
                         protected Void doInBackground(Void... voids) {
@@ -63,7 +63,7 @@ public class MyproductShopRecyclerViewAdapter extends RecyclerView.Adapter<Mypro
                         }
                     }.execute();
                 } else {
-                    Log.d("CheckBoxPressNot", "FAlse");
+                    //Log.d("CheckBoxPressNot", "FAlse");
                 }
             }
         });

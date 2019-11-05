@@ -31,6 +31,17 @@ public class NotificationApp {
 
     }
 
+    public void deleteAlarm(){
+
+        AlarmManager alarmManager = (AlarmManager) CONTEXT.getSystemService(Context.ALARM_SERVICE);
+        Intent intentNotificationApp = new Intent(CONTEXT, NotificationApp.Notification_reciver.class);
+        intentNotificationApp.setAction("MY_NOTIFICATION_MESSAGE");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(CONTEXT, 1, intentNotificationApp, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.cancel(pendingIntent);
+
+    }
+
     public void SetNotification() {
 
         SharedPreferencesApp sharedPreferencesApp = new SharedPreferencesApp(CONTEXT);
@@ -45,10 +56,10 @@ public class NotificationApp {
 
         Intent intentNotificationApp = new Intent(CONTEXT, NotificationApp.Notification_reciver.class);
         intentNotificationApp.setAction("MY_NOTIFICATION_MESSAGE");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(CONTEXT, 0, intentNotificationApp, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(CONTEXT, 1, intentNotificationApp, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) CONTEXT.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
 
     }
 

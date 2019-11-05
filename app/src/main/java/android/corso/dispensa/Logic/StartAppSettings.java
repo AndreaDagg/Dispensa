@@ -1,7 +1,6 @@
 package android.corso.dispensa.Logic;
 
 import android.content.Context;
-import android.corso.dispensa.NotificationApp.NotificationApp;
 
 public class StartAppSettings {
     private Context CONTEXT;
@@ -13,7 +12,7 @@ public class StartAppSettings {
     public void SetNotificatication(){
         SharedPreferencesApp sharedPreferencesApp = new SharedPreferencesApp(CONTEXT);
 
-        if (sharedPreferencesApp.getIsFirstAppOpen()){
+        if (sharedPreferencesApp.getNotificationIsEnabled()){
 
         }
 
