@@ -12,5 +12,6 @@
     <color name="redLight">#DD372B</color>
     <color name="blueSwitch">#596BCC</color>
     <color name="white">#ffffff</color>
+    <color name="whitebk">#fafafa</color>
 
 </resources>

@@ -42,7 +42,7 @@
             android:name=".Activity.AlimentiActivity.AlimentiActivity"
             android:label="@string/AlimentiActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity" android:label="Aggiungi in lista della spesa" android:screenOrientation="portrait"/>
         <activity
             android:name=".Activity.FarmaciActivity.DispensaFarmaciActivity"
             android:label="@string/dispFarm" android:screenOrientation="portrait"/>

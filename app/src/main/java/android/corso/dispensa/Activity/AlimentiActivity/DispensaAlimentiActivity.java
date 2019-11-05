@@ -14,7 +14,7 @@ import android.view.KeyEvent;
 
 
 public class DispensaAlimentiActivity extends AppCompatActivity {
-    private static String CALL_BY_ALI =new CategoryItem().getCATEGORY_ALI();
+    private static String CALL_BY_ALI = new CategoryItem().getCATEGORY_ALI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +22,18 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dispensa_alimenti);
 
 
-        setFragmentHead();
-        setFragmentList();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setFragmentHead();
+                setFragmentList();
+            }
+        });
 
     }
 
@@ -52,11 +57,11 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.frameNameTable, new DispensaFragment()).commit();
         return true;
     }
-    public boolean setFragmentList(){
+
+    public boolean setFragmentList() {
         getSupportFragmentManager().beginTransaction().add(R.id.listFragmentDisp, new ProdottoFragment(CALL_BY_ALI)).commit();
         return true;
     }
-
 
 
 }

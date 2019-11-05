@@ -33,9 +33,9 @@ import static android.Manifest.permission.CAMERA;
 
 public class BarcodeDetect extends AppCompatActivity {
 
-    private static int CALL_BY_ALI = 8;
+   /* private static int CALL_BY_ALI = 8;
     private static int CALL_BY_FAR = 9;
-    private int CALL = 0;
+    private int CALL = 0;*/
 
     private BarcodeDetector detector;
     private SurfaceView surfaceView;
@@ -53,8 +53,8 @@ public class BarcodeDetect extends AppCompatActivity {
 
 
         //Call by alimenti or farmaci
-        Bundle extras = getIntent().getExtras();
-        CALL = extras.getInt("call_by");
+        //Bundle extras = getIntent().getExtras();
+       // CALL = extras.getInt("call_by");
 
 
 

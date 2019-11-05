@@ -10,7 +10,8 @@ import android.corso.dispensa.R;
 import android.os.Bundle;
 
 public class DispensaFarmaciActivity extends AppCompatActivity {
-    private static String CALL_BY_FAR =new CategoryItem().getCATEGORY_FAR();
+    private static String CALL_BY_FAR = new CategoryItem().getCATEGORY_FAR();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +23,13 @@ public class DispensaFarmaciActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        setFragmentHead();
-        setFragmentList();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setFragmentHead();
+                setFragmentList();
+            }
+        });
 
     }
 
@@ -41,7 +46,8 @@ public class DispensaFarmaciActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.frameNameTableFarm, new DispensaFragment()).commit();
 
     }
-    public void setFragmentList(){
+
+    public void setFragmentList() {
         getSupportFragmentManager().beginTransaction().add(R.id.listFragmentDispFarm, new ProdottoFragment(CALL_BY_FAR)).commit();
 
     }
