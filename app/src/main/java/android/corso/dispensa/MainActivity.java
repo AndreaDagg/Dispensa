@@ -141,8 +141,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuOpNotify:
                 startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
                 return true;
-            case R.id.menuOpInfo:
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
                 return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
         }
 
 

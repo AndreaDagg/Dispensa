@@ -39,7 +39,8 @@ public class CheckDeadline {
 
 
         getExpiredItem();
-        getdayplus(daySelected);
+        getCURRENTPLUS(daySelected);
+
     }
 
 
@@ -50,6 +51,7 @@ public class CheckDeadline {
             protected Void doInBackground(Void... voids) {
 
                 articoloEntitiesInfoFromDB = DispensaDatabase.getInstance(context).getArticoloDao().findAll();
+
 
                 for (int i = 0; i < articoloEntitiesInfoFromDB.size(); i++) {
 
@@ -79,71 +81,34 @@ public class CheckDeadline {
                                 //Scade oggi
                                /* Log.d("Scaduto OGGI: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
                                 Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-                                addExpired(articoloEntitiesInfoFromDB.get(i), TODAY);
-                            }
-                        }
-                    }
-
-                    //    Log.d("--------------------------------", "|");
-
-                }
-
-
-                //Log.d("->**", articoloEntitiesInfoFromDB.toString());
-
-
-                return null;
-            }
-        }.execute();
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private void getExpiredItemInDay(final int day) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-
-                articoloEntitiesInfoFromDB = DispensaDatabase.getInstance(context).getArticoloDao().findAll();
-
-                for (int i = 0; i < articoloEntitiesInfoFromDB.size(); i++) {
-
-                    if (articoloEntitiesInfoFromDB.get(i).getYeardeadline() < CURRENTYEAR_PLUS) {
-                        //Scaduto
-                       /* Log.d("Scaduto: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                        Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-
-                        addExpired(articoloEntitiesInfoFromDB.get(i), EXPIRED);
-
-                    } else if (articoloEntitiesInfoFromDB.get(i).getYeardeadline() == CURRENTYEAR_PLUS) {
-                        if (articoloEntitiesInfoFromDB.get(i).getMonthdeadline() < CURRENTMONTH_PLUS) {
-                            //Scaduto
-                           /* Log.d("Scaduto: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                            Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-
-                            addExpired(articoloEntitiesInfoFromDB.get(i), EXPIRED);
-                        } else if (articoloEntitiesInfoFromDB.get(i).getMonthdeadline() == CURRENTMONTH_PLUS) {
-                            if (articoloEntitiesInfoFromDB.get(i).getDaydeadline() < CURRENTDAY_PLUS) {
-                                //Scaduto
-                               /* Log.d("Scaduto: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                                Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-
                                 addExpired(articoloEntitiesInfoFromDB.get(i), EXPIRED);
-
-                            } else if (articoloEntitiesInfoFromDB.get(i).getDaydeadline() == CURRENTDAY_PLUS) {
-                                //Scade oggi
-                               /* Log.d("Scaduto OGGI: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                                Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-                                addExpired(articoloEntitiesInfoFromDB.get(i), INDAYS);
                             }
                         }
                     }
+                    int Y_Item = articoloEntitiesInfoFromDB.get(i).getYeardeadline();
+                    int M_Item = articoloEntitiesInfoFromDB.get(i).getMonthdeadline() - 1;
+                    int D_Item = articoloEntitiesInfoFromDB.get(i).getDaydeadline();
 
-                    //    Log.d("--------------------------------", "|");
+                    int Y_TODAY = getCURRENTYEAR();
+                    int M_TODAY = getCURRENTMONTH() - 1;
+                    int D_TODAY = getCURRENTDAY();
 
+                    int Y_PLUS = CURRENTYEAR_PLUS;
+                    int M_PLUS = CURRENTMONTH_PLUS;
+                    int D_PLUS = CURRENTDAY_PLUS;
+
+
+                    Calendar calendarItemList = Calendar.getInstance();
+                    Calendar calendarPlusDay = Calendar.getInstance();
+                    Calendar calendarToday = Calendar.getInstance();
+                    calendarPlusDay.set(Y_PLUS, M_PLUS, D_PLUS);
+                    calendarToday.set(Y_TODAY, M_TODAY, D_TODAY);
+                    calendarItemList.set(Y_Item, M_Item, D_Item);
+
+                    if (calendarItemList.after(calendarToday) && calendarItemList.before(calendarPlusDay)) {
+                        addExpired(articoloEntitiesInfoFromDB.get(i), INDAYS);
+                    }
                 }
-
-
-                //Log.d("->**", articoloEntitiesInfoFromDB.toString());
 
 
                 return null;
@@ -163,13 +128,13 @@ public class CheckDeadline {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public List<ArticoloEntity> getArticoloEntitiesByCategory(final String category, final boolean today) {
+    public List<ArticoloEntity> getArticoloEntitiesByCategory(final String category, final boolean future) {
 
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                if (!today) {
+                if (!future) {
                     for (int i = 0; i < getArticoloEntitiesExpired().size(); i++) {
 
                         if (getArticoloEntitiesExpired().get(i).getCategoryItem().equals(category)) {
@@ -179,18 +144,16 @@ public class CheckDeadline {
 
                     }
                 } else {
-                    for (int i = 0; i < getArticoloEntitiesExpiredToday().size(); i++) {
+                    for (int i = 0; i < getGetArticoloEntitiesExpiredInDays().size(); i++) {
 
-                        if (getArticoloEntitiesExpiredToday().get(i).getCategoryItem().equals(category)) {
+                        if (getGetArticoloEntitiesExpiredInDays().get(i).getCategoryItem().equals(category)) {
 
-                            getArticoloEntitiesByCategory.add(getArticoloEntitiesExpiredToday().get(i));
+                            getArticoloEntitiesByCategory.add(getGetArticoloEntitiesExpiredInDays().get(i));
                         }
 
                     }
                 }
 
-                //TODO:se vuoi passeare anche gli scaduti del giorno basta riscrivere un for
-                //Log.d("--", getArticoloEntitiesByCategory + "");
                 return null;
             }
         }.execute();
@@ -210,23 +173,6 @@ public class CheckDeadline {
         return getArticoloEntitiesExpiredInDay;
     }
 
-    public int getdayplus(int add) {
-
-        Date curretndate = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(curretndate);
-
-        cal.add(Calendar.DAY_OF_MONTH, add);
-
-        Date date = cal.getTime();
-
-       /* Log.d("-------------------------------", "---------");
-        Log.d("Oggi_e'", curretndate + "");
-        Log.d("Tra_", +add + " giorni sarà: " + date);
-        Log.d("-------------------------------", "---------");*/
-
-        return 0;
-    }
 
     public int getCURRENTDAY() {
         return CURRENTDAY;
@@ -243,7 +189,7 @@ public class CheckDeadline {
     public void getCURRENTPLUS(int plus_int) {
 
         Calendar calendar_plus = Calendar.getInstance();
-        calendar_plus.set(Calendar.DAY_OF_MONTH, plus_int);
+        calendar_plus.add(Calendar.DAY_OF_MONTH, plus_int);
         CURRENTDAY_PLUS = calendar_plus.get(Calendar.DAY_OF_MONTH);
         CURRENTMONTH_PLUS = calendar_plus.get(Calendar.MONTH);
         CURRENTYEAR_PLUS = calendar_plus.get(Calendar.YEAR);

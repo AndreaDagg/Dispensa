@@ -11,10 +11,14 @@ import android.corso.dispensa.BarcodeDetect;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Logic.CategoryItem;
+import android.corso.dispensa.Logic.OptionMenuLogic;
 import android.corso.dispensa.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -290,6 +294,33 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CALL_LIS && resultCode == RESULT_OK) {
             setBarCode(Objects.requireNonNull(data.getExtras()).getString("Barcode"));
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.optionmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuOpHome:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
+                return true;
+            case R.id.menuOpNotify:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
+                return true;
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
+                return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

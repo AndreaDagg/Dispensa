@@ -1,27 +1,23 @@
 package android.corso.dispensa.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.corso.dispensa.Fragment.ItemScaduti.expiredItemFragment;
 import android.corso.dispensa.Logic.CategoryItem;
+import android.corso.dispensa.Logic.OptionMenuLogic;
 import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.Switch;
-
-import com.google.android.gms.vision.Frame;
 
 import java.util.Objects;
 
@@ -29,7 +25,7 @@ import static android.corso.dispensa.R.id.FrameDeadLine;
 
 public class ArticoliScaduti extends AppCompatActivity {
 
-    private boolean TODAY = false;
+    private boolean futureExpireds = false;
     private String CATEGORY = new CategoryItem().getCATEGORY_ALI();
 
     @Override
@@ -39,7 +35,7 @@ public class ArticoliScaduti extends AppCompatActivity {
 
         //Set if show today expired
         if (extras != null) {
-            this.TODAY = extras.getBoolean("today");
+            this.futureExpireds = extras.getBoolean("today");
         }
 
         setContentView(R.layout.activity_articoli_scaduti);
@@ -125,13 +121,13 @@ public class ArticoliScaduti extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (switchToday.isChecked()) {
-                    TODAY = true;
+                    futureExpireds = true;
                     //removeFragmentList();
                     // replaceFragmentList(CATEGORY);
                     setFragmentList(CATEGORY);
 
                 } else {
-                    TODAY = false;
+                    futureExpireds = false;
                     //removeFragmentList();
                     // replaceFragmentList(CATEGORY);
                     setFragmentList(CATEGORY);
@@ -142,14 +138,14 @@ public class ArticoliScaduti extends AppCompatActivity {
     }
 
     public void setFragmentList(String category) {
-        getSupportFragmentManager().beginTransaction().add(FrameDeadLine, new expiredItemFragment(category, TODAY)).addToBackStack(null).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().add(FrameDeadLine, new expiredItemFragment(category, futureExpireds)).addToBackStack(null).commitAllowingStateLoss();
 
 
     }
 
 
     public void replaceFragmentList(final String category) {
-        getSupportFragmentManager().beginTransaction().replace(FrameDeadLine, new expiredItemFragment(category, TODAY)).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(FrameDeadLine, new expiredItemFragment(category, futureExpireds)).addToBackStack(null).commit();
         getSupportFragmentManager().executePendingTransactions();
 
 
@@ -169,5 +165,32 @@ public class ArticoliScaduti extends AppCompatActivity {
         finishAffinity();
         Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intentMain);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.optionmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuOpHome:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
+                return true;
+            case R.id.menuOpNotify:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
+                return true;
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
+                return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

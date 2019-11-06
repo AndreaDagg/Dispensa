@@ -27,9 +27,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activity.Info"></activity>
+        <activity android:name=".Activity.FutureExpireds" />
         <activity
-            android:label="Notifiche"
             android:name=".Activity.NotificationSet"
+            android:label="Notifiche"
             android:screenOrientation="portrait" />
         <activity
             android:name=".BarcodeDetect"
@@ -46,23 +48,33 @@
             android:name=".Activity.AlimentiActivity.AlimentiActivity"
             android:label="@string/AlimentiActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity" android:label="Aggiungi in lista della spesa" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity"
+            android:label="Aggiungi in lista della spesa"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.FarmaciActivity.DispensaFarmaciActivity"
-            android:label="@string/dispFarm" android:screenOrientation="portrait"/>
+            android:label="@string/dispFarm"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.FarmaciActivity.NuovoFarmacoActivity"
-            android:label="@string/AddFarm" android:screenOrientation="portrait"/>
+            android:label="@string/AddFarm"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AlimentiActivity.DispensaAlimentiActivity"
-            android:label="@string/dispAlim" android:screenOrientation="portrait"/>
+            android:label="@string/dispAlim"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AlimentiActivity.NuovoAlimentoActivity"
-            android:label="@string/AddAlim" android:screenOrientation="portrait"/>
+            android:label="@string/AddAlim"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.ArticoliScaduti"
-            android:label="@string/ArticoliScadutiActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+            android:label="@string/ArticoliScadutiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

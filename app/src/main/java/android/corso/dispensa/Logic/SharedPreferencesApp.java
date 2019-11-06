@@ -81,4 +81,22 @@ public class SharedPreferencesApp {
     }
 
 
+    public void saveFuture(int futurday){
+        SharedPreferences sharedPreferences = CONTEXT.getSharedPreferences("DispensaSetting", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("dayfuture",futurday);
+        editor.apply();
+
+    }
+
+
+    public int getDayFuture(){
+        int day = 7;
+        if (getSharedPreferences() != null) {
+            day = getSharedPreferences().getInt("dayfuture", 7);
+        }
+        return day;
+    }
+
+
 }

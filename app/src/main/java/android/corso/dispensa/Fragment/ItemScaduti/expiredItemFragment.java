@@ -7,6 +7,7 @@ import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Logic.CheckDeadline;
+import android.corso.dispensa.Logic.SharedPreferencesApp;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -77,16 +78,15 @@ public class expiredItemFragment extends Fragment {
                 @Override
                 protected List<ArticoloEntity> doInBackground(Void... voids) {
 
-                    return new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY);
+                    return new CheckDeadline(context,new SharedPreferencesApp(getContext()).getDayFuture()).getArticoloEntitiesByCategory(CALLBY, TODAY);
                 }
 
-                @Override
+                @Override 
                 protected void onPostExecute(final List<ArticoloEntity> articoloEntities) {
                     super.onPostExecute(articoloEntities);
                     Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /* recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));*/
                             recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
                         }
                     });

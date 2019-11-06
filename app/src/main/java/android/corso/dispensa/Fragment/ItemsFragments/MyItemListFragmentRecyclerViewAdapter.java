@@ -1,6 +1,7 @@
 package android.corso.dispensa.Fragment.ItemsFragments;
 
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -15,6 +16,7 @@ import android.corso.dispensa.Dialog.ConfirmDeleteItemFarm;
 import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.R;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -108,6 +110,23 @@ public class MyItemListFragmentRecyclerViewAdapter extends RecyclerView.Adapter<
                         @Override
                         protected void onPostExecute(Void aVoid) {
                             super.onPostExecute(aVoid);
+                            /* Call 2nd fragment */
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("idItem",mItem.getBarcode() );
+
+                            ItemFragmentHead itemFragment = new ItemFragmentHead();
+                            ItemListFragment itemListFragment = new ItemListFragment();
+                            itemFragment.setArguments(bundle);
+                            itemListFragment.setArguments(bundle);
+
+                            AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
+                            if (mItem.getCategoryItem().equals(new CategoryItem().getCATEGORY_ALI())) {
+                                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment).addToBackStack(null).commit();
+                                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDisp, itemListFragment).addToBackStack(null).commit();
+                            } else if (mItem.getCategoryItem().equals(new CategoryItem().getCATEGORY_FAR())) {
+                                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTableFarm, itemFragment).addToBackStack(null).commit();
+                                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDispFarm, itemListFragment).addToBackStack(null).commit();
+                            }
 
                         }
                     }.execute();

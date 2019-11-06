@@ -14,6 +14,7 @@ import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Logic.CategoryItem;
+import android.corso.dispensa.Logic.OptionMenuLogic;
 import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.graphics.Bitmap;
@@ -22,6 +23,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -413,5 +417,30 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             setBarCode(data.getExtras().getString("Barcode"),true);
         }
     }
-    //TODO: ADD switch to layout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.optionmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuOpHome:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
+                return true;
+            case R.id.menuOpNotify:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
+                return true;
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
+                return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 }
