@@ -3,12 +3,15 @@ package android.corso.dispensa.Fragment.ProductFragments;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Dialog.DialogAlert;
 import android.corso.dispensa.Fragment.ItemsFragments.ItemFragmentHead;
 import android.corso.dispensa.Fragment.ItemsFragments.ItemListFragment;
 import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.R;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,14 +49,26 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.mType.setText(mValues.get(position).getProducttype() + "");
         holder.mBrand.setText(mValues.get(position).getBrand() + "");
-        //TODO: Passare la quantità
-        holder.mQuantity.setText(mValues.get(position).getCategory() + "");
+
         final Long _id = mValues.get(position).getIdbarcode();
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+
+
+                //TODO: Passare la quantità
+                holder.mQuantity.setText(DispensaDatabase.getInstance(holder.mType.getContext()).getArticoloDao().CountItemByBarcode(mValues.get(position).getIdbarcode())+"");
+                return null;
+            }
+        }.execute();
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

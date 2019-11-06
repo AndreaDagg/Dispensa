@@ -54,8 +54,7 @@ public class BarcodeDetect extends AppCompatActivity {
 
         //Call by alimenti or farmaci
         //Bundle extras = getIntent().getExtras();
-       // CALL = extras.getInt("call_by");
-
+        // CALL = extras.getInt("call_by");
 
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_DENIED) {
@@ -132,15 +131,17 @@ public class BarcodeDetect extends AppCompatActivity {
 
     private void confirmButton() {
         Button barcodeButton = (Button) findViewById(R.id.buttonBarcodeDetect);
+        final TextView textView = (TextView) findViewById(R.id.barcode_text);
         barcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!textView.getText().equals("...")) {
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("Barcode", barcodeRead);
-                    setResult(RESULT_OK,returnIntent);
+                    setResult(RESULT_OK, returnIntent);
                     finish();
 
+                }
             }
         });
 

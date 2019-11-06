@@ -52,14 +52,10 @@ public class ArticoliScaduti extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
                 getCategoryToShowALI();
                 getCategoryToShowFAR();
                 getIfShowToday();
-            }
-        });
+
 
 
 

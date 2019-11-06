@@ -57,10 +57,13 @@ public class productShopFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
             new AsyncTask<Void,Void,Void>(){
 
                 @Override
                 protected Void doInBackground(Void... voids) {
+
+
                     recyclerView.setAdapter(new MyproductShopRecyclerViewAdapter(
 
                             DispensaDatabase.getInstance(getContext()).getProdottoDao().findListShop(true)

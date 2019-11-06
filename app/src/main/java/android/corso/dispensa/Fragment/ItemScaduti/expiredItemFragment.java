@@ -75,7 +75,8 @@ public class expiredItemFragment extends Fragment {
             new AsyncTask<Void,Void,Void>(){
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));
+                   /* recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));*/
+                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));
                     return null;
                 }
             }.execute();
