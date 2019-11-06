@@ -22,6 +22,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,7 +45,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int CONFIRMED_SELECTION = 2;
     static final int REQUEST_CALL_FAR = 9;
-    static final int CODEBAR_LENGTH = 13;
+    static final int CODEBAR_LENGTH = 10;
     private byte[] ByteStringImage = null;
     private boolean CODEBAR_DETECTED = false, CODEBAR_IS_ALIM = false;
     private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0, CONFIRMED_BACK = 0;
@@ -96,8 +97,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!((EditText) findViewById(R.id.barCodeFarm)).getText().toString().matches("")) {
-                   /* DialogFragment newFragment = new DialogAlert("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?");
-                    newFragment.show(getSupportFragmentManager(), "dialog");*/
 
                     new AlertDialog.Builder(NuovoFarmacoActivity.this).setTitle("Barcode presente!").setMessage("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?")
                             .setPositiveButton("Procedi", new DialogInterface.OnClickListener() {
@@ -199,8 +198,9 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
 
 
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 caratteri", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 10 caratteri", Toast.LENGTH_SHORT);
             toast.show();
+            Log.d("-->",((EditText) findViewById(R.id.barCodeFarm)).getText().toString().length()+"" );
         }
     }
 
@@ -255,11 +255,11 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             return false;
         } else if (!(((EditText) findViewById(R.id.barCodeFarm)).getText().toString().length() == CODEBAR_LENGTH)) {
             if (print) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Il codice a barre deve contenere 13 caratteri.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Il codice a barre deve contenere 10 caratteri.", Toast.LENGTH_SHORT);
                 toast.show();
                 EditText targetView = (EditText) findViewById(R.id.barCodeFarm);
                 targetView.getParent().requestChildFocus(targetView, targetView);
-                targetView.setError("Assicurati che sia di 13 caratteri");
+                targetView.setError("Assicurati che sia di 10 caratteri");
             }
             return false;
         } else if (!(dateSelected == CONFIRMED_SELECTION)) {

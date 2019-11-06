@@ -31,7 +31,7 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
     static final String CATEGORYSELECTED = new CategoryItem().getCATEGORY_LIS(), DEFAULTINSERT = "1234";
     static final int CONFIRMED_SELECTION = 2;
     static final int REQUEST_CALL_LIS = 7;
-    static final int CODEBAR_LENGTH = 13;
+    static final int CODEBAR_LENGTH_ALI = 13,CODEBAR_LENGTH_FAR = 10;
     private int CONFIRMED_BACK = 0;
 
     @Override
@@ -124,7 +124,7 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private void setForms(final String barcodeInsert) {
         final Long barcode = Long.parseLong(barcodeInsert);
-        if (((TextView) findViewById(R.id.barCodeLis)).getText().toString().length() == CODEBAR_LENGTH) {
+        if ((((TextView) findViewById(R.id.barCodeLis)).getText().toString().length() == CODEBAR_LENGTH_ALI)||((TextView) findViewById(R.id.barCodeLis)).getText().toString().length() == CODEBAR_LENGTH_FAR) {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
@@ -148,7 +148,7 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
 
 
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 caratteri", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 o 10 caratteri", Toast.LENGTH_SHORT);
             toast.show();
         }
     }

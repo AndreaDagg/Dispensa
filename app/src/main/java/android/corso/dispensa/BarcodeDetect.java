@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.corso.dispensa.Logic.CategoryItem;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -42,6 +43,8 @@ public class BarcodeDetect extends AppCompatActivity {
     private CameraSource cameraSource;
     private TextView barcodeTextView;
     private String barcodeRead = null;
+    private int CALL;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +56,24 @@ public class BarcodeDetect extends AppCompatActivity {
 
 
         //Call by alimenti or farmaci
-        //Bundle extras = getIntent().getExtras();
-        // CALL = extras.getInt("call_by");
+        Bundle extras = getIntent().getExtras();
+        CALL = extras.getInt("call_by");
 
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{CAMERA}, 1);
         }
 
-        /*Barcode.QR_CODE |*/
-        detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.EAN_13).build();
+        if (this.CALL == 8) {
+            /*Barcode.QR_CODE |*/
+            detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.EAN_13).build();
+        } else if (this.CALL == 9) {
+            /*Barcode.QR_CODE |*/
+            detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.ITF).build();
+        } else {
+            detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.EAN_13 | Barcode.ITF).build();
+        }
+
 
         if (!detector.isOperational()) {
             //TODO: gestire in caso incui barcode non è operativo

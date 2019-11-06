@@ -121,7 +121,7 @@ public class ArticoliScaduti extends AppCompatActivity {
                     //removeFragmentList();
                     // replaceFragmentList(CATEGORY);
                     setFragmentList(CATEGORY);
-                    Toast.makeText(getApplicationContext(),"Prodotti in scadenza nei porsssimi "+ new SharedPreferencesApp(getApplicationContext()).getDayFuture()+" giorni",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Prodotti in scadenza nei prossimi "+ new SharedPreferencesApp(getApplicationContext()).getDayFuture()+" giorni",Toast.LENGTH_SHORT).show();
 
                 } else {
                     futureExpireds = false;

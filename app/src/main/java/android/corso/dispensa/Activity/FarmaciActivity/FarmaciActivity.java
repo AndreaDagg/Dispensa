@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.corso.dispensa.Logic.CheckDeadline;
 import android.corso.dispensa.Logic.OptionMenuLogic;
+import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,7 +52,13 @@ public class FarmaciActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
