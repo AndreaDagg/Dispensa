@@ -22,7 +22,7 @@ public class SharedPreferencesApp {
     public int getHourPreferences() {
         int hour = 11;
         if (getSharedPreferences() != null) {
-            hour = getSharedPreferences().getInt("hourpreferences", 1);
+            hour = getSharedPreferences().getInt("hourpreferences", 12);
         }
         return hour;
     }
@@ -30,7 +30,7 @@ public class SharedPreferencesApp {
     public int getMinutesPreferences() {
         int minutes = 11;
         if (getSharedPreferences() != null) {
-            minutes = getSharedPreferences().getInt("minutepreferences", 45);
+            minutes = getSharedPreferences().getInt("minutepreferences", 30);
         }
         return minutes;
     }
