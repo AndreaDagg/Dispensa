@@ -6,18 +6,15 @@ import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -29,10 +26,7 @@ import java.util.Objects;
  */
 public class ProdottoFragment extends Fragment {
     private String CALLBY = null;
-
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -45,7 +39,6 @@ public class ProdottoFragment extends Fragment {
         this.CALLBY = call_by;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +46,6 @@ public class ProdottoFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-
-
     }
 
     @Override
@@ -79,7 +70,6 @@ public class ProdottoFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-
             new AsyncTask<Void, Void, List<ProdottoEntity>>() {
                 @Override
                 protected List<ProdottoEntity> doInBackground(Void... voids) {
@@ -101,11 +91,7 @@ public class ProdottoFragment extends Fragment {
                     });
                 }
             }.execute();
-
-
         }
-
-
         return view;
     }
 
@@ -120,7 +106,6 @@ public class ProdottoFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ProdottoEntity item);
     }
 }

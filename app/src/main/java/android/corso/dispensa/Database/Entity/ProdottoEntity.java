@@ -13,7 +13,7 @@ public class ProdottoEntity {
 
     @PrimaryKey(autoGenerate = true)
     private Long _id;
-    private Long idbarcode;   //TODO:It's not autoGenerate we have to do the check before the insert
+    private Long idbarcode;
     private String category;
     private String brand;
     private String producttype;

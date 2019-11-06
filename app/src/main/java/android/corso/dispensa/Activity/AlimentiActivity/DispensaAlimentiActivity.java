@@ -49,14 +49,6 @@ public class DispensaAlimentiActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-       Intent intent = new Intent(getApplicationContext(), AlimentiActivity.class);
-       startActivity(intent);
-       return super.onKeyDown(keyCode, event);
-    }*/
-
     public boolean setFragmentHead() {
         getSupportFragmentManager().beginTransaction().add(R.id.frameNameTable, new DispensaFragment()).commit();
         return true;

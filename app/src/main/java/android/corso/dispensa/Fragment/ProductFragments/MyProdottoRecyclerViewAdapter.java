@@ -39,7 +39,6 @@ public class MyProdottoRecyclerViewAdapter extends RecyclerView.Adapter<MyProdot
         mListener = listener;
         if (items.size() == 0) {
             DialogAlert dialogAlert = new DialogAlert("Nessun elemento trovato!");
-            //TODO: forse non si possono iusare i dialog
         }
     }
 

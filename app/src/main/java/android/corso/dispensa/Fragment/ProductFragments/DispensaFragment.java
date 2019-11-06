@@ -37,13 +37,11 @@ public class DispensaFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_dispensa, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
     /**
      * This interface must be implemented by activities that contain this
@@ -56,7 +54,6 @@ public class DispensaFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -38,12 +38,4 @@ public interface ArticoloDao {
     @Query("UPDATE articoloentity SET used = :usedpass WHERE id = :idart")
     public  void updateUsedById(Long idart,boolean usedpass);
 
-
-   /* @Query("SELECT *, MIN(yeardeadline) as yearcurrent FROM articoloentity")
-    public List<ArticoloEntity> getExpired(int yearcurrent);*/
-
-   /*@Query("SELECT id,barcode,daydeadline,monthdeadline,yeardeadline FROM articoloentity")
-   public List<ArticoloEntity> getExpiredInfo();*/
-
-
 }

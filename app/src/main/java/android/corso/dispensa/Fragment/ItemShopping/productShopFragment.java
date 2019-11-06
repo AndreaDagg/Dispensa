@@ -23,9 +23,7 @@ import java.util.Objects;
 
 public class productShopFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -60,14 +58,10 @@ public class productShopFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
-
             new AsyncTask<Void, Void, List<ProdottoEntity>>() {
 
                 @Override
                 protected List<ProdottoEntity> doInBackground(Void... voids) {
-
-
                     return DispensaDatabase.getInstance(getContext()).getProdottoDao().findListShop(true);
                 }
 
@@ -81,11 +75,8 @@ public class productShopFragment extends Fragment {
                                     prodottoEntities, mListener));
                         }
                     });
-
                 }
             }.execute();
-
-
         }
         return view;
     }
@@ -102,7 +93,6 @@ public class productShopFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ProdottoEntity item);
     }
 }

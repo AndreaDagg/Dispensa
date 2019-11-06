@@ -36,19 +36,14 @@ public class expiredItemFragment extends Fragment {
 
     private String CALLBY;
     private boolean TODAY;
-
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     public expiredItemFragment(String callby, boolean today) {
         this.CALLBY = callby;
         this.TODAY = today;
-
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +106,6 @@ public class expiredItemFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ArticoloEntity item);
     }
 }

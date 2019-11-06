@@ -42,19 +42,15 @@ public class ArticoliScaduti extends AppCompatActivity {
 
         setContentView(R.layout.activity_articoli_scaduti);
         setFragmentList(new CategoryItem().getCATEGORY_ALI());
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-                getCategoryToShowALI();
-                getCategoryToShowFAR();
-                getIfShowToday();
-
-
+        getCategoryToShowALI();
+        getCategoryToShowFAR();
+        getIfShowToday();
 
 
     }
@@ -70,9 +66,6 @@ public class ArticoliScaduti extends AppCompatActivity {
 
                 AlphaAnimation buttonClick = new AlphaAnimation(1F, 1.5F);
                 v.startAnimation(buttonClick);
-
-                // removeFragmentList();
-                //replaceFragmentList(CATEGORY);
                 setFragmentList(CATEGORY);
 
                 Button buttonFar = (Button) findViewById(R.id.buttonFarDead);
@@ -96,9 +89,6 @@ public class ArticoliScaduti extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CATEGORY = new CategoryItem().getCATEGORY_FAR();
-
-                //removeFragmentList();
-                //replaceFragmentList(CATEGORY);
                 setFragmentList(CATEGORY);
                 Button ButtonAli = (Button) findViewById(R.id.buttonAliDead);
                 buttonFar.setBackgroundColor(getResources().getColor(R.color.blueSwitch, getTheme()));
@@ -118,42 +108,19 @@ public class ArticoliScaduti extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (switchToday.isChecked()) {
                     futureExpireds = true;
-                    //removeFragmentList();
-                    // replaceFragmentList(CATEGORY);
                     setFragmentList(CATEGORY);
-                    Toast.makeText(getApplicationContext(),"Prodotti in scadenza nei prossimi "+ new SharedPreferencesApp(getApplicationContext()).getDayFuture()+" giorni",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Prodotti in scadenza nei prossimi " + new SharedPreferencesApp(getApplicationContext()).getDayFuture() + " giorni", Toast.LENGTH_SHORT).show();
 
                 } else {
                     futureExpireds = false;
-                    //removeFragmentList();
-                    // replaceFragmentList(CATEGORY);
                     setFragmentList(CATEGORY);
                 }
             }
         });
-
     }
 
     public void setFragmentList(String category) {
         getSupportFragmentManager().beginTransaction().add(FrameDeadLine, new expiredItemFragment(category, futureExpireds)).addToBackStack(null).commitAllowingStateLoss();
-
-
-    }
-
-
-    public void replaceFragmentList(final String category) {
-        getSupportFragmentManager().beginTransaction().replace(FrameDeadLine, new expiredItemFragment(category, futureExpireds)).addToBackStack(null).commit();
-        getSupportFragmentManager().executePendingTransactions();
-
-
-    }
-
-    public void removeFragmentList() {
-       /* FrameLayout frameLayout = findViewById(FrameDeadLine);
-        frameLayout.removeAllViews();*/
-
-        getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(FrameDeadLine))).commit();
-        // getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
     }
 
     @Override
@@ -186,8 +153,6 @@ public class ArticoliScaduti extends AppCompatActivity {
             case R.id.menuOpInfo:
                 startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 }

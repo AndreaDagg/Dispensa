@@ -170,7 +170,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                             CODEBAR_IS_ALIM = true;
                         }
                     } else {
-                        return null; //TODO: CHEcK
+                        return null;
                     }
                     return ByteStringImage;
                 }
@@ -200,7 +200,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 10 caratteri", Toast.LENGTH_SHORT);
             toast.show();
-            Log.d("-->",((EditText) findViewById(R.id.barCodeFarm)).getText().toString().length()+"" );
         }
     }
 
@@ -287,7 +286,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                 EditText targetView = (EditText) findViewById(R.id.InsTipoFarm);
                 targetView.getParent().requestChildFocus(targetView, targetView);
                 targetView.setError("Inserisci il tipo");
-
             }
             return false;
         } else if (ByteStringImage == null) {
@@ -305,7 +303,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             }
             return false;
         }
-
         return true;
     }
 
@@ -321,7 +318,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
 
                     @Override
                     protected Boolean doInBackground(Void... voids) {
-
 
                         if (checkInsertForm(false)) {
                             ArticoloEntity articoloEntity = new ArticoloEntity();
@@ -352,8 +348,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                             articoloEntity.setMonthdeadline(monthSelected);
                             articoloEntity.setYeardeadline(yearSelected);
                             articoloEntity.setUsed(false); //Full 100%
-
-
                             Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
 
                             //Start homeActivity if switch is false
@@ -390,8 +384,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
 
                     }
                 }.execute();
-
-                //TODO: Gestire la migrazione
             }
         });
     }
@@ -414,9 +406,10 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             setPictureProdotto(imageBitmap, true);
 
         } else if (requestCode == REQUEST_CALL_FAR && resultCode == RESULT_OK) {
-            setBarCode(data.getExtras().getString("Barcode"),true);
+            setBarCode(data.getExtras().getString("Barcode"), true);
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -439,8 +432,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             case R.id.menuOpInfo:
                 startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 }

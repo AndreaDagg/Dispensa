@@ -103,8 +103,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) {
-                   /* DialogFragment newFragment = new DialogAlert("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?");
-                    newFragment.show(getSupportFragmentManager(), "dialog");*/
 
                     new AlertDialog.Builder(NuovoAlimentoActivity.this).setTitle("Barcode presente!").setMessage("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?")
                             .setPositiveButton("Procedi", new DialogInterface.OnClickListener() {
@@ -180,7 +178,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
 
                     } else {
-                        return null; //TODO: CHEcK
+                        return null;
                     }
                     return ByteStringImage;
                 }
@@ -400,8 +398,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
                     }
                 }.execute();
-
-                //TODO: Gestire la migrazione
             }
         });
     }

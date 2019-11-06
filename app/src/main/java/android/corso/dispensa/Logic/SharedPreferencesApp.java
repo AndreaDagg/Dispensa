@@ -11,9 +11,7 @@ public class SharedPreferencesApp {
 
     public SharedPreferencesApp(Context context) {
         this.CONTEXT = context;
-
     }
-
 
     public SharedPreferences getSharedPreferences() {
 
@@ -43,7 +41,6 @@ public class SharedPreferencesApp {
         editor.putInt("hourpreferences", hour);
         editor.putInt("minutepreferences", minutes);
         editor.apply();
-        //TODO:AppStart();
         Toast.makeText(CONTEXT, "Salvato!", Toast.LENGTH_SHORT).show();
         NotificationApp notificationApp = new NotificationApp(CONTEXT);
         notificationApp.deleteAlarm();
@@ -81,22 +78,19 @@ public class SharedPreferencesApp {
     }
 
 
-    public void saveFuture(int futurday){
+    public void saveFuture(int futurday) {
         SharedPreferences sharedPreferences = CONTEXT.getSharedPreferences("DispensaSetting", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("dayfuture",futurday);
+        editor.putInt("dayfuture", futurday);
         editor.apply();
 
     }
 
-
-    public int getDayFuture(){
+    public int getDayFuture() {
         int day = 7;
         if (getSharedPreferences() != null) {
             day = getSharedPreferences().getInt("dayfuture", 7);
         }
         return day;
     }
-
-
 }

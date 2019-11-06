@@ -52,35 +52,20 @@ public class CheckDeadline {
 
                 articoloEntitiesInfoFromDB = DispensaDatabase.getInstance(context).getArticoloDao().findAll();
 
-
                 for (int i = 0; i < articoloEntitiesInfoFromDB.size(); i++) {
 
                     if (articoloEntitiesInfoFromDB.get(i).getYeardeadline() < getCURRENTYEAR()) {
-                        //Scaduto
-                       /* Log.d("Scaduto: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                        Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-
                         addExpired(articoloEntitiesInfoFromDB.get(i), EXPIRED);
 
                     } else if (articoloEntitiesInfoFromDB.get(i).getYeardeadline() == getCURRENTYEAR()) {
                         if (articoloEntitiesInfoFromDB.get(i).getMonthdeadline() < getCURRENTMONTH()) {
-                            //Scaduto
-                           /* Log.d("Scaduto: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                            Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-
                             addExpired(articoloEntitiesInfoFromDB.get(i), EXPIRED);
+
                         } else if (articoloEntitiesInfoFromDB.get(i).getMonthdeadline() == getCURRENTMONTH()) {
                             if (articoloEntitiesInfoFromDB.get(i).getDaydeadline() < getCURRENTDAY()) {
-                                //Scaduto
-                               /* Log.d("Scaduto: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                                Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
-
                                 addExpired(articoloEntitiesInfoFromDB.get(i), EXPIRED);
 
                             } else if (articoloEntitiesInfoFromDB.get(i).getDaydeadline() == getCURRENTDAY()) {
-                                //Scade oggi
-                               /* Log.d("Scaduto OGGI: ", articoloEntitiesInfoFromDB.get(i).getId().toString() + " || " + articoloEntitiesInfoFromDB.get(i).getBarcode().toString());
-                                Log.d("S=> ", articoloEntitiesInfoFromDB.get(i).getDaydeadline() + " " + articoloEntitiesInfoFromDB.get(i).getMonthdeadline() + " " + articoloEntitiesInfoFromDB.get(i).getYeardeadline());*/
                                 addExpired(articoloEntitiesInfoFromDB.get(i), EXPIRED);
                             }
                         }
@@ -138,22 +123,17 @@ public class CheckDeadline {
                     for (int i = 0; i < getArticoloEntitiesExpired().size(); i++) {
 
                         if (getArticoloEntitiesExpired().get(i).getCategoryItem().equals(category)) {
-
                             getArticoloEntitiesByCategory.add(getArticoloEntitiesExpired().get(i));
                         }
-
                     }
                 } else {
                     for (int i = 0; i < getGetArticoloEntitiesExpiredInDays().size(); i++) {
 
                         if (getGetArticoloEntitiesExpiredInDays().get(i).getCategoryItem().equals(category)) {
-
                             getArticoloEntitiesByCategory.add(getGetArticoloEntitiesExpiredInDays().get(i));
                         }
-
                     }
                 }
-
                 return null;
             }
         }.execute();
@@ -193,8 +173,5 @@ public class CheckDeadline {
         CURRENTDAY_PLUS = calendar_plus.get(Calendar.DAY_OF_MONTH);
         CURRENTMONTH_PLUS = calendar_plus.get(Calendar.MONTH);
         CURRENTYEAR_PLUS = calendar_plus.get(Calendar.YEAR);
-
-
     }
-
 }

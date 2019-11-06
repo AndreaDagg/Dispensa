@@ -34,17 +34,12 @@ import static android.Manifest.permission.CAMERA;
 
 public class BarcodeDetect extends AppCompatActivity {
 
-   /* private static int CALL_BY_ALI = 8;
-    private static int CALL_BY_FAR = 9;
-    private int CALL = 0;*/
-
     private BarcodeDetector detector;
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private TextView barcodeTextView;
     private String barcodeRead = null;
     private int CALL;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +71,6 @@ public class BarcodeDetect extends AppCompatActivity {
 
 
         if (!detector.isOperational()) {
-            //TODO: gestire in caso incui barcode non è operativo
             return;
         }
 
