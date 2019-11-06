@@ -3,24 +3,30 @@ package android.corso.dispensa.Dialog;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.corso.dispensa.Activity.AlimentiActivity.DispensaAlimentiActivity;
 import android.corso.dispensa.Activity.ArticoliScaduti;
+import android.corso.dispensa.Activity.FarmaciActivity.DispensaFarmaciActivity;
 import android.corso.dispensa.Database.DispensaDatabase;
+import android.corso.dispensa.Fragment.ItemsFragments.ItemFragmentHead;
+import android.corso.dispensa.Fragment.ItemsFragments.ItemListFragment;
+import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-public class ConfirmDeleteItem extends DialogFragment {
+public class ConfirmDeleteItemAlim extends DialogFragment {
 
-    private Long IDITEM;
+    private Long IDITEM, BARCODEITEM;
     private String CATEGORY;
-    private ArticoliScaduti articoliScaduti;
-
-
+    private DispensaAlimentiActivity dispensaAlimentiActivity;
+    private Context contextItem;
 
 
     @NonNull
@@ -46,7 +52,19 @@ public class ConfirmDeleteItem extends DialogFragment {
                         super.onPostExecute(aVoid);
 
                         // articoliScaduti.removeFragmentList();
-                        articoliScaduti.setFragmentList(CATEGORY);
+                        // dispensaAlimentiActivity.setFragmentList();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("idItem", BARCODEITEM);
+                        ItemFragmentHead itemFragment = new ItemFragmentHead();
+                        ItemListFragment itemListFragment = new ItemListFragment();
+                        itemFragment.setArguments(bundle);
+                        itemListFragment.setArguments(bundle);
+
+                        AppCompatActivity appCompatActivity = (AppCompatActivity) contextItem;
+                        appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameNameTable, itemFragment).addToBackStack(null).commit();
+                        appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentDisp, itemListFragment).addToBackStack(null).commit();
+
                     }
                 }.execute();
 
@@ -63,11 +81,15 @@ public class ConfirmDeleteItem extends DialogFragment {
         return builder.create();
     }
 
-    public void setIdItem(long id_item, String category, ArticoliScaduti scaduti) {
+    public void setIdItem(long id_item, String category, Long barcode, DispensaAlimentiActivity scaduti) {
         this.IDITEM = id_item;
         this.CATEGORY = category;
-        this.articoliScaduti = scaduti;
+        this.dispensaAlimentiActivity = scaduti;
+        this.BARCODEITEM = barcode;
     }
 
+    public void setContext(Context context) {
+        this.contextItem = context;
+    }
 
 }

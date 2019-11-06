@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -60,31 +61,34 @@ public class productShopFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+
+            new AsyncTask<Void, Void, List<ProdottoEntity>>() {
+
                 @Override
-                public void run() {
-                    new AsyncTask<Void,Void,Void>(){
-
-                        @Override
-                        protected Void doInBackground(Void... voids) {
+                protected List<ProdottoEntity> doInBackground(Void... voids) {
 
 
-                            recyclerView.setAdapter(new MyproductShopRecyclerViewAdapter(
-
-                                    DispensaDatabase.getInstance(getContext()).getProdottoDao().findListShop(true)
-                                    , mListener));
-                            return null;
-                        }
-                    }.execute();
+                    return DispensaDatabase.getInstance(getContext()).getProdottoDao().findListShop(true);
                 }
-            });
+
+                @Override
+                protected void onPostExecute(final List<ProdottoEntity> prodottoEntities) {
+                    super.onPostExecute(prodottoEntities);
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(new MyproductShopRecyclerViewAdapter(
+                                    prodottoEntities, mListener));
+                        }
+                    });
+
+                }
+            }.execute();
 
 
         }
         return view;
     }
-
-
 
 
     /**

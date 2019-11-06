@@ -18,6 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -75,13 +78,27 @@ public class ProdottoFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            new AsyncTask<Void,Void,Void>(){
+
+
+            new AsyncTask<Void, Void, List<ProdottoEntity>>() {
                 @Override
-                protected Void doInBackground(Void... voids) {
-                    recyclerView.setAdapter(new MyProdottoRecyclerViewAdapter(
-                         DispensaDatabase.getInstance(getContext()).getProdottoDao().findAllByCategory(CALLBY), mListener
-                    ));
-                    return null;
+                protected List<ProdottoEntity> doInBackground(Void... voids) {
+
+                    return DispensaDatabase.getInstance(getContext()).getProdottoDao().findAllByCategory(CALLBY);
+                }
+
+                @Override
+                protected void onPostExecute(final List<ProdottoEntity> prodottoEntities) {
+                    super.onPostExecute(prodottoEntities);
+
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(new MyProdottoRecyclerViewAdapter(
+                                    prodottoEntities, mListener
+                            ));
+                        }
+                    });
                 }
             }.execute();
 

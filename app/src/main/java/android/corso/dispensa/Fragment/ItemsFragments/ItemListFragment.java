@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -68,21 +69,27 @@ public class ItemListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+
+            new AsyncTask<Void, Void, List<ArticoloEntity>>() {
                 @Override
-                public void run() {
-                    new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            recyclerView.setAdapter(new MyItemListFragmentRecyclerViewAdapter(
-                                    DispensaDatabase.getInstance(getContext()).getArticoloDao().findByBarcode(barcode), mListener));
-
-
-                            return null;
-                        }
-                    }.execute();
+                protected List<ArticoloEntity> doInBackground(Void... voids) {
+                    return DispensaDatabase.getInstance(getContext()).getArticoloDao().findByBarcode(barcode);
                 }
-            });
+
+                @Override
+                protected void onPostExecute(final List<ArticoloEntity> articoloEntities) {
+                    super.onPostExecute(articoloEntities);
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(new MyItemListFragmentRecyclerViewAdapter(
+                                    articoloEntities, mListener));
+                        }
+                    });
+
+                }
+            }.execute();
+
 
         }
         return view;

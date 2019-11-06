@@ -23,6 +23,7 @@ import android.corso.dispensa.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A fragment representing a list of Items.
@@ -72,12 +73,24 @@ public class expiredItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            new AsyncTask<Void,Void,Void>(){
+            new AsyncTask<Void,Void,List<ArticoloEntity>>(){
                 @Override
-                protected Void doInBackground(Void... voids) {
-                   /* recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));*/
-                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));
-                    return null;
+                protected List<ArticoloEntity> doInBackground(Void... voids) {
+
+                    return new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY);
+                }
+
+                @Override
+                protected void onPostExecute(final List<ArticoloEntity> articoloEntities) {
+                    super.onPostExecute(articoloEntities);
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            /* recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context,4).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));*/
+                            recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
+                        }
+                    });
+
                 }
             }.execute();
 
