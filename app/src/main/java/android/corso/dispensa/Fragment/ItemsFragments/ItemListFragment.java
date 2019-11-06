@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
+import java.util.Objects;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -66,16 +68,22 @@ public class ItemListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            new AsyncTask<Void, Void, Void>() {
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                 @Override
-                protected Void doInBackground(Void... voids) {
-                    recyclerView.setAdapter(new MyItemListFragmentRecyclerViewAdapter(
-                            DispensaDatabase.getInstance(getContext()).getArticoloDao().findByBarcode(barcode), mListener));
+                public void run() {
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            recyclerView.setAdapter(new MyItemListFragmentRecyclerViewAdapter(
+                                    DispensaDatabase.getInstance(getContext()).getArticoloDao().findByBarcode(barcode), mListener));
 
 
-                    return null;
+                            return null;
+                        }
+                    }.execute();
                 }
-            }.execute();
+            });
+
         }
         return view;
     }

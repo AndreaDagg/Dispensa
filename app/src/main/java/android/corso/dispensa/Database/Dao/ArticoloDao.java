@@ -1,6 +1,7 @@
 package android.corso.dispensa.Database.Dao;
 
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
+import android.util.Log;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -33,6 +34,9 @@ public interface ArticoloDao {
 
     @Query("SELECT * FROM articoloentity WHERE id LIKE :iditem")
     public ArticoloEntity findItemByIdItem(Long iditem);
+
+    @Query("UPDATE articoloentity SET used = :usedpass WHERE id = :idart")
+    public  void updateUsedById(Long idart,boolean usedpass);
 
 
    /* @Query("SELECT *, MIN(yeardeadline) as yearcurrent FROM articoloentity")

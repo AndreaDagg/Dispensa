@@ -347,7 +347,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                             articoloEntity.setDaydeadline(daySelected);
                             articoloEntity.setMonthdeadline(monthSelected);
                             articoloEntity.setYeardeadline(yearSelected);
-                            articoloEntity.setUsed(100); //Full 100%
+                            articoloEntity.setUsed(false); //Full 100%
 
 
                             Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);

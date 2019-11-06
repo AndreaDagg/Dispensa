@@ -12,10 +12,11 @@
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <ToggleButton
-        android:id="@+id/ItemToggleButton"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/ItemButtonUsed"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="ToggleButton" />
+       />
+
 </LinearLayout>

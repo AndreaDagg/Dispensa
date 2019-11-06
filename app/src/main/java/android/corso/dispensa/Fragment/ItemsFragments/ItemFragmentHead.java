@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -49,32 +51,39 @@ public class ItemFragmentHead extends Fragment {
         Bundle bundle = this.getArguments();
         final Long _idItem = (Long) bundle.get("idItem");
 
-        new AsyncTask<Void, Void, Void>() {
+
+        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
-            protected Void doInBackground(Void... voids) {
-                ProdottoEntity prodottoEntity = new ProdottoEntity();
-                prodottoEntity = DispensaDatabase.getInstance(getContext()).getProdottoDao().findInfoById(_idItem);
+            public void run() {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        ProdottoEntity prodottoEntity = new ProdottoEntity();
+                        prodottoEntity = DispensaDatabase.getInstance(getContext()).getProdottoDao().findInfoById(_idItem);
 
 
-                TextView textViewItem = (TextView) view.findViewById(R.id.ItemFragmentItem);
-                TextView textViewBrand = (TextView) view.findViewById(R.id.ItemFragmentBrand);
-                TextView textViewQuantity = (TextView) view.findViewById(R.id.ItemFragmentQuantity);
-                ImageView imageViewPicture = (ImageView) view.findViewById(R.id.ItemFragmentImage);
-                textViewItem.setText(prodottoEntity.getProducttype());
-                textViewBrand.setText(prodottoEntity.getBrand());
-                textViewQuantity.setText("Quantità: " +  DispensaDatabase.getInstance(getContext()).getArticoloDao().CountItemByBarcode(_idItem));
+                        TextView textViewItem = (TextView) view.findViewById(R.id.ItemFragmentItem);
+                        TextView textViewBrand = (TextView) view.findViewById(R.id.ItemFragmentBrand);
+                        TextView textViewQuantity = (TextView) view.findViewById(R.id.ItemFragmentQuantity);
+                        ImageView imageViewPicture = (ImageView) view.findViewById(R.id.ItemFragmentImage);
+                        textViewItem.setText(prodottoEntity.getProducttype());
+                        textViewBrand.setText(prodottoEntity.getBrand());
+                        textViewQuantity.setText("Quantità: " + DispensaDatabase.getInstance(getContext()).getArticoloDao().CountItemByBarcode(_idItem));
 
-                if (prodottoEntity.getImage() != null) {
-                    Bitmap bitmapImage = BitmapFactory.decodeByteArray(prodottoEntity.getImage(), 0, prodottoEntity.getImage().length);
-                    bitmapImage = Bitmap.createScaledBitmap(bitmapImage, 120, 190, true);
-                    imageViewPicture.setImageBitmap(bitmapImage);
-                } else {
-                    Toast toast = Toast.makeText(getContext(),"Nessuna immagine trovata", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                return null;
+                        if (prodottoEntity.getImage() != null) {
+                            Bitmap bitmapImage = BitmapFactory.decodeByteArray(prodottoEntity.getImage(), 0, prodottoEntity.getImage().length);
+                            bitmapImage = Bitmap.createScaledBitmap(bitmapImage, 120, 190, true);
+                            imageViewPicture.setImageBitmap(bitmapImage);
+                        } else {
+                            Toast toast = Toast.makeText(getContext(), "Nessuna immagine trovata", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        return null;
+                    }
+                }.execute();
             }
-        }.execute();
+        });
+
 
         return view;
     }

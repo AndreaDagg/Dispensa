@@ -14,7 +14,7 @@ public class ArticoloEntity {
     private int daydeadline;
     private int monthdeadline;
     private int yeardeadline;
-    private int used;
+    private boolean used;
     private String categoryItem;
 
     public String getCategoryItem() {
@@ -65,11 +65,11 @@ public class ArticoloEntity {
         this.barcode = barcode;
     }
 
-    public int getUsed() {
+    public boolean isUsed() {
         return used;
     }
 
-    public void setUsed(int used) {
+    public void setUsed(boolean used) {
         this.used = used;
     }
 }

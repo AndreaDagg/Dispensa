@@ -220,7 +220,20 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
 
                                 Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
                             } else {
+                                /*Update if is aliment or drugs */
                                 if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().getCategoryById(barcode).equals(new CategoryItem().getCATEGORY_ALI())) {
+                                    DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().updateProdottoIsList(true, barcode);
+
+                                    if (((EditText) findViewById(R.id.InsQuantLis)).getText().toString().matches("")) {
+                                        DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().updateProdottoQuantity(
+                                                DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().getQuantuityNewBuy(barcode) + 1, barcode);
+                                    } else {
+                                        DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().updateProdottoQuantity(
+                                                DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().getQuantuityNewBuy(barcode) +
+                                                        Integer.parseInt(((EditText) findViewById(R.id.InsQuantLis)).getText().toString()), barcode);
+                                    }
+
+                                }else if (DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().getCategoryById(barcode).equals(new CategoryItem().getCATEGORY_FAR())) {
                                     DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().updateProdottoIsList(true, barcode);
 
                                     if (((EditText) findViewById(R.id.InsQuantLis)).getText().toString().matches("")) {
