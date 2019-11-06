@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="android.corso.dispensa"
-    android:versionCode="3"
-    android:versionName="demo3"
+    android:versionCode="4"
+    android:versionName="demo4"
     tools:ignore="GradleOverrides">
 
     <meta-data
@@ -27,8 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.Info"></activity>
-        <activity android:name=".Activity.FutureExpireds" />
+        <activity
+            android:name=".Activity.Info"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.FutureExpireds"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.NotificationSet"
             android:label="Notifiche"

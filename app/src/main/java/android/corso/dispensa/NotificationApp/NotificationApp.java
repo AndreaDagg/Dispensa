@@ -84,8 +84,8 @@ public class NotificationApp {
 
                 NotificationCompat.Builder notificationBuilderExpired = new NotificationCompat.Builder(context, "dispensa_channel")
                         .setSmallIcon(R.drawable.apple16px)
-                        .setContentTitle("Prodotti scaduti!")
-                        .setContentText("Clicca per aprire la lista dei prodotti scaduti!")
+                        .setContentTitle("Attenzione dei prodotti stanno per scadere!")
+                        .setContentText("Clicca per aprire la lista dei prodotti scaduti o che stanno per scadere!")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(pendingIntent)
                         .addAction(R.drawable.ic_launcher_background, "Lista prodotti scaduti", pendingIntent);

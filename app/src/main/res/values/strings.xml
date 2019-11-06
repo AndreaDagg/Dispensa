@@ -57,6 +57,7 @@
     <string name="Info">Info</string>
     <string name="future">Scadenze future: </string>
 
+    <string name="insertDay"> Inserisci intervallo </string>
     <string name="insertHour">Inserisci nuovo orario</string>
     <string name="twHour">Orario di notifica: </string>
 

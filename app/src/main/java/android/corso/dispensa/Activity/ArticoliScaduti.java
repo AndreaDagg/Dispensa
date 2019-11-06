@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.corso.dispensa.Fragment.ItemScaduti.expiredItemFragment;
 import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.Logic.OptionMenuLogic;
+import android.corso.dispensa.Logic.SharedPreferencesApp;
 import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -72,8 +74,6 @@ public class ArticoliScaduti extends AppCompatActivity {
                 // removeFragmentList();
                 //replaceFragmentList(CATEGORY);
                 setFragmentList(CATEGORY);
-                /*ViewGroup viewGroup = findViewById(FrameDeadLine);
-                viewGroup.invalidate();*/
 
                 Button buttonFar = (Button) findViewById(R.id.buttonFarDead);
                 ButtonAli.setBackgroundColor(getResources().getColor(R.color.blueSwitch, getTheme()));
@@ -100,10 +100,6 @@ public class ArticoliScaduti extends AppCompatActivity {
                 //removeFragmentList();
                 //replaceFragmentList(CATEGORY);
                 setFragmentList(CATEGORY);
-
-               /* ViewGroup viewGroup = findViewById(FrameDeadLine);
-                viewGroup.invalidate();*/
-
                 Button ButtonAli = (Button) findViewById(R.id.buttonAliDead);
                 buttonFar.setBackgroundColor(getResources().getColor(R.color.blueSwitch, getTheme()));
                 buttonFar.setTextColor(getResources().getColor(R.color.greyLight, getTheme()));
@@ -125,6 +121,7 @@ public class ArticoliScaduti extends AppCompatActivity {
                     //removeFragmentList();
                     // replaceFragmentList(CATEGORY);
                     setFragmentList(CATEGORY);
+                    Toast.makeText(getApplicationContext(),"Prodotti in scadenza nei porsssimi "+ new SharedPreferencesApp(getApplicationContext()).getDayFuture()+" giorni",Toast.LENGTH_SHORT).show();
 
                 } else {
                     futureExpireds = false;

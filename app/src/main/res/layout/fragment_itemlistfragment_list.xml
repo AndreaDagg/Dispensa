@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".Fragment.ItemsFragments.ItemListFragment"
     tools:listitem="@layout/fragment_itemlistfragment" />

@@ -51,9 +51,8 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="300dp"
         android:background="@drawable/button_border"
-        android:text="@string/insertHour"
+        android:text="@string/insertDay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hourSet"
         app:layout_constraintTop_toBottomOf="@+id/ViewFuture" />
 </androidx.constraintlayout.widget.ConstraintLayout>

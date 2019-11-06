@@ -80,9 +80,7 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!((TextView) findViewById(R.id.barCodeLis)).getText().toString().matches("")) {
-                   /* DialogFragment newFragment = new DialogAlert("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?");
-                    newFragment.show(getSupportFragmentManager(), "dialog");*/
-
+                  
                     new AlertDialog.Builder(AggiungiArticloloActivity.this).setTitle("Barcode presente!").setMessage("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?")
                             .setPositiveButton("Procedi", new DialogInterface.OnClickListener() {
                                 @Override
@@ -140,7 +138,7 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
 
 
                     } else {
-                        return null; //TODO: CHEcK
+                        return null;
                     }
                     return null;
                 }
@@ -277,7 +275,7 @@ public class AggiungiArticloloActivity extends AppCompatActivity {
                     }
                 }.execute();
 
-                //TODO: Gestire la migrazione
+                
             }
         });
     }
