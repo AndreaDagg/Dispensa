@@ -15,6 +15,7 @@ import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Logic.CategoryItem;
+import android.corso.dispensa.Logic.OptionMenuLogic;
 import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.graphics.Bitmap;
@@ -23,6 +24,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -99,8 +103,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!((EditText) findViewById(R.id.barCodeAlim)).getText().toString().matches("")) {
-                   /* DialogFragment newFragment = new DialogAlert("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?");
-                    newFragment.show(getSupportFragmentManager(), "dialog");*/
 
                     new AlertDialog.Builder(NuovoAlimentoActivity.this).setTitle("Barcode presente!").setMessage("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?")
                             .setPositiveButton("Procedi", new DialogInterface.OnClickListener() {
@@ -176,7 +178,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
 
                     } else {
-                        return null; //TODO: CHEcK
+                        return null;
                     }
                     return ByteStringImage;
                 }
@@ -194,7 +196,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                     } else if (CODEBAR_IS_FARM) {
                         setPictureProdotto(null, false);
                         Toast.makeText(getApplicationContext(), "ATTENZIONE: Il barcode è un farmaco", Toast.LENGTH_LONG).show();
-                        setBarCode("",false);
+                        setBarCode("", false);
                         CODEBAR_IS_FARM = false;
                     } else {
                         setPictureProdotto(null, false);
@@ -357,7 +359,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                             articoloEntity.setDaydeadline(daySelected);
                             articoloEntity.setMonthdeadline(monthSelected);
                             articoloEntity.setYeardeadline(yearSelected);
-                            articoloEntity.setUsed(100); //Full 100%
+                            articoloEntity.setUsed(false); //Full 100%
 
 
                             Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
@@ -396,8 +398,6 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
 
                     }
                 }.execute();
-
-                //TODO: Gestire la migrazione
             }
         });
     }
@@ -420,7 +420,34 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
             setPictureProdotto(imageBitmap, true);
 
         } else if (requestCode == REQUEST_CALL_ALI && resultCode == RESULT_OK) {
-            setBarCode(data.getExtras().getString("Barcode"),true);
+            setBarCode(data.getExtras().getString("Barcode"), true);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.optionmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuOpHome:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
+                return true;
+            case R.id.menuOpNotify:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
+                return true;
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
+                return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

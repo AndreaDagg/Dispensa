@@ -11,9 +11,7 @@ public class SharedPreferencesApp {
 
     public SharedPreferencesApp(Context context) {
         this.CONTEXT = context;
-
     }
-
 
     public SharedPreferences getSharedPreferences() {
 
@@ -24,7 +22,7 @@ public class SharedPreferencesApp {
     public int getHourPreferences() {
         int hour = 11;
         if (getSharedPreferences() != null) {
-            hour = getSharedPreferences().getInt("hourpreferences", 10);
+            hour = getSharedPreferences().getInt("hourpreferences", 12);
         }
         return hour;
     }
@@ -32,39 +30,67 @@ public class SharedPreferencesApp {
     public int getMinutesPreferences() {
         int minutes = 11;
         if (getSharedPreferences() != null) {
-            minutes = getSharedPreferences().getInt("minutepreferences", 10);
+            minutes = getSharedPreferences().getInt("minutepreferences", 30);
         }
         return minutes;
     }
 
-    public void doSave(int hour, int minutes){
+    public void doSave(int hour, int minutes) {
         SharedPreferences sharedPreferences = CONTEXT.getSharedPreferences("DispensaSetting", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("hourpreferences",hour);
-        editor.putInt("minutepreferences",minutes);
+        editor.putInt("hourpreferences", hour);
+        editor.putInt("minutepreferences", minutes);
         editor.apply();
-        AppStart();
-        Toast.makeText(CONTEXT,"Salvato!",Toast.LENGTH_SHORT).show();
-        new NotificationApp(CONTEXT).SetNotification();
+        Toast.makeText(CONTEXT, "Salvato!", Toast.LENGTH_SHORT).show();
+        NotificationApp notificationApp = new NotificationApp(CONTEXT);
+        notificationApp.deleteAlarm();
+        notificationApp.SetNotification();
     }
 
-    public boolean getIsFirstAppOpen(){
+    public boolean getNotificationIsEnabled() {
         boolean firstStartApp = true;
-        if (getSharedPreferences()!=null){
-            firstStartApp = getSharedPreferences().getBoolean("AppStart",true);
+        if (getSharedPreferences() != null) {
+            firstStartApp = getSharedPreferences().getBoolean("Notification", true);
         }
         return firstStartApp;
     }
 
-    public void AppStart(){
+    public void setNotificationUp() {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
-        editor.putBoolean("AppStart",false);
+        editor.putBoolean("Notification", false);
+        editor.apply();
+
+    }
+
+    public boolean getDialogNotification() {
+        boolean firstStartApp = true;
+        if (getSharedPreferences() != null) {
+            firstStartApp = getSharedPreferences().getBoolean("DialogShow", true);
+        }
+        return firstStartApp;
+    }
+
+    public void setDialogNotificationUp() {
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putBoolean("DialogShow", false);
         editor.apply();
 
     }
 
 
+    public void saveFuture(int futurday) {
+        SharedPreferences sharedPreferences = CONTEXT.getSharedPreferences("DispensaSetting", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("dayfuture", futurday);
+        editor.apply();
 
+    }
 
-
+    public int getDayFuture() {
+        int day = 7;
+        if (getSharedPreferences() != null) {
+            day = getSharedPreferences().getInt("dayfuture", 7);
+        }
+        return day;
+    }
 }

@@ -1,27 +1,25 @@
 package android.corso.dispensa.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.corso.dispensa.Fragment.ItemScaduti.expiredItemFragment;
 import android.corso.dispensa.Logic.CategoryItem;
+import android.corso.dispensa.Logic.OptionMenuLogic;
+import android.corso.dispensa.Logic.SharedPreferencesApp;
 import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.Switch;
-
-import com.google.android.gms.vision.Frame;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -29,7 +27,7 @@ import static android.corso.dispensa.R.id.FrameDeadLine;
 
 public class ArticoliScaduti extends AppCompatActivity {
 
-    private boolean TODAY = false;
+    private boolean futureExpireds = false;
     private String CATEGORY = new CategoryItem().getCATEGORY_ALI();
 
     @Override
@@ -39,13 +37,11 @@ public class ArticoliScaduti extends AppCompatActivity {
 
         //Set if show today expired
         if (extras != null) {
-            this.TODAY = extras.getBoolean("today");
+            this.futureExpireds = extras.getBoolean("today");
         }
 
         setContentView(R.layout.activity_articoli_scaduti);
         setFragmentList(new CategoryItem().getCATEGORY_ALI());
-
-
     }
 
     @Override
@@ -70,12 +66,7 @@ public class ArticoliScaduti extends AppCompatActivity {
 
                 AlphaAnimation buttonClick = new AlphaAnimation(1F, 1.5F);
                 v.startAnimation(buttonClick);
-
-                // removeFragmentList();
-                //replaceFragmentList(CATEGORY);
                 setFragmentList(CATEGORY);
-                /*ViewGroup viewGroup = findViewById(FrameDeadLine);
-                viewGroup.invalidate();*/
 
                 Button buttonFar = (Button) findViewById(R.id.buttonFarDead);
                 ButtonAli.setBackgroundColor(getResources().getColor(R.color.blueSwitch, getTheme()));
@@ -98,14 +89,7 @@ public class ArticoliScaduti extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CATEGORY = new CategoryItem().getCATEGORY_FAR();
-
-                //removeFragmentList();
-                //replaceFragmentList(CATEGORY);
                 setFragmentList(CATEGORY);
-
-               /* ViewGroup viewGroup = findViewById(FrameDeadLine);
-                viewGroup.invalidate();*/
-
                 Button ButtonAli = (Button) findViewById(R.id.buttonAliDead);
                 buttonFar.setBackgroundColor(getResources().getColor(R.color.blueSwitch, getTheme()));
                 buttonFar.setTextColor(getResources().getColor(R.color.greyLight, getTheme()));
@@ -123,42 +107,20 @@ public class ArticoliScaduti extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (switchToday.isChecked()) {
-                    TODAY = true;
-                    //removeFragmentList();
-                    // replaceFragmentList(CATEGORY);
+                    futureExpireds = true;
                     setFragmentList(CATEGORY);
+                    Toast.makeText(getApplicationContext(), "Prodotti in scadenza nei prossimi " + new SharedPreferencesApp(getApplicationContext()).getDayFuture() + " giorni", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    TODAY = false;
-                    //removeFragmentList();
-                    // replaceFragmentList(CATEGORY);
+                    futureExpireds = false;
                     setFragmentList(CATEGORY);
                 }
             }
         });
-
     }
 
     public void setFragmentList(String category) {
-        getSupportFragmentManager().beginTransaction().add(FrameDeadLine, new expiredItemFragment(category, TODAY)).addToBackStack(null).commitAllowingStateLoss();
-
-
-    }
-
-
-    public void replaceFragmentList(final String category) {
-        getSupportFragmentManager().beginTransaction().replace(FrameDeadLine, new expiredItemFragment(category, TODAY)).addToBackStack(null).commit();
-        getSupportFragmentManager().executePendingTransactions();
-
-
-    }
-
-    public void removeFragmentList() {
-       /* FrameLayout frameLayout = findViewById(FrameDeadLine);
-        frameLayout.removeAllViews();*/
-
-        getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(FrameDeadLine))).commit();
-        // getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.FrameDeadLine))).commitNow();
+        getSupportFragmentManager().beginTransaction().add(FrameDeadLine, new expiredItemFragment(category, futureExpireds)).addToBackStack(null).commitAllowingStateLoss();
     }
 
     @Override
@@ -167,5 +129,30 @@ public class ArticoliScaduti extends AppCompatActivity {
         finishAffinity();
         Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intentMain);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.optionmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuOpHome:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
+                return true;
+            case R.id.menuOpNotify:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
+                return true;
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
+                return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

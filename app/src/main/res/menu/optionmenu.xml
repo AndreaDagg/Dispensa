@@ -11,6 +11,10 @@
         android:id="@+id/menuOpNotify"
         android:title="@string/Notify"
         android:icon="@drawable/notification24px"/>
+    <item
+        android:id="@+id/menuOpSetDay"
+        android:title="@string/ssetfuture"
+        android:icon="@drawable/notification24px"/>
 
     <item
         android:id="@+id/menuOpInfo"

@@ -3,6 +3,8 @@ package android.corso.dispensa;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.corso.dispensa.Activity.AlimentiActivity.AlimentiActivity;
@@ -10,13 +12,16 @@ import android.corso.dispensa.Activity.ArticoliScaduti;
 import android.corso.dispensa.Activity.FarmaciActivity.FarmaciActivity;
 import android.corso.dispensa.Activity.ListaSpesaAvtivity.ListaSpesaActivity;
 import android.corso.dispensa.Logic.OptionMenuLogic;
+import android.corso.dispensa.Logic.SharedPreferencesApp;
 import android.corso.dispensa.NotificationApp.NotificationApp;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import static android.Manifest.permission.SET_ALARM;
 
@@ -31,9 +36,8 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), SET_ALARM) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{SET_ALARM}, 1);
         }
-        new NotificationApp(getApplicationContext()).SetNotification();
 
-
+        showDialogNotification();
     }
 
     @Override
@@ -44,9 +48,37 @@ public class MainActivity extends AppCompatActivity {
         setFarmaciButtonHome();
         setListaSpesaButtonHome();
         setArticoliScaduti();
+
         super.onResume();
     }
 
+    private void showDialogNotification() {
+        final SharedPreferencesApp sharedPreferencesApp = new SharedPreferencesApp(getApplicationContext());
+        if (sharedPreferencesApp.getDialogNotification()) {
+            new AlertDialog.Builder(MainActivity.this).setTitle("Ricevere notifiche").setMessage("Vuoi ricevere le notifiche da Dispensa?")
+                    .setPositiveButton("Abilita", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sharedPreferencesApp.setDialogNotificationUp();
+                            sharedPreferencesApp.setNotificationUp();
+                            NotificationApp notificationApp = new NotificationApp(MainActivity.this);
+                            notificationApp.deleteAlarm();
+                            notificationApp.SetNotification();
+
+                        }
+                    }).setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    sharedPreferencesApp.setDialogNotificationUp();
+                    if (!sharedPreferencesApp.getDialogNotification()) {
+                        Toast.makeText(MainActivity.this, "Le notifiche sono disattivate! Per attivarele selezionare un orario dal menu.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }).show();
+
+        }
+
+    }
 
     private void setAlimentiButtonHome() {
         Button alimentiButtonHome = (Button) findViewById(R.id.AlimentiButtonHome);
@@ -109,9 +141,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuOpNotify:
                 startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
                 return true;
-            case R.id.menuOpInfo:
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
                 return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
         }
+
 
         return super.onOptionsItemSelected(item);
     }

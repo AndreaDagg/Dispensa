@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    android:background="@color/white"
+    android:background="@color/whitebk"
     app:layoutManager="LinearLayoutManager"
     tools:context=".Fragment.ItemScaduti.expiredItemFragment"
     tools:listitem="@layout/fragment_expireditem" >

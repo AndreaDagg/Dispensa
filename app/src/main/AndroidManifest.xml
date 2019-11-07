@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.corso.dispensa">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="android.corso.dispensa"
+    android:versionCode="4"
+    android:versionName="demo4"
+    tools:ignore="GradleOverrides">
 
     <meta-data
         android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -21,41 +25,67 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activity.NotificationSet"></activity>
-        <activity android:name=".BarcodeDetect" />
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".Activity.Info"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.FutureExpireds"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.NotificationSet"
+            android:label="Notifiche"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BarcodeDetect"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.ListaSpesaAvtivity.ListaSpesaActivity"
-            android:label="@string/ListaSpesaActivity" />
+            android:label="@string/ListaSpesaActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.FarmaciActivity.FarmaciActivity"
-            android:label="@string/FarmaciActivity" />
+            android:label="@string/FarmaciActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AlimentiActivity.AlimentiActivity"
-            android:label="@string/AlimentiActivity" />
-        <activity android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity" />
+            android:label="@string/AlimentiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ListaSpesaAvtivity.AggiungiArticloloActivity"
+            android:label="Aggiungi in lista della spesa"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.FarmaciActivity.DispensaFarmaciActivity"
-            android:label="@string/dispFarm" />
+            android:label="@string/dispFarm"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.FarmaciActivity.NuovoFarmacoActivity"
-            android:label="@string/AddFarm" />
+            android:label="@string/AddFarm"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AlimentiActivity.DispensaAlimentiActivity"
-            android:label="@string/dispAlim" />
+            android:label="@string/dispAlim"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AlimentiActivity.NuovoAlimentoActivity"
-            android:label="@string/AddAlim" />
+            android:label="@string/AddAlim"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.ArticoliScaduti"
-            android:label="@string/ArticoliScadutiActivity" />
-        <activity android:name=".MainActivity">
+            android:label="@string/ArticoliScadutiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".NotificationApp.NotificationApp$Notification_reciver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

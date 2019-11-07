@@ -64,14 +64,12 @@
 
             <TextView
                 android:id="@+id/textViewTipoFarm"
-                android:layout_width="120dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="259dp"
                 android:text="@string/TxTipo"
                 app:layout_constraintBottom_toTopOf="@+id/InsTipoFarm"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/InsMarcaFarm" />
 
@@ -93,7 +91,7 @@
             <CalendarView
                 android:id="@+id/calendarViewScadenzaFarm"
                 android:layout_width="342dp"
-                android:layout_height="292dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="37dp"
@@ -162,15 +160,12 @@
 
             <TextView
                 android:id="@+id/textMarcaFarm"
-                android:layout_width="40dp"
-                android:layout_height="34dp"
-                android:layout_marginStart="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="339dp"
                 android:text="@string/TxMarca"
                 app:layout_constraintBottom_toTopOf="@+id/InsMarcaFarm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -192,14 +187,12 @@
 
             <TextView
                 android:id="@+id/textViewBarCodeFarm"
-                android:layout_width="92dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="287dp"
                 android:text="@string/CBAR"
                 app:layout_constraintBottom_toTopOf="@+id/barCodeFarm"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/InsTipoFarm" />
 

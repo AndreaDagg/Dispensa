@@ -19,6 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -27,9 +30,7 @@ import android.corso.dispensa.R;
  */
 public class ItemListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
 
@@ -66,16 +67,28 @@ public class ItemListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            new AsyncTask<Void, Void, Void>() {
+
+            new AsyncTask<Void, Void, List<ArticoloEntity>>() {
                 @Override
-                protected Void doInBackground(Void... voids) {
-                    recyclerView.setAdapter(new MyItemListFragmentRecyclerViewAdapter(
-                            DispensaDatabase.getInstance(getContext()).getArticoloDao().findByBarcode(barcode), mListener));
+                protected List<ArticoloEntity> doInBackground(Void... voids) {
+                    return DispensaDatabase.getInstance(getContext()).getArticoloDao().findByBarcode(barcode);
+                }
 
+                @Override
+                protected void onPostExecute(final List<ArticoloEntity> articoloEntities) {
+                    super.onPostExecute(articoloEntities);
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(new MyItemListFragmentRecyclerViewAdapter(
+                                    articoloEntities, mListener));
+                        }
+                    });
 
-                    return null;
                 }
             }.execute();
+
+
         }
         return view;
     }
@@ -92,7 +105,6 @@ public class ItemListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ArticoloEntity item);
     }
 }

@@ -45,7 +45,6 @@
 
     <string name="quantity">Quantità</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="delete">Elimina</string>
@@ -55,14 +54,32 @@
     <string name="Home">Home Dispensa</string>
     <string name="Notify">Notifiche</string>
     <string name="Info">Info</string>
-    <string name="today">Scaduti oggi: </string>
+    <string name="future">Scadenze future: </string>
 
+    <string name="insertDay"> Inserisci intervallo </string>
     <string name="insertHour">Inserisci nuovo orario</string>
     <string name="twHour">Orario di notifica: </string>
 
     <string name="product">Prodotto</string>
-    <string name="shopping">Carrello</string>
+    <string name="shopping">Acquistato</string>
     <string name="adddProdList">Inserisci prodotto</string>
     <string name="RemuveShop">Rimuovi acquistati</string>
+
+    <string name="futureDay">Inserisci entro quanti giorni mostrare le scadenze</string>
+    <string name="ssetfuture">Intervallo scadenze</string>
+
+    <string name="info">
+        Dispensa è un app che consente di poter salvare le scadenze di alimenti e medicinali.
+        Dal menù laterale seleziona l orario in cui vuoi ricevere le notifiche che giornalmente ti ricorderanno quali prodotti stanno per scadere.
+        Impostando l intervallo delle scadenze si decide in qauale intervallo di giorni si vuole avere un feedback dei prodotti che scadranno.
+
+
+
+
+    </string>
+
+    <string name="info2">
+        Icons made by Smashicons, Freepik, Good Ware, Gregor Cresnar, Flat Icons, from www.flaticon.com
+    </string>
 
 </resources>

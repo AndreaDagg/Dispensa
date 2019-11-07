@@ -7,6 +7,7 @@ import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Logic.CheckDeadline;
+import android.corso.dispensa.Logic.SharedPreferencesApp;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import android.corso.dispensa.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A fragment representing a list of Items.
@@ -34,19 +36,14 @@ public class expiredItemFragment extends Fragment {
 
     private String CALLBY;
     private boolean TODAY;
-
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     public expiredItemFragment(String callby, boolean today) {
         this.CALLBY = callby;
         this.TODAY = today;
-
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,11 +69,23 @@ public class expiredItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            new AsyncTask<Void,Void,Void>(){
+            new AsyncTask<Void,Void,List<ArticoloEntity>>(){
                 @Override
-                protected Void doInBackground(Void... voids) {
-                    recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(new CheckDeadline(context).getArticoloEntitiesByCategory(CALLBY, TODAY), mListener));
-                    return null;
+                protected List<ArticoloEntity> doInBackground(Void... voids) {
+
+                    return new CheckDeadline(context,new SharedPreferencesApp(getContext()).getDayFuture()).getArticoloEntitiesByCategory(CALLBY, TODAY);
+                }
+
+                @Override 
+                protected void onPostExecute(final List<ArticoloEntity> articoloEntities) {
+                    super.onPostExecute(articoloEntities);
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(new MyexpiredItemRecyclerViewAdapter(articoloEntities, mListener));
+                        }
+                    });
+
                 }
             }.execute();
 
@@ -97,7 +106,6 @@ public class expiredItemFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ArticoloEntity item);
     }
 }

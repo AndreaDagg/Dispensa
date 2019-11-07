@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.corso.dispensa.Logic.CategoryItem;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -33,15 +34,12 @@ import static android.Manifest.permission.CAMERA;
 
 public class BarcodeDetect extends AppCompatActivity {
 
-    private static int CALL_BY_ALI = 8;
-    private static int CALL_BY_FAR = 9;
-    private int CALL = 0;
-
     private BarcodeDetector detector;
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private TextView barcodeTextView;
     private String barcodeRead = null;
+    private int CALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +55,22 @@ public class BarcodeDetect extends AppCompatActivity {
         CALL = extras.getInt("call_by");
 
 
-
         if (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{CAMERA}, 1);
         }
 
-        /*Barcode.QR_CODE |*/
-        detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.EAN_13).build();
+        if (this.CALL == 8) {
+            /*Barcode.QR_CODE |*/
+            detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.EAN_13).build();
+        } else if (this.CALL == 9) {
+            /*Barcode.QR_CODE |*/
+            detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.ITF).build();
+        } else {
+            detector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.EAN_13 | Barcode.ITF).build();
+        }
+
 
         if (!detector.isOperational()) {
-            //TODO: gestire in caso incui barcode non è operativo
             return;
         }
 
@@ -132,15 +136,17 @@ public class BarcodeDetect extends AppCompatActivity {
 
     private void confirmButton() {
         Button barcodeButton = (Button) findViewById(R.id.buttonBarcodeDetect);
+        final TextView textView = (TextView) findViewById(R.id.barcode_text);
         barcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!textView.getText().equals("...")) {
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("Barcode", barcodeRead);
-                    setResult(RESULT_OK,returnIntent);
+                    setResult(RESULT_OK, returnIntent);
                     finish();
 
+                }
             }
         });
 

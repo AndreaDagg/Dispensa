@@ -14,6 +14,7 @@ import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
 import android.corso.dispensa.Logic.CategoryItem;
+import android.corso.dispensa.Logic.OptionMenuLogic;
 import android.corso.dispensa.MainActivity;
 import android.corso.dispensa.R;
 import android.graphics.Bitmap;
@@ -21,7 +22,11 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -40,7 +45,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int CONFIRMED_SELECTION = 2;
     static final int REQUEST_CALL_FAR = 9;
-    static final int CODEBAR_LENGTH = 13;
+    static final int CODEBAR_LENGTH = 10;
     private byte[] ByteStringImage = null;
     private boolean CODEBAR_DETECTED = false, CODEBAR_IS_ALIM = false;
     private int daySelected = 0, monthSelected = 0, yearSelected = 0, dateSelected = 0, CONFIRMED_BACK = 0;
@@ -92,8 +97,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!((EditText) findViewById(R.id.barCodeFarm)).getText().toString().matches("")) {
-                   /* DialogFragment newFragment = new DialogAlert("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?");
-                    newFragment.show(getSupportFragmentManager(), "dialog");*/
 
                     new AlertDialog.Builder(NuovoFarmacoActivity.this).setTitle("Barcode presente!").setMessage("Barcode presente eliminare il prodotto e continuare con l'inserimento di un'altro barcode?")
                             .setPositiveButton("Procedi", new DialogInterface.OnClickListener() {
@@ -167,7 +170,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                             CODEBAR_IS_ALIM = true;
                         }
                     } else {
-                        return null; //TODO: CHEcK
+                        return null;
                     }
                     return ByteStringImage;
                 }
@@ -195,7 +198,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
 
 
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 13 caratteri", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Il barcode deve essere di 10 caratteri", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -251,11 +254,11 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             return false;
         } else if (!(((EditText) findViewById(R.id.barCodeFarm)).getText().toString().length() == CODEBAR_LENGTH)) {
             if (print) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Il codice a barre deve contenere 13 caratteri.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Il codice a barre deve contenere 10 caratteri.", Toast.LENGTH_SHORT);
                 toast.show();
                 EditText targetView = (EditText) findViewById(R.id.barCodeFarm);
                 targetView.getParent().requestChildFocus(targetView, targetView);
-                targetView.setError("Assicurati che sia di 13 caratteri");
+                targetView.setError("Assicurati che sia di 10 caratteri");
             }
             return false;
         } else if (!(dateSelected == CONFIRMED_SELECTION)) {
@@ -283,7 +286,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                 EditText targetView = (EditText) findViewById(R.id.InsTipoFarm);
                 targetView.getParent().requestChildFocus(targetView, targetView);
                 targetView.setError("Inserisci il tipo");
-
             }
             return false;
         } else if (ByteStringImage == null) {
@@ -301,7 +303,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             }
             return false;
         }
-
         return true;
     }
 
@@ -317,7 +318,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
 
                     @Override
                     protected Boolean doInBackground(Void... voids) {
-
 
                         if (checkInsertForm(false)) {
                             ArticoloEntity articoloEntity = new ArticoloEntity();
@@ -347,9 +347,7 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
                             articoloEntity.setDaydeadline(daySelected);
                             articoloEntity.setMonthdeadline(monthSelected);
                             articoloEntity.setYeardeadline(yearSelected);
-                            articoloEntity.setUsed(100); //Full 100%
-
-
+                            articoloEntity.setUsed(false); //Full 100%
                             Long ArticoloIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getArticoloDao().insertArticolo(articoloEntity);
 
                             //Start homeActivity if switch is false
@@ -386,8 +384,6 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
 
                     }
                 }.execute();
-
-                //TODO: Gestire la migrazione
             }
         });
     }
@@ -410,8 +406,32 @@ public class NuovoFarmacoActivity extends AppCompatActivity {
             setPictureProdotto(imageBitmap, true);
 
         } else if (requestCode == REQUEST_CALL_FAR && resultCode == RESULT_OK) {
-            setBarCode(data.getExtras().getString("Barcode"),true);
+            setBarCode(data.getExtras().getString("Barcode"), true);
         }
     }
-    //TODO: ADD switch to layout
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.optionmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuOpHome:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoHomeIntent());
+                return true;
+            case R.id.menuOpNotify:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoNotificationIntent());
+                return true;
+            case R.id.menuOpSetDay:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoDay());
+                return true;
+            case R.id.menuOpInfo:
+                startActivity(new OptionMenuLogic(getApplicationContext()).getGoInfo());
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

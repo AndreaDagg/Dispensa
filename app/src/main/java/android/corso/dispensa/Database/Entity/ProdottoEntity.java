@@ -11,9 +11,9 @@ import java.sql.Blob;
 public class ProdottoEntity {
 
 
-
-    @PrimaryKey
-    private Long idbarcode;   //TODO:It's not autoGenerate we have to do the check before the insert
+    @PrimaryKey(autoGenerate = true)
+    private Long _id;
+    private Long idbarcode;
     private String category;
     private String brand;
     private String producttype;
@@ -22,10 +22,17 @@ public class ProdottoEntity {
     private byte[] image;
 
 
-
     private boolean isList;
     private int newBuy;
     private String note;
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
+    }
 
     public byte[] getImage() {
         return image;

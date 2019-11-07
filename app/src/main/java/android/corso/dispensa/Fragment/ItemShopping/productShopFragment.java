@@ -17,12 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.corso.dispensa.R;
 
+import java.util.List;
+import java.util.Objects;
+
 
 public class productShopFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -57,23 +58,28 @@ public class productShopFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            new AsyncTask<Void,Void,Void>(){
+            new AsyncTask<Void, Void, List<ProdottoEntity>>() {
 
                 @Override
-                protected Void doInBackground(Void... voids) {
-                    recyclerView.setAdapter(new MyproductShopRecyclerViewAdapter(
+                protected List<ProdottoEntity> doInBackground(Void... voids) {
+                    return DispensaDatabase.getInstance(getContext()).getProdottoDao().findListShop(true);
+                }
 
-                            DispensaDatabase.getInstance(getContext()).getProdottoDao().findListShop(true)
-                            , mListener));
-                    return null;
+                @Override
+                protected void onPostExecute(final List<ProdottoEntity> prodottoEntities) {
+                    super.onPostExecute(prodottoEntities);
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(new MyproductShopRecyclerViewAdapter(
+                                    prodottoEntities, mListener));
+                        }
+                    });
                 }
             }.execute();
-
         }
         return view;
     }
-
-
 
 
     /**
@@ -87,7 +93,6 @@ public class productShopFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ProdottoEntity item);
     }
 }
