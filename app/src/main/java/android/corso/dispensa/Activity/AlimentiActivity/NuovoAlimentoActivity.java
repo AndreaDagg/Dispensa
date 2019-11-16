@@ -366,6 +366,7 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                                new SendToRemoteDb().getJSON(getApplicationContext(),prodottoEntity.getIdbarcode());
 
                                 Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
                             } else {
