@@ -14,6 +14,7 @@ import android.corso.dispensa.BarcodeDetect;
 import android.corso.dispensa.Database.DispensaDatabase;
 import android.corso.dispensa.Database.Entity.ArticoloEntity;
 import android.corso.dispensa.Database.Entity.ProdottoEntity;
+import android.corso.dispensa.Database.RemoteDB.SendToRemoteDb;
 import android.corso.dispensa.Logic.CategoryItem;
 import android.corso.dispensa.Logic.OptionMenuLogic;
 import android.corso.dispensa.MainActivity;
@@ -37,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import static android.Manifest.permission.CAMERA;
 
@@ -172,6 +174,15 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                             setMarcaProdotto(prodottoEntities.getBrand());
                             setTipoProdotto(prodottoEntities.getProducttype());
                             ByteStringImage = prodottoEntities.getImage();
+                            //TODO:remotedb
+                            try {
+                                new SendToRemoteDb().send(prodottoEntities);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            new SendToRemoteDb().getJSON(getApplicationContext(),prodottoEntities.getIdbarcode());
+
                         } else {
                             CODEBAR_IS_FARM = true;
                         }
@@ -348,6 +359,13 @@ public class NuovoAlimentoActivity extends AppCompatActivity {
                                 prodottoEntity.setList(false);
                                 prodottoEntity.setNewBuy(0);
                                 prodottoEntity.setNote(null);
+
+                                //TODO:remotedb
+                                try {
+                                    new SendToRemoteDb().send(prodottoEntity);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
 
                                 Long ProdottoIdRowCreated = DispensaDatabase.getInstance(getApplicationContext()).getProdottoDao().insertProdotto(prodottoEntity);
                             } else {

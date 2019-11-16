@@ -17,7 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-}
+ }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -35,4 +35,6 @@ dependencies {
 
     //Google services
     implementation 'com.google.android.gms:play-services-vision:10.0.0'
+
+    
 }
