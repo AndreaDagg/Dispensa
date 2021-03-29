@@ -1,3 +1,3 @@
 # Dispensa
-https://studentiunimol-my.sharepoint.com/:p:/g/personal/a_daguanno1_studenti_unimol_it/EYDdKwFnnXRPngXX0k0hLKABJXCLmH9_KhqJsPdVnr8x0A?e=YzR4hv
+<a href="https://docs.google.com/presentation/d/1TNNprFAHo8kPJL_yosRa2WMXHnIu0wz0x2MVXjYt55o/edit?usp=sharing">Documentazione App Dispensa</a>
 
